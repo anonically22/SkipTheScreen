@@ -223,17 +223,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
         // Communication
-        if (toggleCommunication && toggleCommunication.checked && communicationInput.value && previewCommunicationSection) {
+        if (toggleCommunication && toggleCommunication.checked && previewCommunicationSection) {
             previewCommunicationSection.style.display = '';
-            if(previewCommunication) previewCommunication.textContent = communicationInput.value;
+            if (previewCommunication && communicationInput) { // Ensure communicationInput is also checked
+                previewCommunication.textContent = communicationInput.value || defaultTexts.communication;
+            }
         } else if (previewCommunicationSection) {
             previewCommunicationSection.style.display = 'none';
         }
 
         // Leadership
-        if (toggleLeadership && toggleLeadership.checked && leadershipInput.value && previewLeadershipSection) {
+        if (toggleLeadership && toggleLeadership.checked && previewLeadershipSection) {
             previewLeadershipSection.style.display = '';
-            if(previewLeadership) previewLeadership.textContent = leadershipInput.value;
+            if (previewLeadership && leadershipInput) { // Ensure leadershipInput is also checked
+                previewLeadership.textContent = leadershipInput.value || defaultTexts.leadership;
+            }
         } else if (previewLeadershipSection) {
             previewLeadershipSection.style.display = 'none';
         }
@@ -337,69 +341,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Education
         if(previewEducationEntriesContainer && educationFormEntriesContainer) {
-            previewEducationEntriesContainer.innerHTML = '';
+            previewEducationEntriesContainer.innerHTML = ''; // Clear previous dynamic entries AND initial sample HTML
             const educationForms = educationFormEntriesContainer.querySelectorAll('.education-entry');
-            if (educationForms.length === 0 && educationFormEntriesContainer.children.length === 0) { //TODO: check if this condition is ever met given initial html
-                defaultTexts.education.forEach(edu => {
+
+            educationForms.forEach(form => {
+                const institution = form.querySelector('.institution').value;
+                const eduLocation = form.querySelector('.eduLocation').value;
+                const degree = form.querySelector('.degree').value;
+                const gpa = form.querySelector('.gpa').value;
+                const coursework = form.querySelector('.coursework').value;
+
+                if (institution || eduLocation || degree || gpa || coursework) {
                     const eduDiv = document.createElement('div');
-                    eduDiv.innerHTML = `
-                        <h3>${edu.institution}</h3>
-                        <p>${edu.eduLocation}</p>
-                        <p>${edu.degree}</p>
-                        <p>GPA: ${edu.gpa}</p>
-                        <p>Relevant coursework: ${edu.coursework}</p>
-                    `;
-                    previewEducationEntriesContainer.appendChild(eduDiv);
-                });
-            } else {
-                educationForms.forEach(form => {
-                    const institution = form.querySelector('.institution').value;
-                    const eduLocation = form.querySelector('.eduLocation').value;
-                    const degree = form.querySelector('.degree').value;
-                    const gpa = form.querySelector('.gpa').value;
-                    const coursework = form.querySelector('.coursework').value;
+                    const h3 = document.createElement('h3');
+                    h3.textContent = institution || 'Institution';
+                    eduDiv.appendChild(h3);
 
-                    if (institution || eduLocation || degree || gpa || coursework) {
-                        const eduDiv = document.createElement('div');
-                        const h3 = document.createElement('h3');
-                        h3.textContent = institution || 'Institution';
-                        eduDiv.appendChild(h3);
+                    const pLoc = document.createElement('p');
+                    pLoc.textContent = eduLocation || 'Location';
+                    eduDiv.appendChild(pLoc);
 
-                        const pLoc = document.createElement('p');
-                        pLoc.textContent = eduLocation || 'Location';
-                        eduDiv.appendChild(pLoc);
+                    const pDegree = document.createElement('p');
+                    pDegree.textContent = degree || 'Degree';
+                    eduDiv.appendChild(pDegree);
 
-                        const pDegree = document.createElement('p');
-                        pDegree.textContent = degree || 'Degree';
-                        eduDiv.appendChild(pDegree);
-
-                        if (gpa) {
-                            const pGpa = document.createElement('p');
-                            pGpa.textContent = `GPA: ${gpa}`;
-                            eduDiv.appendChild(pGpa);
-                        }
-                        if (coursework) {
-                            const pCourse = document.createElement('p');
-                            pCourse.textContent = `Relevant coursework: ${coursework}`;
-                            eduDiv.appendChild(pCourse);
-                        }
-                        previewEducationEntriesContainer.appendChild(eduDiv);
+                    if (gpa) {
+                        const pGpa = document.createElement('p');
+                        pGpa.textContent = `GPA: ${gpa}`;
+                        eduDiv.appendChild(pGpa);
                     }
-                });
-                if (previewEducationEntriesContainer.children.length === 0) {
-                    defaultTexts.education.forEach(edu => {
-                        const eduDiv = document.createElement('div');
-                        eduDiv.innerHTML = `
-                            <h3>${edu.institution}</h3>
-                            <p>${edu.eduLocation}</p>
-                            <p>${edu.degree}</p>
-                            <p>GPA: ${edu.gpa}</p>
-                            <p>Relevant coursework: ${edu.coursework}</p>
-                        `;
-                        previewEducationEntriesContainer.appendChild(eduDiv);
-                    });
+                    if (coursework) {
+                        const pCourse = document.createElement('p');
+                        pCourse.textContent = `Relevant coursework: ${coursework}`;
+                        eduDiv.appendChild(pCourse);
+                    }
+                    previewEducationEntriesContainer.appendChild(eduDiv);
                 }
-            }
+            });
+            // If all education forms are blank, previewEducationEntriesContainer will be empty.
+            // The "Education" <h2> heading in the preview remains visible.
         }
 
 
