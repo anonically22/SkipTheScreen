@@ -7,11 +7,19 @@ body {
     line-height: 1.6; /* Consistent line spacing */
 }
 
+#main-title {
+    text-align: center;
+    color: #2c3e50; /* Using a color similar to other primary headings */
+    margin-top: 20px;
+    margin-bottom: 30px; /* More space below the main title */
+    font-size: 2.5em; /* Larger main title */
+}
+
 .container {
-    display: flex;
-    gap: 20px; /* Adjusted gap */
-    max-width: 95%; /* Use more window width */
-    margin: 20px auto; /* Center container with some top/bottom margin */
+    display: block; /* Stack form and preview */
+    /* max-width: 95%; // Keep if desired, or adjust for stacked view */
+    max-width: 1200px; /* Or a fixed max-width for content area */
+    margin: 0 auto; /* Center container */
 }
 
 .resume-form, .resume-preview-container {
@@ -19,10 +27,14 @@ body {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    flex: 1; /* Allow flex items to grow and shrink */
-    min-width: 45%; /* Ensure they don't get too small, adjust as needed */
+    width: 100%; /* Take full width of the container */
     box-sizing: border-box;
+    margin-bottom: 30px; /* Space between form/preview and next element */
 }
+.resume-preview-container {
+    margin-bottom: 20px; /* Standard bottom margin for the last block */
+}
+
 
 /* Styling for the radio button group for header layout */
 .resume-form h2 + div {
