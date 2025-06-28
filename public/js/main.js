@@ -94,36 +94,34 @@ document.addEventListener('DOMContentLoaded', () => {
                         eduDiv.classList.add('preview-entry-item'); // Generic class for styling entries
 
                         const h3 = document.createElement('h3');
-                        h3.textContent = institution || 'Institution';
+                        let institutionText = institution || 'Institution Name';
+                        if (eduLocation) {
+                            institutionText += ` - ${eduLocation}`;
+                        }
+                        h3.textContent = institutionText;
                         eduDiv.appendChild(h3);
 
-                        if (degree) { // Only show degree if present
-                            const pDegree = document.createElement('p');
-                            pDegree.textContent = degree + (eduLocation ? ` - ${eduLocation}` : '');
-                            eduDiv.appendChild(pDegree);
-                        } else if (eduLocation) { // Show location if degree is not present but location is
-                            const pLocation = document.createElement('p');
-                            pLocation.textContent = eduLocation;
-                            eduDiv.appendChild(pLocation);
+                        let degreeLine = '';
+                        if (degree) {
+                            degreeLine += degree;
+                        }
+                        if (gpa) {
+                            degreeLine += (degreeLine ? ' - ' : '') + `GPA: ${gpa}`;
+                        }
+                        if (degreeLine) {
+                            const pDegreeGpa = document.createElement('p');
+                            pDegreeGpa.textContent = degreeLine;
+                            eduDiv.appendChild(pDegreeGpa);
                         }
 
-                        if (gpa) {
-                            const pGpa = document.createElement('p');
-                            pGpa.textContent = `GPA: ${gpa}`;
-                            eduDiv.appendChild(pGpa);
-                        }
                         if (coursework) {
                             const pCourse = document.createElement('p');
-                            // Simple display for coursework, could be ul/li if parsed
                             pCourse.textContent = `Relevant Coursework: ${coursework}`;
                             eduDiv.appendChild(pCourse);
                         }
                         previewEducationEntriesContainer.appendChild(eduDiv);
                     }
                 });
-                // If toggle is checked but no content, the "Education" H2 still shows, entries area is blank.
-                // If you want to hide H2 as well if no content:
-                // previewEducationSection.style.display = hasEducationContent ? '' : 'none';
             } else {
                 previewEducationSection.style.display = 'none';
             }
