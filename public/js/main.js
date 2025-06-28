@@ -20,6 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewEmail = document.getElementById('preview-email');
     const previewLinkedin = document.getElementById('preview-linkedin');
 
+    // Education Form Elements
+    const toggleEducation = document.getElementById('toggle-education');
+    const educationFormContent = document.getElementById('education-form-content');
+    const educationEntriesContainer = document.getElementById('education-entries'); // Form container for entries
+    const addEducationButton = document.getElementById('add-education');
+
+    // Education Preview Elements
+    const previewEducationSection = document.getElementById('preview-education-section'); // Main preview section wrapper
+    const previewEducationEntriesContainer = document.getElementById('preview-education-entries'); // Preview container for entries
+
+
     // --- Default Preview Text ---
     const defaultTexts = {
         fullName: 'Your Name',
@@ -61,6 +72,101 @@ document.addEventListener('DOMContentLoaded', () => {
         if(previewLocation && locationInput) previewLocation.textContent = locationInput.value || defaultTexts.location;
         if(previewEmail && emailInput) previewEmail.textContent = emailInput.value || defaultTexts.email;
         if(previewLinkedin && linkedinInput) previewLinkedin.textContent = linkedinInput.value || defaultTexts.linkedin;
+
+        // Education Preview Logic
+        if (previewEducationSection && educationFormContent && educationEntriesContainer && previewEducationEntriesContainer) {
+            if (toggleEducation && toggleEducation.checked) {
+                previewEducationSection.style.display = '';
+                previewEducationEntriesContainer.innerHTML = ''; // Clear previous entries
+
+                const educationForms = educationEntriesContainer.querySelectorAll('.education-entry');
+                let hasEducationContent = false;
+                educationForms.forEach(form => {
+                    const institution = form.querySelector('.institution')?.value;
+                    const eduLocation = form.querySelector('.eduLocation')?.value;
+                    const degree = form.querySelector('.degree')?.value;
+                    const gpa = form.querySelector('.gpa')?.value;
+                    const coursework = form.querySelector('.coursework')?.value;
+
+                    if (institution || eduLocation || degree || gpa || coursework) {
+                        hasEducationContent = true;
+                        const eduDiv = document.createElement('div');
+                        eduDiv.classList.add('preview-entry-item'); // Generic class for styling entries
+
+                        const h3 = document.createElement('h3');
+                        h3.textContent = institution || 'Institution';
+                        eduDiv.appendChild(h3);
+
+                        if (degree) { // Only show degree if present
+                            const pDegree = document.createElement('p');
+                            pDegree.textContent = degree + (eduLocation ? ` - ${eduLocation}` : '');
+                            eduDiv.appendChild(pDegree);
+                        } else if (eduLocation) { // Show location if degree is not present but location is
+                            const pLocation = document.createElement('p');
+                            pLocation.textContent = eduLocation;
+                            eduDiv.appendChild(pLocation);
+                        }
+
+                        if (gpa) {
+                            const pGpa = document.createElement('p');
+                            pGpa.textContent = `GPA: ${gpa}`;
+                            eduDiv.appendChild(pGpa);
+                        }
+                        if (coursework) {
+                            const pCourse = document.createElement('p');
+                            // Simple display for coursework, could be ul/li if parsed
+                            pCourse.textContent = `Relevant Coursework: ${coursework}`;
+                            eduDiv.appendChild(pCourse);
+                        }
+                        previewEducationEntriesContainer.appendChild(eduDiv);
+                    }
+                });
+                // If toggle is checked but no content, the "Education" H2 still shows, entries area is blank.
+                // If you want to hide H2 as well if no content:
+                // previewEducationSection.style.display = hasEducationContent ? '' : 'none';
+            } else {
+                previewEducationSection.style.display = 'none';
+            }
+        }
+    };
+
+    // --- Factory for Creating Form Entries ---
+    const createFormEntry = (type, container) => {
+        if (!container) return;
+        const entryDiv = document.createElement('div');
+        entryDiv.classList.add(`${type}-entry`); // e.g., 'education-entry'
+        let innerHTML = '';
+
+        switch (type) {
+            case 'education':
+                innerHTML = `
+                    <input type="text" class="institution" placeholder="Institution">
+                    <input type="text" class="eduLocation" placeholder="Location">
+                    <input type="text" class="degree" placeholder="Degree">
+                    <input type="text" class="gpa" placeholder="GPA">
+                    <textarea class="coursework" placeholder="Relevant Coursework"></textarea>
+                `;
+                break;
+            // Add other cases (experience, project, etc.) here later
+        }
+        entryDiv.innerHTML = innerHTML;
+        container.appendChild(entryDiv);
+        entryDiv.querySelectorAll('input, textarea, select').forEach(inputEl => { // Changed variable name
+            if(inputEl) inputEl.addEventListener('input', updatePreview);
+        });
+        updatePreview();
+    };
+
+    // --- Helper for Toggling Form Section Visibility ---
+    const setupToggleListener = (toggleCheckbox, contentDiv) => {
+        if (toggleCheckbox && contentDiv) {
+            toggleCheckbox.addEventListener('change', () => {
+                contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
+                updatePreview();
+            });
+            // Set initial state of content based on checkbox
+            contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
+        }
     };
 
     // --- Add Event Listeners ---
@@ -73,9 +179,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (headerLayoutRadios) {
         headerLayoutRadios.forEach(radio => {
-            radio.addEventListener('change', updatePreview);
+            if(radio) radio.addEventListener('change', updatePreview);
         });
     }
+
+    // Education Section Listeners
+    if (toggleEducation) setupToggleListener(toggleEducation, educationFormContent);
+    if (addEducationButton) {
+        addEducationButton.addEventListener('click', () => {
+            if(educationEntriesContainer) createFormEntry('education', educationEntriesContainer);
+        });
+    }
+    // Initial listeners for hardcoded education entry
+    if (educationEntriesContainer) {
+        educationEntriesContainer.querySelectorAll('.education-entry input, .education-entry textarea').forEach(el => {
+            if(el) el.addEventListener('input', updatePreview);
+        });
+    }
+
 
     // Initial preview update
     updatePreview();
