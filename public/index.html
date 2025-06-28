@@ -30,6 +30,23 @@
             <input type="email" id="email" placeholder="Email">
             <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
 
+            <!-- Education Section (Optional Toggle) -->
+            <h2>
+                <label><input type="checkbox" id="toggle-education" checked> Education Section</label>
+            </h2>
+            <div id="education-form-content">
+                <div id="education-entries">
+                    <div class="education-entry">
+                        <input type="text" class="institution" placeholder="Institution (e.g., Glennwood University)">
+                        <input type="text" class="eduLocation" placeholder="Location (e.g., Boulder, CO)">
+                        <input type="text" class="degree" placeholder="Degree (e.g., BS in Computer Science)">
+                        <input type="text" class="gpa" placeholder="GPA (e.g., 3.8)">
+                        <textarea class="coursework" placeholder="Relevant Coursework (e.g., web development, database management)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-education">Add Education</button>
+            </div>
+
             <!-- Other sections will be added here later -->
         </div>
 
@@ -45,6 +62,13 @@
                         <span id="preview-location">Your Location</span>
                         <span id="preview-email">Your Email</span>
                         <span id="preview-linkedin">Your LinkedIn</span>
+                    </div>
+                </div>
+                <!-- Education Preview -->
+                <div id="preview-education-section">
+                    <h2>Education</h2>
+                    <div id="preview-education-entries">
+                        <!-- JS will populate this based on form input -->
                     </div>
                 </div>
                 <!-- Other preview sections will be added here later -->
