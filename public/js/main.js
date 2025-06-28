@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // --- Form Input Elements ---
     // Header
+    const headerLayoutRadios = document.querySelectorAll('input[name="headerLayout"]');
     const fullNameInput = document.getElementById('fullName');
     const jobTitleInput = document.getElementById('jobTitle');
     const phoneInput = document.getElementById('phone');
@@ -35,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Preview Elements ---
     // Header
+    const previewHeaderDiv = document.getElementById('preview-header'); // Get the container
     const previewFullName = document.getElementById('preview-fullName');
     const previewJobTitle = document.getElementById('preview-jobTitle');
     const previewPhone = document.getElementById('preview-phone');
@@ -49,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewSkillsAbilities = document.getElementById('preview-skillsAbilities');
 
     // Experience (dynamic entries)
+    const previewExperienceSection = document.getElementById('preview-experience-section'); // Get the whole section
     const previewExperienceEntriesContainer = document.getElementById('preview-experience-entries');
 
     // Education (dynamic entries)
@@ -104,6 +107,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Update Preview Function ---
     const updatePreview = () => {
         // Header
+        // Apply layout class
+        let selectedLayout = 'inline'; // default
+        headerLayoutRadios.forEach(radio => {
+            if (radio.checked) {
+                selectedLayout = radio.value;
+            }
+        });
+        if (selectedLayout === 'stacked') {
+            previewHeaderDiv.classList.add('stacked');
+            previewHeaderDiv.classList.remove('inline');
+        } else {
+            previewHeaderDiv.classList.add('inline');
+            previewHeaderDiv.classList.remove('stacked');
+        }
+
         previewFullName.textContent = fullNameInput.value || defaultTexts.fullName;
         previewJobTitle.textContent = jobTitleInput.value || defaultTexts.jobTitle;
         previewPhone.textContent = phoneInput.value || defaultTexts.phone;
@@ -124,58 +142,54 @@ document.addEventListener('DOMContentLoaded', () => {
         previewLeadership.textContent = leadershipInput.value || defaultTexts.leadership;
 
         // Experience
-        previewExperienceEntriesContainer.innerHTML = '';
+        previewExperienceEntriesContainer.innerHTML = ''; // Clear previous entries
         const experienceForms = experienceFormEntriesContainer.querySelectorAll('.experience-entry');
-        if (experienceForms.length === 0 && experienceFormEntriesContainer.children.length === 0) { // Show default if no forms and no entries yet
-            defaultTexts.experience.forEach(exp => {
+        let hasExperienceContent = false;
+
+        experienceForms.forEach(form => {
+            const companyName = form.querySelector('.companyName').value;
+            const expJobTitle = form.querySelector('.expJobTitle').value;
+            const expDates = form.querySelector('.expDates').value;
+            const expResponsibilities = form.querySelector('.expResponsibilities').value.split('\n').filter(line => line.trim() !== '');
+
+            if (companyName || expJobTitle || expDates || expResponsibilities.length > 0) {
+                hasExperienceContent = true;
                 const expDiv = document.createElement('div');
-                expDiv.innerHTML = `
-                    <h3>${exp.companyName}</h3>
-                    <p>${exp.expJobTitle} | ${exp.expDates}</p>
-                    <ul>${exp.expResponsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
-                `;
-                previewExperienceEntriesContainer.appendChild(expDiv);
-            });
-        } else {
-            experienceForms.forEach(form => {
-                const companyName = form.querySelector('.companyName').value;
-                const expJobTitle = form.querySelector('.expJobTitle').value;
-                const expDates = form.querySelector('.expDates').value;
-                const expResponsibilities = form.querySelector('.expResponsibilities').value.split('\n').filter(line => line.trim() !== '');
+                const h3 = document.createElement('h3');
+                h3.textContent = companyName || 'Company Name';
+                const pSub = document.createElement('p');
+                pSub.textContent = `${expJobTitle || 'Job Title'} | ${expDates || 'Dates'}`;
 
-                if (companyName || expJobTitle || expDates || expResponsibilities.length > 0) {
-                    const expDiv = document.createElement('div');
-                    const h3 = document.createElement('h3');
-                    h3.textContent = companyName || 'Company Name';
-                    const pSub = document.createElement('p');
-                    pSub.textContent = `${expJobTitle || 'Job Title'} | ${expDates || 'Dates'}`;
+                expDiv.appendChild(h3);
+                expDiv.appendChild(pSub);
 
-                    expDiv.appendChild(h3);
-                    expDiv.appendChild(pSub);
-
-                    if (expResponsibilities.length > 0) {
-                        const ul = document.createElement('ul');
-                        expResponsibilities.forEach(resp => {
-                            const li = document.createElement('li');
-                            li.textContent = resp;
-                            ul.appendChild(li);
-                        });
-                        expDiv.appendChild(ul);
-                    }
-                    previewExperienceEntriesContainer.appendChild(expDiv);
+                if (expResponsibilities.length > 0) {
+                    const ul = document.createElement('ul');
+                    expResponsibilities.forEach(resp => {
+                        const li = document.createElement('li');
+                        li.textContent = resp;
+                        ul.appendChild(li);
+                    });
+                    expDiv.appendChild(ul);
                 }
-            });
-             if (previewExperienceEntriesContainer.children.length === 0) { // Fallback if all fields are empty
-                defaultTexts.experience.forEach(exp => {
-                    const expDiv = document.createElement('div');
-                    expDiv.innerHTML = `
-                        <h3>${exp.companyName}</h3>
-                        <p>${exp.expJobTitle} | ${exp.expDates}</p>
-                        <ul>${exp.expResponsibilities.map(r => `<li>${r}</li>`).join('')}</ul>
-                    `;
-                    previewExperienceEntriesContainer.appendChild(expDiv);
-                });
+                previewExperienceEntriesContainer.appendChild(expDiv);
             }
+        });
+
+        // Show/hide experience section based on content
+        if (hasExperienceContent) {
+            previewExperienceSection.style.display = ''; // Or 'block' if you prefer
+        } else {
+            // If there are no forms at all (e.g. initial state, or user deleted all)
+            // AND the default shouldn't be shown because we want it optional
+            if (experienceForms.length === 0) {
+                 previewExperienceSection.style.display = 'none';
+            } else {
+                // If there are forms, but all are empty
+                 previewExperienceSection.style.display = 'none';
+            }
+            // To completely remove default population for experience when optional:
+            // previewExperienceSection.style.display = 'none';
         }
 
 
@@ -350,6 +364,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     allStaticInputs.forEach(input => {
         if (input) input.addEventListener('input', updatePreview);
+    });
+
+    // Header layout radio buttons
+    headerLayoutRadios.forEach(radio => {
+        radio.addEventListener('change', updatePreview);
     });
 
     // Dynamic entry buttons
