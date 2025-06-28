@@ -9,18 +9,28 @@ body {
 
 .container {
     display: flex;
-    gap: 30px; /* Increased gap for better separation */
-    max-width: 1200px; /* Limit overall width */
-    margin: 0 auto; /* Center container */
+    gap: 20px; /* Adjusted gap */
+    max-width: 95%; /* Use more window width */
+    margin: 20px auto; /* Center container with some top/bottom margin */
 }
 
 .resume-form, .resume-preview-container {
     background-color: #fff;
-    padding: 25px; /* Slightly more padding */
+    padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
-    width: 50%;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    flex: 1; /* Allow flex items to grow and shrink */
+    min-width: 45%; /* Ensure they don't get too small, adjust as needed */
     box-sizing: border-box;
+}
+
+/* Styling for the radio button group for header layout */
+.resume-form h2 + div {
+    margin-bottom: 15px; /* Space below radio buttons */
+}
+.resume-form h2 + div label {
+    margin-right: 15px;
+    font-size: 0.9em;
 }
 
 /* Headings for the form itself */
@@ -109,6 +119,43 @@ button:hover {
 }
 #preview-header #preview-contactInfo span:first-child {
     margin-left: 0;
+}
+
+/* Header Layout Styles */
+#preview-header.stacked #preview-jobTitle,
+#preview-header.stacked #preview-contactInfo {
+    display: block;
+    margin-left: 0; /* Reset margin for stacked layout */
+}
+#preview-header.stacked #preview-jobTitle {
+    margin-top: 5px; /* Add some space above job title in stacked mode */
+}
+#preview-header.stacked #preview-contactInfo span {
+    display: block; /* Each contact item on a new line */
+    margin-left: 0; /* Reset margin for individual contact items */
+    margin-top: 3px;
+}
+#preview-header.stacked #preview-contactInfo span::after {
+    content: ""; /* Remove separators in stacked mode */
+}
+
+
+/* Default/Inline styling is already in place, so .inline class might not be strictly needed for CSS if it's the default */
+/* However, adding it for clarity or future specific inline tweaks */
+#preview-header.inline #preview-jobTitle {
+    display: inline; /* Explicitly inline */
+    margin-left: 5px;
+}
+#preview-header.inline #preview-contactInfo {
+    display: block; /* Contact info block still takes its own line below name/title */
+}
+#preview-header.inline #preview-contactInfo span {
+    display: inline; /* Contact items themselves are inline */
+}
+#preview-header.inline #preview-contactInfo span:not(:last-child)::after {
+    content: " | ";
+    margin-right: 5px;
+    margin-left: 5px;
 }
 
 
