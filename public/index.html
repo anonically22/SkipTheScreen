@@ -29,19 +29,33 @@
 
             <!-- Skills & Abilities Section -->
             <h2>Skills & Abilities</h2>
-            <textarea id="skillsAbilities" placeholder="Describe your skills and abilities..."></textarea>
+            <textarea id="skillsAbilities" placeholder="Describe your general skills and abilities..."></textarea>
+            <h3>Languages</h3>
+            <textarea id="skillsLanguages" placeholder="e.g., JavaScript, Python, Java (one per line or comma-separated)"></textarea>
+            <h3>Frameworks/Libraries</h3>
+            <textarea id="skillsFrameworks" placeholder="e.g., React, Angular, Node.js, Django (one per line or comma-separated)"></textarea>
+            <h3>Tools</h3>
+            <textarea id="skillsTools" placeholder="e.g., Git, Docker, Jenkins, VS Code (one per line or comma-separated)"></textarea>
+            <h3>Platforms</h3>
+            <textarea id="skillsPlatforms" placeholder="e.g., AWS, Azure, Google Cloud, Heroku (one per line or comma-separated)"></textarea>
 
             <!-- Experience Section -->
-            <h2>Experience</h2>
+            <h2>Experience / Projects / Research</h2>
             <div id="experience-entries">
                 <div class="experience-entry">
-                    <input type="text" class="companyName" placeholder="Company Name (e.g., Proseware, Inc.)">
-                    <input type="text" class="expJobTitle" placeholder="Job Title (e.g., Front-end web developer)">
-                    <input type="text" class="expDates" placeholder="Start – End Dates (e.g., September 20XX – August 20XX)">
-                    <textarea class="expResponsibilities" placeholder="Responsibilities & Achievements (one per line)"></textarea>
+                    <label for="expType-0">Type:</label>
+                    <select class="expType" id="expType-0">
+                        <option value="experience" selected>Professional Experience</option>
+                        <option value="project">Project</option>
+                        <option value="research">Research</option>
+                    </select>
+                    <input type="text" class="companyName" placeholder="Company/Project Name/Research Title">
+                    <input type="text" class="expJobTitle" placeholder="Role/Job Title (if applicable)">
+                    <input type="text" class="expDates" placeholder="Dates (e.g., September 20XX – August 20XX or Year)">
+                    <textarea class="expResponsibilities" placeholder="Details, Responsibilities & Achievements (one per line)"></textarea>
                 </div>
             </div>
-            <button type="button" id="add-experience">Add Experience</button>
+            <button type="button" id="add-experience">Add Entry</button>
 
             <!-- Education Section -->
             <h2>Education</h2>
@@ -102,12 +116,17 @@
                 <div id="preview-skillsAbilities-section">
                     <h2>Skills & abilities</h2>
                     <p id="preview-skillsAbilities">Proficient in a range of programming languages...</p>
+                    <div id="preview-skillsLanguages-list" class="skills-subcategory"></div>
+                    <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
+                    <div id="preview-skillsTools-list" class="skills-subcategory"></div>
+                    <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
                 </div>
 
                 <!-- Experience Preview -->
                 <div id="preview-experience-section">
-                    <h2>Experience</h2>
+                    <h2>Experience / Projects / Research</h2>
                     <div id="preview-experience-entries">
+                        <!-- Content will be grouped here by JS -->
                         <div>
                             <h3>Proseware, Inc.</h3>
                             <p>Front-end web developer | September 20XX – August 20XX</p>
