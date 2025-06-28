@@ -3,76 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATS-Friendly Resume Builder</title>
+    <title>ATS-Friendly Resume Builder - Modern Layout</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>ATS-Friendly Resume Builder</h1>
+        <h1>Modern Web Developer Resume</h1>
         <div class="resume-form">
-            <h2>Personal Information</h2>
-            <input type="text" id="name" placeholder="Full Name">
-            <input type="email" id="email" placeholder="Email">
-            <input type="tel" id="phone" placeholder="Phone">
-            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
+            <!-- Header Section -->
+            <h2>Header</h2>
+            <input type="text" id="fullName" placeholder="Full Name (e.g., Graham Barnes)">
+            <input type="text" id="jobTitle" placeholder="Job Title (e.g., Web Developer)">
+            <input type="tel" id="phone" placeholder="Phone (e.g., 303.555.0123)">
+            <input type="text" id="location" placeholder="Location (e.g., Denver, CO)">
+            <input type="email" id="email" placeholder="Email (e.g., Graham@EXAMPLE.COM)">
+            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL (e.g., www.linkedin.com)">
 
-            <h2>Summary</h2>
-            <textarea id="summary" placeholder="Professional Summary"></textarea>
+            <!-- Objective Section -->
+            <h2>Objective</h2>
+            <textarea id="objective" placeholder="Enter your career objective..."></textarea>
 
-            <h2>Skills</h2>
-            <input type="text" id="skills" placeholder="Comma-separated skills (e.g., JavaScript, Node.js, React)">
+            <!-- Skills & Abilities Section -->
+            <h2>Skills & Abilities</h2>
+            <textarea id="skillsAbilities" placeholder="Describe your skills and abilities..."></textarea>
 
+            <!-- Experience Section -->
+            <h2>Experience</h2>
+            <div id="experience-entries">
+                <div class="experience-entry">
+                    <input type="text" class="companyName" placeholder="Company Name (e.g., Proseware, Inc.)">
+                    <input type="text" class="expJobTitle" placeholder="Job Title (e.g., Front-end web developer)">
+                    <input type="text" class="expDates" placeholder="Start – End Dates (e.g., September 20XX – August 20XX)">
+                    <textarea class="expResponsibilities" placeholder="Responsibilities & Achievements (one per line)"></textarea>
+                </div>
+            </div>
+            <button type="button" id="add-experience">Add Experience</button>
+
+            <!-- Education Section -->
             <h2>Education</h2>
-            <div id="education-entries">
-                <div class="education-entry">
-                    <input type="text" class="degree" placeholder="Degree">
-                    <input type="text" class="school" placeholder="School/University">
-                    <input type="text" class="edu-year" placeholder="Year of Completion">
+            <div id="education-form-entries">
+                 <div class="education-entry">
+                    <input type="text" class="institution" placeholder="Institution (e.g., Glennwood University)">
+                    <input type="text" class="eduLocation" placeholder="Location (e.g., Boulder, CO)">
+                    <input type="text" class="degree" placeholder="Degree (e.g., BS in Computer Science)">
+                    <input type="text" class="gpa" placeholder="GPA (e.g., 3.8)">
+                    <textarea class="coursework" placeholder="Relevant Coursework (e.g., web development, database management)"></textarea>
                 </div>
             </div>
             <button type="button" id="add-education">Add Education</button>
 
-            <h2>Experience</h2>
-            <div id="experience-entries">
-                <div class="experience-entry">
-                    <input type="text" class="job-title" placeholder="Job Title">
-                    <input type="text" class="company" placeholder="Company">
-                    <input type="text" class="job-year" placeholder="Years of Experience">
-                    <textarea class="job-description" placeholder="Job Description"></textarea>
+            <!-- Communication Section -->
+            <h2>Communication</h2>
+            <textarea id="communication" placeholder="Describe your communication skills..."></textarea>
+
+            <!-- Leadership Section -->
+            <h2>Leadership</h2>
+            <textarea id="leadership" placeholder="Describe your leadership experience..."></textarea>
+
+            <!-- References Section -->
+            <h2>References</h2>
+            <div id="reference-entries">
+                <div class="reference-entry">
+                    <input type="text" class="refName" placeholder="Reference Name (e.g., Ian Hansson)">
+                    <input type="text" class="refJobTitle" placeholder="Job Title (e.g., Web Developer Manager)">
+                    <input type="text" class="refCompany" placeholder="Company (e.g., Proseware, Inc.)">
+                    <input type="text" class="refContact" placeholder="Contact (e.g., 303.555.0156)">
                 </div>
             </div>
-            <button type="button" id="add-experience">Add Experience</button>
+            <button type="button" id="add-reference">Add Reference</button>
         </div>
 
         <div class="resume-preview-container">
             <h2>Live Preview</h2>
             <div id="resume-preview">
-                <h1 id="preview-name">Your Name</h1>
-                <p><span id="preview-email">your.email@example.com</span> | <span id="preview-phone">123-456-7890</span> | <span id="preview-linkedin">linkedin.com/in/yourprofile</span></p>
+                <!-- Header Preview -->
+                <div id="preview-header">
+                    <h1 id="preview-fullName">Graham Barnes</h1>
+                    <p id="preview-jobTitle">Web Developer</p>
+                    <p id="preview-contactInfo">
+                        <span id="preview-phone">303.555.0123</span> |
+                        <span id="preview-location">Denver, CO</span> |
+                        <span id="preview-email">Graham@EXAMPLE.COM</span> |
+                        <span id="preview-linkedin">www.linkedin.com</span>
+                    </p>
+                </div>
 
-                <h2>Summary</h2>
-                <p id="preview-summary">Your professional summary will appear here.</p>
+                <!-- Objective Preview -->
+                <div id="preview-objective-section">
+                    <h2>Objective</h2>
+                    <p id="preview-objective">To obtain a challenging web developer position...</p>
+                </div>
 
-                <h2>Skills</h2>
-                <ul id="preview-skills">
-                    <li>Skill 1</li>
-                    <li>Skill 2</li>
-                </ul>
+                <!-- Skills & Abilities Preview -->
+                <div id="preview-skillsAbilities-section">
+                    <h2>Skills & abilities</h2>
+                    <p id="preview-skillsAbilities">Proficient in a range of programming languages...</p>
+                </div>
 
-                <h2>Education</h2>
-                <div id="preview-education">
-                    <div>
-                        <h3>Degree</h3>
-                        <p>School/University - Year</p>
+                <!-- Experience Preview -->
+                <div id="preview-experience-section">
+                    <h2>Experience</h2>
+                    <div id="preview-experience-entries">
+                        <div>
+                            <h3>Proseware, Inc.</h3>
+                            <p>Front-end web developer | September 20XX – August 20XX</p>
+                            <ul>
+                                <li>Develop and maintain responsive, user-friendly, and visually appealing websites...</li>
+                                <li>Collaborate with cross-functional teams...</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3>Adantum Corporation</h3>
+                            <p>Full-stack web developer | December 20XX – September 20XX</p>
+                            <ul>
+                                <li>Built and maintained scalable and secure web applications.</li>
+                                <li>Designed and implemented custom CMS solutions...</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <h2>Experience</h2>
-                <div id="preview-experience">
-                    <div>
-                        <h3>Job Title</h3>
-                        <p>Company - Years</p>
-                        <p>Job description...</p>
+                <!-- Education Preview -->
+                <div id="preview-education-section">
+                    <h2>Education</h2>
+                    <div id="preview-education-entries">
+                        <div>
+                            <h3>Glennwood University</h3>
+                            <p>Boulder, CO</p>
+                            <p>BS in Computer Science</p>
+                            <p>GPA: 3.8</p>
+                            <p>Relevant coursework: web development, database management, software engineering</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Communication Preview -->
+                <div id="preview-communication-section">
+                    <h2>Communication</h2>
+                    <p id="preview-communication">Excellent communication skills enable me to collaborate...</p>
+                </div>
+
+                <!-- Leadership Preview -->
+                <div id="preview-leadership-section">
+                    <h2>Leadership</h2>
+                    <p id="preview-leadership">Mentor junior developers, coordinate project tasks...</p>
+                </div>
+
+                <!-- References Preview -->
+                <div id="preview-references-section">
+                    <h2>References</h2>
+                    <div id="preview-reference-entries">
+                        <div>
+                            <p><strong>Ian Hansson</strong></p>
+                            <p>Web Developer Manager</p>
+                            <p>Proseware, Inc.</p>
+                            <p>303.555.0156</p>
+                        </div>
                     </div>
                 </div>
             </div>
