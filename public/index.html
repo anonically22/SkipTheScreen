@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RESUME BUILDER</title>
     <link rel="stylesheet" href="css/styles.css">
-    <!-- Style added to demonstrate stacked header layout -->
     <style>
-        /* This class would be toggled by JS on #preview-contactInfo */
+        /* Basic style for stacked header preview option */
         #preview-contactInfo.stacked span {
-            display: block; /* Each contact item gets its own line */
+            display: block;
             margin-bottom: 3px;
         }
     </style>
@@ -24,108 +23,14 @@
                 <label style="margin-right: 10px;"><input type="radio" name="headerLayout" value="inline" checked> Inline Header</label>
                 <label><input type="radio" name="headerLayout" value="stacked"> Stacked Header</label>
             </div>
-            <input type="text" id="fullName" placeholder="Full Name (e.g., Graham Barnes)">
-            <input type="text" id="jobTitle" placeholder="Job Title (e.g., Web Developer)">
-            <input type="tel" id="phone" placeholder="Phone (e.g., 303.555.0123)">
-            <input type="text" id="location" placeholder="Location (e.g., Denver, CO)">
-            <input type="email" id="email" placeholder="Email (e.g., Graham@EXAMPLE.COM)">
-            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL (e.g., www.linkedin.com)">
+            <input type="text" id="fullName" placeholder="Full Name">
+            <input type="text" id="jobTitle" placeholder="Job Title">
+            <input type="tel" id="phone" placeholder="Phone">
+            <input type="text" id="location" placeholder="Location">
+            <input type="email" id="email" placeholder="Email">
+            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
 
-            <!-- Objective Section (Optional) -->
-            <h2>
-                 <label><input type="checkbox" id="toggle-objective" checked> Objective Section</label>
-            </h2>
-            <div id="objective-form-content">
-                <textarea id="objective" placeholder="Enter your career objective..."></textarea>
-            </div>
-
-            <!-- Skills & Abilities Section -->
-            <h2>Skills & Abilities</h2>
-            <textarea id="skillsAbilities" placeholder="Describe your general skills and abilities..."></textarea>
-            <!-- Optional Detailed Skills Sub-section -->
-            <div class="form-subsection-toggle">
-                <label><input type="checkbox" id="toggle-detailed-skills" checked> Include detailed skills breakdown (Languages, Frameworks, etc.)</label>
-            </div>
-            <div id="detailed-skills-form">
-                <h3>Languages</h3>
-                <textarea id="skillsLanguages" placeholder="e.g., JavaScript, Python, Java (one per line or comma-separated)"></textarea>
-                <h3>Frameworks/Libraries</h3>
-                <textarea id="skillsFrameworks" placeholder="e.g., React, Angular, Node.js, Django (one per line or comma-separated)"></textarea>
-                <h3>Tools</h3>
-                <textarea id="skillsTools" placeholder="e.g., Git, Docker, Jenkins, VS Code (one per line or comma-separated)"></textarea>
-                <h3>Platforms</h3>
-                <textarea id="skillsPlatforms" placeholder="e.g., AWS, Azure, Google Cloud, Heroku (one per line or comma-separated)"></textarea>
-            </div>
-
-            <!-- Experience Section -->
-            <h2>Experience / Projects / Research</h2>
-            <div id="experience-type-filter" style="margin-bottom: 15px;">
-                <span style="font-weight: bold; margin-right: 10px;">Display Types:</span>
-                <label><input type="checkbox" class="experience-filter" value="experience" checked> Experience</label>
-                <label><input type="checkbox" class="experience-filter" value="project" checked> Projects</label>
-                <label><input type="checkbox" class="experience-filter" value="research" checked> Research</label>
-                <!-- JS will use these checkboxes to filter which entries are shown in the preview -->
-            </div>
-            <div id="experience-entries">
-                <div class="experience-entry">
-                    <label for="expType-0">Type:</label>
-                    <select class="expType" id="expType-0">
-                        <option value="experience" selected>Professional Experience</option>
-                        <option value="project">Project</option>
-                        <option value="research">Research</option>
-                    </select>
-                    <input type="text" class="companyName" placeholder="Company/Project Name/Research Title">
-                    <input type="text" class="expJobTitle" placeholder="Role/Job Title (if applicable)">
-                    <input type="text" class="expDates" placeholder="Dates (e.g., Sept 20XX – Aug 20XX or Year)">
-                    <textarea class="expResponsibilities" placeholder="Details, Responsibilities & Achievements (one per line)"></textarea>
-                </div>
-            </div>
-            <button type="button" id="add-experience">Add Entry</button>
-
-            <!-- Education Section -->
-            <h2>Education</h2>
-            <div id="education-form-entries">
-                 <div class="education-entry">
-                    <input type="text" class="institution" placeholder="Institution (e.g., Glennwood University)">
-                    <input type="text" class="eduLocation" placeholder="Location (e.g., Boulder, CO)">
-                    <input type="text" class="degree" placeholder="Degree (e.g., BS in Computer Science)">
-                    <input type="text" class="gpa" placeholder="GPA (e.g., 3.8)">
-                    <textarea class="coursework" placeholder="Relevant Coursework (e.g., web development, database management)"></textarea>
-                </div>
-            </div>
-            <button type="button" id="add-education">Add Education</button>
-
-            <!-- Communication Section (Optional) -->
-            <h2>
-                <label><input type="checkbox" id="toggle-communication" checked> Communication Section</label>
-            </h2>
-            <div id="communication-form-content">
-                <textarea id="communication" placeholder="Describe your communication skills..."></textarea>
-            </div>
-
-            <!-- Leadership Section (Optional) -->
-            <h2>
-                <label><input type="checkbox" id="toggle-leadership" checked> Leadership Section</label>
-            </h2>
-            <div id="leadership-form-content">
-                 <textarea id="leadership" placeholder="Describe your leadership experience..."></textarea>
-            </div>
-
-            <!-- References Section (Optional) -->
-            <h2>
-                <label><input type="checkbox" id="toggle-references"> References Section</label>
-            </h2>
-            <div id="references-form-content" style="display: none;"> <!-- Hidden by default -->
-                <div id="reference-entries">
-                    <div class="reference-entry">
-                        <input type="text" class="refName" placeholder="Reference Name (e.g., Ian Hansson)">
-                        <input type="text" class="refJobTitle" placeholder="Job Title (e.g., Web Developer Manager)">
-                        <input type="text" class="refCompany" placeholder="Company (e.g., Proseware, Inc.)">
-                        <input type="text" class="refContact" placeholder="Contact (e.g., 303.555.0156)">
-                    </div>
-                </div>
-                <button type="button" id="add-reference">Add Reference</button>
-            </div>
+            <!-- Other sections will be added here later -->
         </div>
 
         <div class="resume-preview-container">
@@ -133,104 +38,19 @@
             <div id="resume-preview">
                 <!-- Header Preview -->
                 <div id="preview-header">
-                    <h1 id="preview-fullName">Graham Barnes</h1>
-                    <p id="preview-jobTitle">Web Developer</p>
-                    <!-- For the Stacked Header option, your JS should add the class "stacked" to this element -->
-                    <!-- and ensure no "|" separators are added between the spans. -->
+                    <h1 id="preview-fullName">Your Name</h1>
+                    <p id="preview-jobTitle">Your Job Title</p>
                     <div id="preview-contactInfo">
-                        <span id="preview-phone">303.555.0123</span>
-                        <span id="preview-location">Denver, CO</span>
-                        <span id="preview-email">Graham@EXAMPLE.COM</span>
-                        <span id="preview-linkedin">www.linkedin.com</span>
+                        <span id="preview-phone">Your Phone</span>
+                        <span id="preview-location">Your Location</span>
+                        <span id="preview-email">Your Email</span>
+                        <span id="preview-linkedin">Your LinkedIn</span>
                     </div>
                 </div>
-
-                <!-- Objective Preview (JS will hide/show this entire div) -->
-                <div id="preview-objective-section">
-                    <h2>Objective</h2>
-                    <p id="preview-objective">To obtain a challenging web developer position...</p>
-                </div>
-
-                <!-- Skills & Abilities Preview -->
-                <div id="preview-skillsAbilities-section">
-                    <h2>Skills & abilities</h2>
-                    <p id="preview-skillsAbilities">Proficient in a range of programming languages...</p>
-                    <!-- JS will hide/show this container div for detailed skills -->
-                    <div id="preview-detailed-skills">
-                        <div id="preview-skillsLanguages-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsTools-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
-                    </div>
-                </div>
-
-                <!-- Experience Preview -->
-                <div id="preview-experience-section">
-                    <!-- The text in this h2 can be dynamically updated by JS based on the filter checkboxes -->
-                    <h2>Experience / Projects / Research</h2>
-                    <div id="preview-experience-entries">
-                        <!-- Content will be generated and filtered here by JS -->
-                        <div>
-                            <h3>Proseware, Inc.</h3>
-                            <p>Front-end web developer | September 20XX – August 20XX</p>
-                            <ul>
-                                <li>Develop and maintain responsive, user-friendly, and visually appealing websites...</li>
-                                <li>Collaborate with cross-functional teams...</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <h3>Adantum Corporation</h3>
-                            <p>Full-stack web developer | December 20XX – September 20XX</p>
-                            <ul>
-                                <li>Built and maintained scalable and secure web applications.</li>
-                                <li>Designed and implemented custom CMS solutions...</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Education Preview -->
-                <div id="preview-education-section">
-                    <h2>Education</h2>
-                    <div id="preview-education-entries">
-                        <div>
-                            <h3>Glennwood University</h3>
-                            <p>Boulder, CO</p>
-                            <p>BS in Computer Science</p>
-                            <p>GPA: 3.8</p>
-                            <p>Relevant coursework: web development, database management, software engineering</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Communication Preview (JS will hide/show this entire div) -->
-                <div id="preview-communication-section">
-                    <h2>Communication</h2>
-                    <p id="preview-communication">Excellent communication skills enable me to collaborate...</p>
-                </div>
-
-                <!-- Leadership Preview (JS will hide/show this entire div) -->
-                <div id="preview-leadership-section">
-                    <h2>Leadership</h2>
-                    <p id="preview-leadership">Mentor junior developers, coordinate project tasks...</p>
-                </div>
-
-                <!-- References Preview (JS will hide/show this entire div) -->
-                <div id="preview-references-section" style="display: none;"> <!-- Hidden by default -->
-                    <h2>References</h2>
-                    <div id="preview-reference-entries">
-                        <div>
-                            <p><strong>Ian Hansson</strong></p>
-                            <p>Web Developer Manager</p>
-                            <p>Proseware, Inc.</p>
-                            <p>303.555.0156</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- Other preview sections will be added here later -->
             </div>
         </div>
     </div>
-    <!-- Make sure your main.js file handles the new toggle checkboxes and filters! -->
     <script src="js/main.js"></script>
 </body>
 </html>

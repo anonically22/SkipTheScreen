@@ -1,28 +1,26 @@
 body {
-    font-family: Calibri, Arial, sans-serif; /* Professional font */
+    font-family: Calibri, Arial, sans-serif;
     margin: 0;
     padding: 20px;
     background-color: #f4f4f4;
     color: #333;
-    line-height: 1.6; /* Consistent line spacing */
+    line-height: 1.6;
 }
 
 #main-title {
     text-align: center;
-    color: #2c3e50; /* Using a color similar to other primary headings */
+    color: #2c3e50;
     margin-top: 20px;
-    margin-bottom: 30px; /* More space below the main title */
-    font-size: 2.5em; /* Larger main title */
+    margin-bottom: 30px;
+    font-size: 2.5em;
 }
 
 .container {
-    display: flex; /* Side-by-side layout for form and preview */
-    flex-direction: row; /* Explicitly row */
-    justify-content: space-between; /* Or use gap */
-    gap: 20px; /* Space between form and preview */
-    max-width: 95%; /* Wider container for side-by-side */
-    /* max-width: 1600px; */ /* Alternative max width */
-    margin: 0 auto; /* Center container */
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 95%;
+    margin: 0 auto;
 }
 
 .resume-form, .resume-preview-container {
@@ -30,27 +28,31 @@ body {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    /* width: calc(50% - 10px); */ /* Adjust based on gap */
-    flex-basis: 48%; /* Allow them to share space */
+    flex-basis: 48%;
     box-sizing: border-box;
-    margin-bottom: 20px; /* Keep some bottom margin */
-}
-/* .resume-preview-container {
     margin-bottom: 20px;
-} */ /* Redundant if both have margin-bottom */
+}
 
-
-/* Styling for the radio button group for header layout */
-.resume-form h2 + div {
-    margin-bottom: 15px; /* Space below radio buttons */
+/* Styling for the radio button group for header layout in form */
+.resume-form h2 + div { /* Targets the div immediately after an h2, specific to header layout radios */
+    margin-bottom: 15px;
 }
 .resume-form h2 + div label {
     margin-right: 15px;
     font-size: 0.9em;
 }
 
-/* Subheadings in the form (e.g., for Languages under Skills) */
-.resume-form h3 {
+/* General Form Element Styling */
+.resume-form h2 { /* Section titles in the form */
+    color: #34495e;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.resume-form h3 { /* Sub-headings in the form */
     font-size: 1em;
     color: #555;
     margin-top: 15px;
@@ -58,8 +60,12 @@ body {
     font-weight: bold;
 }
 
-/* Styling for select dropdown in experience entries */
-.experience-entry select.expType {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select { /* Added select here for future use */
     width: calc(100% - 22px);
     padding: 12px;
     margin-bottom: 12px;
@@ -68,77 +74,58 @@ body {
     box-sizing: border-box;
     font-family: inherit;
     font-size: 1em;
-    background-color: white; /* Ensure select is not transparent */
 }
-
-
-/* Headings for the form itself */
-.resume-form h1 { /* Main title of the form page */
-    text-align: center;
-    color: #2c3e50; /* Darker, more professional blue */
-    margin-bottom: 20px;
-}
-.resume-form h2 { /* Section titles in the form */
-    color: #34495e; /* Slightly lighter blue-gray */
-    border-bottom: 2px solid #ecf0f1; /* Lighter, subtle border */
-    padding-bottom: 8px;
-    margin-top: 20px; /* Space above section titles */
-    margin-bottom: 15px; /* Space below section titles */
-    font-size: 1.3em;
-}
-
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="url"],
-textarea {
-    width: calc(100% - 22px); /* Full width minus padding */
-    padding: 12px; /* More padding for better touch targets */
-    margin-bottom: 12px; /* Consistent margin */
-    border: 1px solid #bdc3c7; /* Softer border color */
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-family: inherit; /* Use body font */
-    font-size: 1em;
+select {
+    background-color: white;
 }
 
 textarea {
-    min-height: 80px; /* Default height for textareas */
+    min-height: 80px;
     resize: vertical;
 }
 
-button {
-    background-color: #3498db; /* Professional blue */
+button { /* General button styling for "Add Entry" etc. */
+    background-color: #3498db;
     color: white;
-    padding: 10px 20px; /* More horizontal padding */
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     margin-top: 10px;
     font-size: 1em;
-    transition: background-color 0.3s ease; /* Smooth transition */
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
+    background-color: #2980b9;
 }
+
+/* Generic entry container styling for form sections like education, experience */
+.education-entry, .experience-entry, .project-entry, .research-entry, .reference-entry {
+    border: 1px solid #ecf0f1;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
 
 /* Resume Preview Specific Styles */
 #resume-preview {
     border: 1px solid #ddd;
-    padding: 30px; /* More padding for a document feel */
-    min-height: 600px; /* Taller preview */
-    background-color: #fff; /* Ensure white background */
-    text-align: left; /* Enforce left alignment */
+    padding: 30px;
+    min-height: 600px;
+    background-color: #fff;
+    text-align: left;
 }
 
 /* Header in Preview */
 #preview-header {
-    text-align: left; /* Ensure header content is left-aligned */
+    text-align: left;
     margin-bottom: 20px;
 }
 #preview-header #preview-fullName {
-    font-size: 2em; /* Larger name */
+    font-size: 2em;
     color: #2c3e50;
     margin-bottom: 0;
 }
@@ -148,82 +135,83 @@ button:hover {
     margin-top: 0;
     margin-bottom: 5px;
 }
-#preview-header #preview-contactInfo {
+
+/* Contact Info in Preview */
+#preview-contactInfo { /* This is now a div */
     font-size: 0.9em;
     color: #777;
 }
-#preview-header #preview-contactInfo span {
-    margin-right: 5px;
-    margin-left: 5px;
+/* Spacing for inline contact items; separators handled by JS/CSS logic via .inline class */
+#preview-contactInfo.inline span {
+    display: inline;
+    margin-right: 5px; /* Base spacing */
 }
-#preview-header #preview-contactInfo span:first-child {
-    margin-left: 0;
+#preview-contactInfo.inline span:not(:last-child) {
+    margin-right: 10px; /* More space before separator if one is added by CSS */
+}
+#preview-contactInfo.inline span:not(:last-child)::after {
+    content: " | ";
+    /* margin-left: 5px; Spacing is now on margin-right of the span itself */
 }
 
-/* Header Layout Styles */
-#preview-header.stacked #preview-jobTitle,
+
+/* Stacked Header Layout in Preview */
+/* previewHeaderDiv gets .stacked, which affects its direct children p and div */
+#preview-header.stacked #preview-jobTitle {
+    display: block;
+    margin-left: 0;
+    margin-top: 5px;
+}
 #preview-header.stacked #preview-contactInfo {
     display: block;
-    margin-left: 0; /* Reset margin for stacked layout */
+    margin-left: 0;
 }
-#preview-header.stacked #preview-jobTitle {
-    margin-top: 5px; /* Add some space above job title in stacked mode */
-}
-#preview-header.stacked #preview-contactInfo span {
-    display: block; /* Each contact item on a new line */
-    margin-left: 0; /* Reset margin for individual contact items */
-    margin-top: 3px;
-}
-#preview-header.stacked #preview-contactInfo span::after {
-    content: ""; /* Remove separators in stacked mode */
-}
+/* previewContactInfoDiv also gets .stacked for its children spans */
+/* This is already handled by the inline <style> in index.html:
+   #preview-contactInfo.stacked span { display: block; margin-bottom: 3px; }
+   No need to repeat here unless we want to consolidate. For now, it's fine.
+*/
 
 
-/* Default/Inline styling is already in place, so .inline class might not be strictly needed for CSS if it's the default */
-/* However, adding it for clarity or future specific inline tweaks */
-#preview-header.inline #preview-jobTitle {
-    display: inline; /* Explicitly inline */
-    margin-left: 5px;
-}
-#preview-header.inline #preview-contactInfo {
-    display: block; /* Contact info block still takes its own line below name/title */
-}
-#preview-header.inline #preview-contactInfo span {
-    display: inline; /* Contact items themselves are inline */
-}
-#preview-header.inline #preview-contactInfo span:not(:last-child)::after {
-    content: " | ";
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-
-/* Section Headings in Preview */
+/* General Preview Section Headings (H2) */
 #resume-preview h2 {
-    font-size: 1.4em; /* Slightly larger for emphasis */
+    font-size: 1.4em;
     color: #34495e;
-    border-bottom: 2px solid #34495e; /* Match heading color */
+    border-bottom: 2px solid #34495e;
     padding-bottom: 5px;
     margin-top: 20px;
     margin-bottom: 10px;
-    font-weight: bold; /* Ensure bold */
-}
-
-/* Experience/Education Entry Titles in Preview */
-#resume-preview h3 {
-    font-size: 1.1em;
-    color: #333;
-    margin-top: 15px; /* Space above job/degree title */
-    margin-bottom: 3px; /* Less space below title */
     font-weight: bold;
 }
 
-#resume-preview p {
-    margin-top: 0;
-    margin-bottom: 8px; /* Consistent paragraph spacing */
-    color: #555; /* Softer text color */
+/* General Preview Entry Titles (H3, e.g., for Education, Experience items) */
+#resume-preview h3 { /* e.g. Degree Name, Company Name */
+    font-size: 1.1em;
+    color: #333;
+    margin-top: 15px;
+    margin-bottom: 3px;
+    font-weight: bold;
+}
+/* Sub-headings for experience types in preview */
+#preview-experience-entries .experience-type-heading {
+    font-size: 1.2em;
+    color: #34495e;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 3px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-weight: bold;
 }
 
+
+/* General Preview Paragraphs */
+#resume-preview p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+/* General Preview Lists (e.g., for responsibilities) */
 #resume-preview ul {
     list-style-type: disc;
     padding-left: 20px;
@@ -231,27 +219,11 @@ button:hover {
     margin-bottom: 10px;
 }
 #resume-preview ul li {
-    margin-bottom: 5px; /* Spacing between bullet points */
+    margin-bottom: 5px;
     color: #555;
 }
 
-.education-entry, .experience-entry, .reference-entry {
-    border: 1px solid #ecf0f1; /* Lighter border for form entries */
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 4px;
-    background-color: #f9f9f9; /* Slight background tint for entries */
-}
-
-/* Styling for specific preview sections if needed */
-#preview-objective-section p,
-/* #preview-skillsAbilities-section p, Main skills description no longer italic by default */
-#preview-communication-section p,
-#preview-leadership-section p {
-    font-style: italic; /* Optional: if you want these descriptions to stand out */
-}
-
-/* Styling for Skills Subcategories in Preview */
+/* Styling for Skills Subcategories in Preview (kept for future use) */
 .skills-subcategory {
     margin-top: 8px;
     margin-bottom: 8px;
@@ -261,26 +233,25 @@ button:hover {
     font-weight: bold;
     color: #444;
     margin-bottom: 3px;
-    display: inline; /* Keep title and list on same flow if possible */
+    display: inline;
 }
 .skills-subcategory ul {
-    list-style-type: none; /* Or 'disc' if preferred */
-    padding-left: 0; /* Reset padding if no bullets */
+    list-style-type: none;
+    padding-left: 0;
     margin-top: 0;
-    display: inline; /* Allows list to flow with h4 if skills are comma separated on one line */
+    display: inline;
 }
 .skills-subcategory ul li {
-    display: inline; /* For comma-separated items on one line */
+    display: inline;
     margin-right: 5px;
     color: #555;
 }
 .skills-subcategory ul li:not(:last-child)::after {
     content: ", ";
 }
-/* Alternative for newline separated skills in textarea, if JS makes them separate li's */
-.skills-subcategory.newline-items ul {
-    display: block; /* Switch to block for newline items */
-    padding-left: 20px; /* Indent if using bullets */
+.skills-subcategory.newline-items ul { /* For newline separated skills */
+    display: block;
+    padding-left: 20px;
     list-style-type: disc;
 }
 .skills-subcategory.newline-items ul li {
@@ -289,26 +260,4 @@ button:hover {
 }
 .skills-subcategory.newline-items ul li::after {
     content: ""; /* Remove comma for newline items */
-}
-
-
-/* Styling for Experience Subheadings in Preview (e.g., "Projects") */
-#preview-experience-entries .experience-type-heading {
-    font-size: 1.2em; /* Slightly smaller than main section H2 */
-    color: #34495e;
-    border-bottom: 1px solid #bdc3c7;
-    padding-bottom: 3px;
-    margin-top: 15px; /* Space above a new type of experience */
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-
-#preview-education-entries div p,
-#preview-reference-entries div p {
-    margin-bottom: 3px; /* Tighter spacing for education/reference details */
-}
-#preview-reference-entries div p strong { /* Make reference name bold */
-    font-weight: bold;
-    color: #333;
 }
