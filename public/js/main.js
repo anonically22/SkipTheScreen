@@ -77,6 +77,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewReferencesSection = document.getElementById('preview-references-section');
     const previewReferenceEntriesContainer = document.getElementById('preview-reference-entries');
 
+    // Toggle Checkboxes for Form Sections
+    const toggleObjective = document.getElementById('toggle-objective');
+    const toggleDetailedSkills = document.getElementById('toggle-detailed-skills');
+    const toggleCommunication = document.getElementById('toggle-communication');
+    const toggleLeadership = document.getElementById('toggle-leadership');
+    const toggleReferences = document.getElementById('toggle-references');
+
+    // Form Content Divs to be Toggled
+    const objectiveFormContent = document.getElementById('objective-form-content');
+    const detailedSkillsForm = document.getElementById('detailed-skills-form');
+    const communicationFormContent = document.getElementById('communication-form-content');
+    const leadershipFormContent = document.getElementById('leadership-form-content');
+    const referencesFormContent = document.getElementById('references-form-content');
+
+    // Experience Filter Checkboxes
+    const experienceFilterCheckboxes = document.querySelectorAll('.experience-filter');
+
+    // Preview div for detailed skills (wrapper)
+    const previewDetailedSkillsDiv = document.getElementById('preview-detailed-skills');
+
+
     // --- Default Preview Text ---
     const defaultTexts = {
         fullName: 'Graham Barnes',
@@ -120,39 +141,43 @@ document.addEventListener('DOMContentLoaded', () => {
         // Header
         // Apply layout class
         let selectedLayout = 'inline'; // default
-        headerLayoutRadios.forEach(radio => {
-            if (radio.checked) {
-                selectedLayout = radio.value;
+        if (headerLayoutRadios && headerLayoutRadios.length > 0) { // Check if headerLayoutRadios exists
+            headerLayoutRadios.forEach(radio => {
+                if (radio.checked) {
+                    selectedLayout = radio.value;
+                }
+            });
+            if (selectedLayout === 'stacked') {
+                previewHeaderDiv.classList.add('stacked');
+                previewHeaderDiv.classList.remove('inline');
+            } else {
+                previewHeaderDiv.classList.add('inline');
+                previewHeaderDiv.classList.remove('stacked');
             }
-        });
-        if (selectedLayout === 'stacked') {
-            previewHeaderDiv.classList.add('stacked');
-            previewHeaderDiv.classList.remove('inline');
-        } else {
-            previewHeaderDiv.classList.add('inline');
-            previewHeaderDiv.classList.remove('stacked');
         }
 
-        previewFullName.textContent = fullNameInput.value || defaultTexts.fullName;
-        previewJobTitle.textContent = jobTitleInput.value || defaultTexts.jobTitle;
-        previewPhone.textContent = phoneInput.value || defaultTexts.phone;
-        previewLocation.textContent = locationInput.value || defaultTexts.location;
-        previewEmail.textContent = emailInput.value || defaultTexts.email;
-        previewLinkedin.textContent = linkedinInput.value || defaultTexts.linkedin;
+
+        if(previewFullName) previewFullName.textContent = fullNameInput.value || defaultTexts.fullName;
+        if(previewJobTitle) previewJobTitle.textContent = jobTitleInput.value || defaultTexts.jobTitle;
+        if(previewPhone) previewPhone.textContent = phoneInput.value || defaultTexts.phone;
+        if(previewLocation) previewLocation.textContent = locationInput.value || defaultTexts.location;
+        if(previewEmail) previewEmail.textContent = emailInput.value || defaultTexts.email;
+        if(previewLinkedin) previewLinkedin.textContent = linkedinInput.value || defaultTexts.linkedin;
 
         // Objective
-        if (objectiveInput.value) {
+        if (toggleObjective && toggleObjective.checked && objectiveInput.value && previewObjectiveSection && previewObjective) {
             previewObjectiveSection.style.display = '';
             previewObjective.textContent = objectiveInput.value;
-        } else {
+        } else if (previewObjectiveSection) {
             previewObjectiveSection.style.display = 'none';
         }
 
         // Skills & Abilities
-        previewSkillsAbilities.textContent = skillsAbilitiesInput.value || defaultTexts.skillsAbilities; // Main description
+        if(previewSkillsAbilities) previewSkillsAbilities.textContent = skillsAbilitiesInput.value || defaultTexts.skillsAbilities; // Main description
 
         // Helper function to populate skill subcategories
         const populateSkillList = (inputElement, previewListElement, categoryName) => {
+            if (!inputElement || !previewListElement) return; // Guard against null elements
             previewListElement.innerHTML = ''; // Clear previous
             const skillsText = inputElement.value.trim();
             if (skillsText) {
@@ -169,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     previewListElement.appendChild(ul);
                     previewListElement.style.display = '';
-                     // Decide on newline or inline based on presence of newlines in input
+                    // Decide on newline or inline based on presence of newlines in input
                     if (skillsText.includes('\n')) {
                         previewListElement.classList.add('newline-items');
                     } else {
@@ -183,151 +208,139 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        populateSkillList(skillsLanguagesInput, previewSkillsLanguagesList, 'Languages');
-        populateSkillList(skillsFrameworksInput, previewSkillsFrameworksList, 'Frameworks/Libraries');
-        populateSkillList(skillsToolsInput, previewSkillsToolsList, 'Tools');
-        populateSkillList(skillsPlatformsInput, previewSkillsPlatformsList, 'Platforms');
 
-        // Communication
-        previewCommunication.textContent = communicationInput.value || defaultTexts.communication;
+        if (toggleDetailedSkills && toggleDetailedSkills.checked && previewDetailedSkillsDiv) {
+            let hasDetailedSkillContent = false;
+            hasDetailedSkillContent = populateSkillList(skillsLanguagesInput, previewSkillsLanguagesList, 'Languages') || hasDetailedSkillContent;
+            hasDetailedSkillContent = populateSkillList(skillsFrameworksInput, previewSkillsFrameworksList, 'Frameworks/Libraries') || hasDetailedSkillContent;
+            hasDetailedSkillContent = populateSkillList(skillsToolsInput, previewSkillsToolsList, 'Tools') || hasDetailedSkillContent;
+            hasDetailedSkillContent = populateSkillList(skillsPlatformsInput, previewSkillsPlatformsList, 'Platforms') || hasDetailedSkillContent;
 
-        // Leadership
-        previewLeadership.textContent = leadershipInput.value || defaultTexts.leadership;
-
-        // Experience / Projects / Research
-        previewExperienceEntriesContainer.innerHTML = ''; // Clear previous entries
-        const experienceForms = experienceFormEntriesContainer.querySelectorAll('.experience-entry');
-        let allEntriesData = [];
-
-        experienceForms.forEach(form => {
-            const expType = form.querySelector('.expType').value;
-            const companyName = form.querySelector('.companyName').value; // Placeholder: Company/Project Name/Research Title
-            const expJobTitle = form.querySelector('.expJobTitle').value; // Placeholder: Role/Job Title (if applicable)
-            const expDates = form.querySelector('.expDates').value;       // Placeholder: Dates (e.g., ... or Year)
-            const expResponsibilities = form.querySelector('.expResponsibilities').value.split('\n').filter(line => line.trim() !== '');
-
-            if (companyName || expJobTitle || expDates || expResponsibilities.length > 0) {
-                allEntriesData.push({
-                    type: expType,
-                    companyName: companyName || (expType === 'project' ? 'Project Title' : expType === 'research' ? 'Research Title' : 'Company Name'),
-                    jobTitle: expJobTitle, // Will be empty if not applicable
-                    dates: expDates || 'Dates',
-                    responsibilities: expResponsibilities
-                });
-            }
-        });
-
-        if (allEntriesData.length > 0) {
-            previewExperienceSection.style.display = '';
-
-            // Group entries by type for rendering
-            const groupedEntries = {
-                experience: [],
-                project: [],
-                research: []
-            };
-            allEntriesData.forEach(entry => {
-                groupedEntries[entry.type].push(entry);
-            });
-
-            const typeHeadings = {
-                experience: 'Professional Experience',
-                project: 'Projects',
-                research: 'Research'
-            };
-
-            // Render grouped entries
-            for (const type in groupedEntries) {
-                if (groupedEntries[type].length > 0) {
-                    const typeHeading = document.createElement('h3'); // Using h3 for sub-section titles
-                    typeHeading.classList.add('experience-type-heading');
-                    typeHeading.textContent = typeHeadings[type];
-                    previewExperienceEntriesContainer.appendChild(typeHeading);
-
-                    groupedEntries[type].forEach(entry => {
-                        const expDiv = document.createElement('div');
-                        const h4 = document.createElement('h4'); // Using h4 for entry title
-                        h4.textContent = entry.companyName;
-                        expDiv.appendChild(h4);
-
-                        let subTextParts = [];
-                        if(entry.jobTitle) subTextParts.push(entry.jobTitle);
-                        if(entry.dates) subTextParts.push(entry.dates);
-                        if(subTextParts.length > 0){
-                            const pSub = document.createElement('p');
-                            pSub.textContent = subTextParts.join(' | ');
-                            expDiv.appendChild(pSub);
-                        }
-
-                        if (entry.responsibilities.length > 0) {
-                            const ul = document.createElement('ul');
-                            entry.responsibilities.forEach(resp => {
-                                const li = document.createElement('li');
-                                li.textContent = resp;
-                                ul.appendChild(li);
-                            });
-                            expDiv.appendChild(ul);
-                        }
-                        previewExperienceEntriesContainer.appendChild(expDiv);
-                    });
-                }
-            }
-        } else {
-            previewExperienceSection.style.display = 'none';
+            previewDetailedSkillsDiv.style.display = hasDetailedSkillContent ? '' : 'none';
+        } else if (previewDetailedSkillsDiv) {
+            previewDetailedSkillsDiv.style.display = 'none';
         }
 
-        // Education
-        previewEducationEntriesContainer.innerHTML = '';
-        const educationForms = educationFormEntriesContainer.querySelectorAll('.education-entry');
-         if (educationForms.length === 0 && educationFormEntriesContainer.children.length === 0) {
-            defaultTexts.education.forEach(edu => {
-                const eduDiv = document.createElement('div');
-                eduDiv.innerHTML = `
-                    <h3>${edu.institution}</h3>
-                    <p>${edu.eduLocation}</p>
-                    <p>${edu.degree}</p>
-                    <p>GPA: ${edu.gpa}</p>
-                    <p>Relevant coursework: ${edu.coursework}</p>
-                `;
-                previewEducationEntriesContainer.appendChild(eduDiv);
-            });
-        } else {
-            educationForms.forEach(form => {
-                const institution = form.querySelector('.institution').value;
-                const eduLocation = form.querySelector('.eduLocation').value;
-                const degree = form.querySelector('.degree').value;
-                const gpa = form.querySelector('.gpa').value;
-                const coursework = form.querySelector('.coursework').value;
 
-                if (institution || eduLocation || degree || gpa || coursework) {
-                    const eduDiv = document.createElement('div');
-                    const h3 = document.createElement('h3');
-                    h3.textContent = institution || 'Institution';
-                    eduDiv.appendChild(h3);
+        // Communication
+        if (toggleCommunication && toggleCommunication.checked && communicationInput.value && previewCommunicationSection) {
+            previewCommunicationSection.style.display = '';
+            if(previewCommunication) previewCommunication.textContent = communicationInput.value;
+        } else if (previewCommunicationSection) {
+            previewCommunicationSection.style.display = 'none';
+        }
 
-                    const pLoc = document.createElement('p');
-                    pLoc.textContent = eduLocation || 'Location';
-                    eduDiv.appendChild(pLoc);
+        // Leadership
+        if (toggleLeadership && toggleLeadership.checked && leadershipInput.value && previewLeadershipSection) {
+            previewLeadershipSection.style.display = '';
+            if(previewLeadership) previewLeadership.textContent = leadershipInput.value;
+        } else if (previewLeadershipSection) {
+            previewLeadershipSection.style.display = 'none';
+        }
 
-                    const pDegree = document.createElement('p');
-                    pDegree.textContent = degree || 'Degree';
-                    eduDiv.appendChild(pDegree);
+        // Experience / Projects / Research
+        if(previewExperienceEntriesContainer && previewExperienceSection && experienceFormEntriesContainer){ // Added experienceFormEntriesContainer null check
+            previewExperienceEntriesContainer.innerHTML = '';
+            const experienceForms = experienceFormEntriesContainer.querySelectorAll('.experience-entry');
+            let rawEntriesData = []; // Renamed to avoid conflict later
 
-                    if (gpa) {
-                        const pGpa = document.createElement('p');
-                        pGpa.textContent = `GPA: ${gpa}`;
-                        eduDiv.appendChild(pGpa);
-                    }
-                    if (coursework) {
-                        const pCourse = document.createElement('p');
-                        pCourse.textContent = `Relevant coursework: ${coursework}`;
-                        eduDiv.appendChild(pCourse);
-                    }
-                    previewEducationEntriesContainer.appendChild(eduDiv);
+            experienceForms.forEach(form => {
+                const expTypeElement = form.querySelector('.expType');
+                const companyNameElement = form.querySelector('.companyName');
+                const expJobTitleElement = form.querySelector('.expJobTitle');
+                const expDatesElement = form.querySelector('.expDates');
+                const expResponsibilitiesElement = form.querySelector('.expResponsibilities');
+
+                const expType = expTypeElement ? expTypeElement.value : 'experience';
+                const companyName = companyNameElement ? companyNameElement.value : '';
+                const expJobTitle = expJobTitleElement ? expJobTitleElement.value : '';
+                const expDates = expDatesElement ? expDatesElement.value : '';
+                const expResponsibilities = expResponsibilitiesElement ? expResponsibilitiesElement.value.split('\n').filter(line => line.trim() !== '') : [];
+
+
+                if (companyName || expJobTitle || expDates || expResponsibilities.length > 0) {
+                    rawEntriesData.push({ // Changed variable name here
+                        type: expType,
+                        companyName: companyName || (expType === 'project' ? 'Project Title' : expType === 'research' ? 'Research Title' : 'Company Name'),
+                        jobTitle: expJobTitle,
+                        dates: expDates || 'Dates',
+                        responsibilities: expResponsibilities
+                    });
                 }
             });
-            if (previewEducationEntriesContainer.children.length === 0) { // Fallback if all fields are empty
-                 defaultTexts.education.forEach(edu => {
+
+            // Filter rawEntriesData based on selected filter checkboxes
+            const selectedExperienceFilters = [];
+            if (experienceFilterCheckboxes) {
+                experienceFilterCheckboxes.forEach(cb => {
+                    if (cb.checked) selectedExperienceFilters.push(cb.value);
+                });
+            }
+
+            const allEntriesData = rawEntriesData.filter(entry => selectedExperienceFilters.includes(entry.type));
+
+
+            if (allEntriesData.length > 0) {
+                previewExperienceSection.style.display = '';
+
+                const groupedEntries = { experience: [], project: [], research: [] };
+                allEntriesData.forEach(entry => {
+                    if(groupedEntries[entry.type]) groupedEntries[entry.type].push(entry);
+                });
+
+                const typeHeadings = {
+                    experience: 'Professional Experience',
+                    project: 'Projects',
+                    research: 'Research'
+                };
+
+                for (const type in groupedEntries) {
+                    if (groupedEntries[type].length > 0) {
+                        const typeHeading = document.createElement('h3');
+                        typeHeading.classList.add('experience-type-heading');
+                        typeHeading.textContent = typeHeadings[type];
+                        previewExperienceEntriesContainer.appendChild(typeHeading);
+
+                        groupedEntries[type].forEach(entry => {
+                            const expDiv = document.createElement('div');
+                            const h4 = document.createElement('h4');
+                            h4.textContent = entry.companyName;
+                            expDiv.appendChild(h4);
+
+                            let subTextParts = [];
+                            if(entry.jobTitle) subTextParts.push(entry.jobTitle);
+                            if(entry.dates) subTextParts.push(entry.dates);
+                            if(subTextParts.length > 0){
+                                const pSub = document.createElement('p');
+                                pSub.textContent = subTextParts.join(' | ');
+                                expDiv.appendChild(pSub);
+                            }
+
+                            if (entry.responsibilities.length > 0) {
+                                const ul = document.createElement('ul');
+                                entry.responsibilities.forEach(resp => {
+                                    const li = document.createElement('li');
+                                    li.textContent = resp;
+                                    ul.appendChild(li);
+                                });
+                                expDiv.appendChild(ul);
+                            }
+                            previewExperienceEntriesContainer.appendChild(expDiv);
+                        });
+                    }
+                }
+            } else {
+                previewExperienceSection.style.display = 'none';
+            }
+        }
+
+
+        // Education
+        if(previewEducationEntriesContainer && educationFormEntriesContainer) {
+            previewEducationEntriesContainer.innerHTML = '';
+            const educationForms = educationFormEntriesContainer.querySelectorAll('.education-entry');
+            if (educationForms.length === 0 && educationFormEntriesContainer.children.length === 0) { //TODO: check if this condition is ever met given initial html
+                defaultTexts.education.forEach(edu => {
                     const eduDiv = document.createElement('div');
                     eduDiv.innerHTML = `
                         <h3>${edu.institution}</h3>
@@ -338,64 +351,130 @@ document.addEventListener('DOMContentLoaded', () => {
                     `;
                     previewEducationEntriesContainer.appendChild(eduDiv);
                 });
+            } else {
+                educationForms.forEach(form => {
+                    const institution = form.querySelector('.institution').value;
+                    const eduLocation = form.querySelector('.eduLocation').value;
+                    const degree = form.querySelector('.degree').value;
+                    const gpa = form.querySelector('.gpa').value;
+                    const coursework = form.querySelector('.coursework').value;
+
+                    if (institution || eduLocation || degree || gpa || coursework) {
+                        const eduDiv = document.createElement('div');
+                        const h3 = document.createElement('h3');
+                        h3.textContent = institution || 'Institution';
+                        eduDiv.appendChild(h3);
+
+                        const pLoc = document.createElement('p');
+                        pLoc.textContent = eduLocation || 'Location';
+                        eduDiv.appendChild(pLoc);
+
+                        const pDegree = document.createElement('p');
+                        pDegree.textContent = degree || 'Degree';
+                        eduDiv.appendChild(pDegree);
+
+                        if (gpa) {
+                            const pGpa = document.createElement('p');
+                            pGpa.textContent = `GPA: ${gpa}`;
+                            eduDiv.appendChild(pGpa);
+                        }
+                        if (coursework) {
+                            const pCourse = document.createElement('p');
+                            pCourse.textContent = `Relevant coursework: ${coursework}`;
+                            eduDiv.appendChild(pCourse);
+                        }
+                        previewEducationEntriesContainer.appendChild(eduDiv);
+                    }
+                });
+                if (previewEducationEntriesContainer.children.length === 0) {
+                    defaultTexts.education.forEach(edu => {
+                        const eduDiv = document.createElement('div');
+                        eduDiv.innerHTML = `
+                            <h3>${edu.institution}</h3>
+                            <p>${edu.eduLocation}</p>
+                            <p>${edu.degree}</p>
+                            <p>GPA: ${edu.gpa}</p>
+                            <p>Relevant coursework: ${edu.coursework}</p>
+                        `;
+                        previewEducationEntriesContainer.appendChild(eduDiv);
+                    });
+                }
             }
         }
 
+
         // References
-        previewReferenceEntriesContainer.innerHTML = '';
-        const referenceForms = referenceFormEntriesContainer.querySelectorAll('.reference-entry');
-        let hasReferenceContent = false;
+        if(previewReferenceEntriesContainer && referenceFormEntriesContainer && previewReferencesSection && toggleReferences) { // Added toggleReferences check
+            if (toggleReferences.checked) {
+                previewReferenceEntriesContainer.innerHTML = '';
+                const referenceForms = referenceFormEntriesContainer.querySelectorAll('.reference-entry');
+                let hasReferenceContent = false;
 
-        referenceForms.forEach(form => {
-            const refName = form.querySelector('.refName').value;
-            const refJobTitle = form.querySelector('.refJobTitle').value;
-            const refCompany = form.querySelector('.refCompany').value;
-            const refContact = form.querySelector('.refContact').value;
+                referenceForms.forEach(form => {
+                    const refName = form.querySelector('.refName').value;
+                    const refJobTitle = form.querySelector('.refJobTitle').value;
+                    const refCompany = form.querySelector('.refCompany').value;
+                    const refContact = form.querySelector('.refContact').value;
 
-            if (refName || refJobTitle || refCompany || refContact) {
-                hasReferenceContent = true;
-                const refDiv = document.createElement('div');
-                const pName = document.createElement('p');
-                const strongName = document.createElement('strong');
-                strongName.textContent = refName || 'Reference Name';
-                pName.appendChild(strongName);
-                refDiv.appendChild(pName);
+                    if (refName || refJobTitle || refCompany || refContact) {
+                        hasReferenceContent = true;
+                        const refDiv = document.createElement('div');
+                        const pName = document.createElement('p');
+                        const strongName = document.createElement('strong');
+                        strongName.textContent = refName || 'Reference Name';
+                        pName.appendChild(strongName);
+                        refDiv.appendChild(pName);
 
-                const pTitle = document.createElement('p');
-                pTitle.textContent = refJobTitle || 'Job Title';
-                refDiv.appendChild(pTitle);
+                        const pTitle = document.createElement('p');
+                        pTitle.textContent = refJobTitle || 'Job Title';
+                        refDiv.appendChild(pTitle);
 
-                const pCompany = document.createElement('p');
-                pCompany.textContent = refCompany || 'Company';
-                refDiv.appendChild(pCompany);
+                        const pCompany = document.createElement('p');
+                        pCompany.textContent = refCompany || 'Company';
+                        refDiv.appendChild(pCompany);
 
-                const pContact = document.createElement('p');
-                pContact.textContent = refContact || 'Contact';
-                refDiv.appendChild(pContact);
+                        const pContact = document.createElement('p');
+                        pContact.textContent = refContact || 'Contact';
+                        refDiv.appendChild(pContact);
 
-                previewReferenceEntriesContainer.appendChild(refDiv);
+                        previewReferenceEntriesContainer.appendChild(refDiv);
+                    }
+                });
+
+                if (hasReferenceContent) {
+                    previewReferencesSection.style.display = '';
+                } else {
+                    previewReferencesSection.style.display = 'none'; // Hide if toggle is on but no content
+                }
+            } else {
+                previewReferencesSection.style.display = 'none'; // Hide if toggle is off
             }
-        });
-
-        if (hasReferenceContent) {
-            previewReferencesSection.style.display = '';
-        } else {
+        } else if (previewReferencesSection) { // Ensure section is hidden if toggleReferences is somehow null
             previewReferencesSection.style.display = 'none';
         }
     };
 
     // --- Factory for Creating Form Entries (Education, Experience, Reference) ---
     const createFormEntry = (type, container) => {
+        if (!container) return; // Guard against null container
         const entryDiv = document.createElement('div');
         entryDiv.classList.add(`${type}-entry`);
         let innerHTML = '';
+        let entryIdSuffix = Date.now(); // For unique IDs for labels if needed in future
+
         switch (type) {
             case 'experience':
                 innerHTML = `
-                    <input type="text" class="companyName" placeholder="Company Name">
-                    <input type="text" class="expJobTitle" placeholder="Job Title">
-                    <input type="text" class="expDates" placeholder="Start – End Dates">
-                    <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
+                    <label for="expType-${entryIdSuffix}" style="display: block; margin-bottom: 5px;">Type:</label>
+                    <select class="expType" id="expType-${entryIdSuffix}" style="margin-bottom: 10px;">
+                        <option value="experience" selected>Professional Experience</option>
+                        <option value="project">Project</option>
+                        <option value="research">Research</option>
+                    </select>
+                    <input type="text" class="companyName" placeholder="Company/Project Name/Research Title">
+                    <input type="text" class="expJobTitle" placeholder="Role/Job Title (if applicable)">
+                    <input type="text" class="expDates" placeholder="Dates (e.g., ... or Year)">
+                    <textarea class="expResponsibilities" placeholder="Details, Responsibilities & Achievements (one per line)"></textarea>
                 `;
                 break;
             case 'education':
@@ -418,9 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         entryDiv.innerHTML = innerHTML;
         container.appendChild(entryDiv);
-        // Add event listeners to new inputs/textareas within this entry
-        entryDiv.querySelectorAll('input, textarea').forEach(input => input.addEventListener('input', updatePreview));
-        updatePreview(); // Update preview immediately after adding
+        entryDiv.querySelectorAll('input, textarea, select').forEach(input => input.addEventListener('input', updatePreview));
+        updatePreview();
     };
 
     // --- Add Event Listeners ---
@@ -428,19 +506,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const allStaticInputs = [
         fullNameInput, jobTitleInput, phoneInput, locationInput, emailInput, linkedinInput,
         objectiveInput, skillsAbilitiesInput,
-        skillsLanguagesInput, skillsFrameworksInput, skillsToolsInput, skillsPlatformsInput, // New skill inputs
+        skillsLanguagesInput, skillsFrameworksInput, skillsToolsInput, skillsPlatformsInput,
         communicationInput, leadershipInput
     ];
     allStaticInputs.forEach(input => {
         if (input) input.addEventListener('input', updatePreview);
     });
 
-    // Header layout radio buttons
-    headerLayoutRadios.forEach(radio => {
-        radio.addEventListener('change', updatePreview);
-    });
+    if (headerLayoutRadios) {
+        headerLayoutRadios.forEach(radio => {
+            radio.addEventListener('change', updatePreview);
+        });
+    }
 
-    // Dynamic entry buttons
+    // Toggle Form Section Visibility Listeners
+    const setupToggleListener = (toggleCheckbox, contentDiv) => {
+        if (toggleCheckbox && contentDiv) {
+            toggleCheckbox.addEventListener('change', () => {
+                contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
+                updatePreview(); // Update preview when form sections are toggled
+            });
+            // Initial state based on checkbox (if not using inline style for initial hide)
+            // For referencesFormContent, it's initially hidden by inline style, so this is fine.
+            // For others, they are checked by default, so contentDiv should be visible.
+             contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
+        }
+    };
+
+    setupToggleListener(toggleObjective, objectiveFormContent);
+    setupToggleListener(toggleDetailedSkills, detailedSkillsForm);
+    setupToggleListener(toggleCommunication, communicationFormContent);
+    setupToggleListener(toggleLeadership, leadershipFormContent);
+    setupToggleListener(toggleReferences, referencesFormContent); // This will make reference inputs appear
+
+    // Experience Filter Checkbox Listeners
+    if(experienceFilterCheckboxes) {
+        experienceFilterCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updatePreview);
+        });
+    }
+
     if (addExperienceButton) {
         addExperienceButton.addEventListener('click', () => createFormEntry('experience', experienceFormEntriesContainer));
     }
@@ -451,12 +556,10 @@ document.addEventListener('DOMContentLoaded', () => {
         addReferenceButton.addEventListener('click', () => createFormEntry('reference', referenceFormEntriesContainer));
     }
 
-    // Initial listeners for any pre-existing dynamic entries (e.g. the first one in HTML)
-    document.querySelectorAll('.experience-entry input, .experience-entry textarea').forEach(el => el.addEventListener('input', updatePreview));
+    // Initial listeners for any pre-existing dynamic entries
+    document.querySelectorAll('.experience-entry input, .experience-entry textarea, .experience-entry select').forEach(el => el.addEventListener('input', updatePreview));
     document.querySelectorAll('.education-entry input, .education-entry textarea').forEach(el => el.addEventListener('input', updatePreview));
     document.querySelectorAll('.reference-entry input').forEach(el => el.addEventListener('input', updatePreview));
 
-
-    // Initial preview update on page load
-    updatePreview();
+    updatePreview(); // Initial preview update
 });
