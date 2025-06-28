@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Friendly Resume Builder</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>ATS-Friendly Resume Builder</h1>
+        <div class="resume-form">
+            <h2>Personal Information</h2>
+            <input type="text" id="name" placeholder="Full Name">
+            <input type="email" id="email" placeholder="Email">
+            <input type="tel" id="phone" placeholder="Phone">
+            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
+
+            <h2>Summary</h2>
+            <textarea id="summary" placeholder="Professional Summary"></textarea>
+
+            <h2>Skills</h2>
+            <input type="text" id="skills" placeholder="Comma-separated skills (e.g., JavaScript, Node.js, React)">
+
+            <h2>Education</h2>
+            <div id="education-entries">
+                <div class="education-entry">
+                    <input type="text" class="degree" placeholder="Degree">
+                    <input type="text" class="school" placeholder="School/University">
+                    <input type="text" class="edu-year" placeholder="Year of Completion">
+                </div>
+            </div>
+            <button type="button" id="add-education">Add Education</button>
+
+            <h2>Experience</h2>
+            <div id="experience-entries">
+                <div class="experience-entry">
+                    <input type="text" class="job-title" placeholder="Job Title">
+                    <input type="text" class="company" placeholder="Company">
+                    <input type="text" class="job-year" placeholder="Years of Experience">
+                    <textarea class="job-description" placeholder="Job Description"></textarea>
+                </div>
+            </div>
+            <button type="button" id="add-experience">Add Experience</button>
+        </div>
+
+        <div class="resume-preview-container">
+            <h2>Live Preview</h2>
+            <div id="resume-preview">
+                <h1 id="preview-name">Your Name</h1>
+                <p><span id="preview-email">your.email@example.com</span> | <span id="preview-phone">123-456-7890</span> | <span id="preview-linkedin">linkedin.com/in/yourprofile</span></p>
+
+                <h2>Summary</h2>
+                <p id="preview-summary">Your professional summary will appear here.</p>
+
+                <h2>Skills</h2>
+                <ul id="preview-skills">
+                    <li>Skill 1</li>
+                    <li>Skill 2</li>
+                </ul>
+
+                <h2>Education</h2>
+                <div id="preview-education">
+                    <div>
+                        <h3>Degree</h3>
+                        <p>School/University - Year</p>
+                    </div>
+                </div>
+
+                <h2>Experience</h2>
+                <div id="preview-experience">
+                    <div>
+                        <h3>Job Title</h3>
+                        <p>Company - Years</p>
+                        <p>Job description...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

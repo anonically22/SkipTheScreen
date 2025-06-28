@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+}
+
+.resume-form, .resume-preview-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 50%;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+h2 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea {
+    width: calc(100% - 22px);
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+#resume-preview {
+    border: 1px solid #ddd;
+    padding: 20px;
+    min-height: 400px;
+    background-color: #fdfdfd;
+}
+
+#resume-preview h1,
+#resume-preview h2,
+#resume-preview h3 {
+    margin-top: 0;
+}
+
+#resume-preview h2 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+    font-size: 1.2em;
+}
+
+#resume-preview h3 {
+    font-size: 1em;
+    margin-bottom: 5px;
+}
+
+#resume-preview p {
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+#resume-preview ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.education-entry, .experience-entry {
+    border: 1px solid #eee;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
