@@ -16,9 +16,12 @@ body {
 }
 
 .container {
-    display: block; /* Stack form and preview */
-    /* max-width: 95%; // Keep if desired, or adjust for stacked view */
-    max-width: 1200px; /* Or a fixed max-width for content area */
+    display: flex; /* Side-by-side layout for form and preview */
+    flex-direction: row; /* Explicitly row */
+    justify-content: space-between; /* Or use gap */
+    gap: 20px; /* Space between form and preview */
+    max-width: 95%; /* Wider container for side-by-side */
+    /* max-width: 1600px; */ /* Alternative max width */
     margin: 0 auto; /* Center container */
 }
 
@@ -27,13 +30,14 @@ body {
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Take full width of the container */
+    /* width: calc(50% - 10px); */ /* Adjust based on gap */
+    flex-basis: 48%; /* Allow them to share space */
     box-sizing: border-box;
-    margin-bottom: 30px; /* Space between form/preview and next element */
+    margin-bottom: 20px; /* Keep some bottom margin */
 }
-.resume-preview-container {
-    margin-bottom: 20px; /* Standard bottom margin for the last block */
-}
+/* .resume-preview-container {
+    margin-bottom: 20px;
+} */ /* Redundant if both have margin-bottom */
 
 
 /* Styling for the radio button group for header layout */
