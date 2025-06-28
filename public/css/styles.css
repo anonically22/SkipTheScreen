@@ -33,6 +33,29 @@ body {
     font-size: 0.9em;
 }
 
+/* Subheadings in the form (e.g., for Languages under Skills) */
+.resume-form h3 {
+    font-size: 1em;
+    color: #555;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Styling for select dropdown in experience entries */
+.experience-entry select.expType {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: white; /* Ensure select is not transparent */
+}
+
+
 /* Headings for the form itself */
 .resume-form h1 { /* Main title of the form page */
     text-align: center;
@@ -206,11 +229,64 @@ button:hover {
 
 /* Styling for specific preview sections if needed */
 #preview-objective-section p,
-#preview-skillsAbilities-section p,
+/* #preview-skillsAbilities-section p, Main skills description no longer italic by default */
 #preview-communication-section p,
 #preview-leadership-section p {
     font-style: italic; /* Optional: if you want these descriptions to stand out */
 }
+
+/* Styling for Skills Subcategories in Preview */
+.skills-subcategory {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.skills-subcategory h4 { /* Subcategory titles like "Languages:" */
+    font-size: 1em;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 3px;
+    display: inline; /* Keep title and list on same flow if possible */
+}
+.skills-subcategory ul {
+    list-style-type: none; /* Or 'disc' if preferred */
+    padding-left: 0; /* Reset padding if no bullets */
+    margin-top: 0;
+    display: inline; /* Allows list to flow with h4 if skills are comma separated on one line */
+}
+.skills-subcategory ul li {
+    display: inline; /* For comma-separated items on one line */
+    margin-right: 5px;
+    color: #555;
+}
+.skills-subcategory ul li:not(:last-child)::after {
+    content: ", ";
+}
+/* Alternative for newline separated skills in textarea, if JS makes them separate li's */
+.skills-subcategory.newline-items ul {
+    display: block; /* Switch to block for newline items */
+    padding-left: 20px; /* Indent if using bullets */
+    list-style-type: disc;
+}
+.skills-subcategory.newline-items ul li {
+    display: list-item;
+    margin-bottom: 3px;
+}
+.skills-subcategory.newline-items ul li::after {
+    content: ""; /* Remove comma for newline items */
+}
+
+
+/* Styling for Experience Subheadings in Preview (e.g., "Projects") */
+#preview-experience-entries .experience-type-heading {
+    font-size: 1.2em; /* Slightly smaller than main section H2 */
+    color: #34495e;
+    border-bottom: 1px solid #bdc3c7;
+    padding-bottom: 3px;
+    margin-top: 15px; /* Space above a new type of experience */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
 
 #preview-education-entries div p,
 #preview-reference-entries div p {

@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Skills & Abilities
     const skillsAbilitiesInput = document.getElementById('skillsAbilities');
+    const skillsLanguagesInput = document.getElementById('skillsLanguages');
+    const skillsFrameworksInput = document.getElementById('skillsFrameworks');
+    const skillsToolsInput = document.getElementById('skillsTools');
+    const skillsPlatformsInput = document.getElementById('skillsPlatforms');
 
     // Experience (dynamic entries)
     const experienceFormEntriesContainer = document.getElementById('experience-entries');
@@ -45,10 +49,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewLinkedin = document.getElementById('preview-linkedin');
 
     // Objective
+    const previewObjectiveSection = document.getElementById('preview-objective-section');
     const previewObjective = document.getElementById('preview-objective');
 
     // Skills & Abilities
     const previewSkillsAbilities = document.getElementById('preview-skillsAbilities');
+    const previewSkillsLanguagesList = document.getElementById('preview-skillsLanguages-list');
+    const previewSkillsFrameworksList = document.getElementById('preview-skillsFrameworks-list');
+    const previewSkillsToolsList = document.getElementById('preview-skillsTools-list');
+    const previewSkillsPlatformsList = document.getElementById('preview-skillsPlatforms-list');
+
 
     // Experience (dynamic entries)
     const previewExperienceSection = document.getElementById('preview-experience-section'); // Get the whole section
@@ -64,6 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewLeadership = document.getElementById('preview-leadership');
 
     // References (dynamic entries)
+    const previewReferencesSection = document.getElementById('preview-references-section');
     const previewReferenceEntriesContainer = document.getElementById('preview-reference-entries');
 
     // --- Default Preview Text ---
@@ -130,10 +141,52 @@ document.addEventListener('DOMContentLoaded', () => {
         previewLinkedin.textContent = linkedinInput.value || defaultTexts.linkedin;
 
         // Objective
-        previewObjective.textContent = objectiveInput.value || defaultTexts.objective;
+        if (objectiveInput.value) {
+            previewObjectiveSection.style.display = '';
+            previewObjective.textContent = objectiveInput.value;
+        } else {
+            previewObjectiveSection.style.display = 'none';
+        }
 
         // Skills & Abilities
-        previewSkillsAbilities.textContent = skillsAbilitiesInput.value || defaultTexts.skillsAbilities;
+        previewSkillsAbilities.textContent = skillsAbilitiesInput.value || defaultTexts.skillsAbilities; // Main description
+
+        // Helper function to populate skill subcategories
+        const populateSkillList = (inputElement, previewListElement, categoryName) => {
+            previewListElement.innerHTML = ''; // Clear previous
+            const skillsText = inputElement.value.trim();
+            if (skillsText) {
+                const skillsArray = skillsText.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
+                if (skillsArray.length > 0) {
+                    const h4 = document.createElement('h4');
+                    h4.textContent = `${categoryName}: `;
+                    previewListElement.appendChild(h4);
+                    const ul = document.createElement('ul');
+                    skillsArray.forEach(skill => {
+                        const li = document.createElement('li');
+                        li.textContent = skill;
+                        ul.appendChild(li);
+                    });
+                    previewListElement.appendChild(ul);
+                    previewListElement.style.display = '';
+                     // Decide on newline or inline based on presence of newlines in input
+                    if (skillsText.includes('\n')) {
+                        previewListElement.classList.add('newline-items');
+                    } else {
+                        previewListElement.classList.remove('newline-items');
+                    }
+                } else {
+                    previewListElement.style.display = 'none';
+                }
+            } else {
+                previewListElement.style.display = 'none';
+            }
+        };
+
+        populateSkillList(skillsLanguagesInput, previewSkillsLanguagesList, 'Languages');
+        populateSkillList(skillsFrameworksInput, previewSkillsFrameworksList, 'Frameworks/Libraries');
+        populateSkillList(skillsToolsInput, previewSkillsToolsList, 'Tools');
+        populateSkillList(skillsPlatformsInput, previewSkillsPlatformsList, 'Platforms');
 
         // Communication
         previewCommunication.textContent = communicationInput.value || defaultTexts.communication;
@@ -141,57 +194,87 @@ document.addEventListener('DOMContentLoaded', () => {
         // Leadership
         previewLeadership.textContent = leadershipInput.value || defaultTexts.leadership;
 
-        // Experience
+        // Experience / Projects / Research
         previewExperienceEntriesContainer.innerHTML = ''; // Clear previous entries
         const experienceForms = experienceFormEntriesContainer.querySelectorAll('.experience-entry');
-        let hasExperienceContent = false;
+        let allEntriesData = [];
 
         experienceForms.forEach(form => {
-            const companyName = form.querySelector('.companyName').value;
-            const expJobTitle = form.querySelector('.expJobTitle').value;
-            const expDates = form.querySelector('.expDates').value;
+            const expType = form.querySelector('.expType').value;
+            const companyName = form.querySelector('.companyName').value; // Placeholder: Company/Project Name/Research Title
+            const expJobTitle = form.querySelector('.expJobTitle').value; // Placeholder: Role/Job Title (if applicable)
+            const expDates = form.querySelector('.expDates').value;       // Placeholder: Dates (e.g., ... or Year)
             const expResponsibilities = form.querySelector('.expResponsibilities').value.split('\n').filter(line => line.trim() !== '');
 
             if (companyName || expJobTitle || expDates || expResponsibilities.length > 0) {
-                hasExperienceContent = true;
-                const expDiv = document.createElement('div');
-                const h3 = document.createElement('h3');
-                h3.textContent = companyName || 'Company Name';
-                const pSub = document.createElement('p');
-                pSub.textContent = `${expJobTitle || 'Job Title'} | ${expDates || 'Dates'}`;
-
-                expDiv.appendChild(h3);
-                expDiv.appendChild(pSub);
-
-                if (expResponsibilities.length > 0) {
-                    const ul = document.createElement('ul');
-                    expResponsibilities.forEach(resp => {
-                        const li = document.createElement('li');
-                        li.textContent = resp;
-                        ul.appendChild(li);
-                    });
-                    expDiv.appendChild(ul);
-                }
-                previewExperienceEntriesContainer.appendChild(expDiv);
+                allEntriesData.push({
+                    type: expType,
+                    companyName: companyName || (expType === 'project' ? 'Project Title' : expType === 'research' ? 'Research Title' : 'Company Name'),
+                    jobTitle: expJobTitle, // Will be empty if not applicable
+                    dates: expDates || 'Dates',
+                    responsibilities: expResponsibilities
+                });
             }
         });
 
-        // Show/hide experience section based on content
-        if (hasExperienceContent) {
-            previewExperienceSection.style.display = ''; // Or 'block' if you prefer
-        } else {
-            // If there are no forms at all (e.g. initial state, or user deleted all)
-            // AND the default shouldn't be shown because we want it optional
-            if (experienceForms.length === 0) {
-                 previewExperienceSection.style.display = 'none';
-            } else {
-                // If there are forms, but all are empty
-                 previewExperienceSection.style.display = 'none';
-            }
-            // To completely remove default population for experience when optional:
-            // previewExperienceSection.style.display = 'none';
-        }
+        if (allEntriesData.length > 0) {
+            previewExperienceSection.style.display = '';
 
+            // Group entries by type for rendering
+            const groupedEntries = {
+                experience: [],
+                project: [],
+                research: []
+            };
+            allEntriesData.forEach(entry => {
+                groupedEntries[entry.type].push(entry);
+            });
+
+            const typeHeadings = {
+                experience: 'Professional Experience',
+                project: 'Projects',
+                research: 'Research'
+            };
+
+            // Render grouped entries
+            for (const type in groupedEntries) {
+                if (groupedEntries[type].length > 0) {
+                    const typeHeading = document.createElement('h3'); // Using h3 for sub-section titles
+                    typeHeading.classList.add('experience-type-heading');
+                    typeHeading.textContent = typeHeadings[type];
+                    previewExperienceEntriesContainer.appendChild(typeHeading);
+
+                    groupedEntries[type].forEach(entry => {
+                        const expDiv = document.createElement('div');
+                        const h4 = document.createElement('h4'); // Using h4 for entry title
+                        h4.textContent = entry.companyName;
+                        expDiv.appendChild(h4);
+
+                        let subTextParts = [];
+                        if(entry.jobTitle) subTextParts.push(entry.jobTitle);
+                        if(entry.dates) subTextParts.push(entry.dates);
+                        if(subTextParts.length > 0){
+                            const pSub = document.createElement('p');
+                            pSub.textContent = subTextParts.join(' | ');
+                            expDiv.appendChild(pSub);
+                        }
+
+                        if (entry.responsibilities.length > 0) {
+                            const ul = document.createElement('ul');
+                            entry.responsibilities.forEach(resp => {
+                                const li = document.createElement('li');
+                                li.textContent = resp;
+                                ul.appendChild(li);
+                            });
+                            expDiv.appendChild(ul);
+                        }
+                        previewExperienceEntriesContainer.appendChild(expDiv);
+                    });
+                }
+            }
+        } else {
+            previewExperienceSection.style.display = 'none';
+        }
 
         // Education
         previewEducationEntriesContainer.innerHTML = '';
@@ -261,59 +344,43 @@ document.addEventListener('DOMContentLoaded', () => {
         // References
         previewReferenceEntriesContainer.innerHTML = '';
         const referenceForms = referenceFormEntriesContainer.querySelectorAll('.reference-entry');
-        if (referenceForms.length === 0 && referenceFormEntriesContainer.children.length === 0) {
-            defaultTexts.references.forEach(ref => {
+        let hasReferenceContent = false;
+
+        referenceForms.forEach(form => {
+            const refName = form.querySelector('.refName').value;
+            const refJobTitle = form.querySelector('.refJobTitle').value;
+            const refCompany = form.querySelector('.refCompany').value;
+            const refContact = form.querySelector('.refContact').value;
+
+            if (refName || refJobTitle || refCompany || refContact) {
+                hasReferenceContent = true;
                 const refDiv = document.createElement('div');
-                refDiv.innerHTML = `
-                    <p><strong>${ref.refName}</strong></p>
-                    <p>${ref.refJobTitle}</p>
-                    <p>${ref.refCompany}</p>
-                    <p>${ref.refContact}</p>
-                `;
+                const pName = document.createElement('p');
+                const strongName = document.createElement('strong');
+                strongName.textContent = refName || 'Reference Name';
+                pName.appendChild(strongName);
+                refDiv.appendChild(pName);
+
+                const pTitle = document.createElement('p');
+                pTitle.textContent = refJobTitle || 'Job Title';
+                refDiv.appendChild(pTitle);
+
+                const pCompany = document.createElement('p');
+                pCompany.textContent = refCompany || 'Company';
+                refDiv.appendChild(pCompany);
+
+                const pContact = document.createElement('p');
+                pContact.textContent = refContact || 'Contact';
+                refDiv.appendChild(pContact);
+
                 previewReferenceEntriesContainer.appendChild(refDiv);
-            });
-        } else {
-            referenceForms.forEach(form => {
-                const refName = form.querySelector('.refName').value;
-                const refJobTitle = form.querySelector('.refJobTitle').value;
-                const refCompany = form.querySelector('.refCompany').value;
-                const refContact = form.querySelector('.refContact').value;
-
-                if (refName || refJobTitle || refCompany || refContact) {
-                    const refDiv = document.createElement('div');
-                    const pName = document.createElement('p');
-                    const strongName = document.createElement('strong');
-                    strongName.textContent = refName || 'Reference Name';
-                    pName.appendChild(strongName);
-                    refDiv.appendChild(pName);
-
-                    const pTitle = document.createElement('p');
-                    pTitle.textContent = refJobTitle || 'Job Title';
-                    refDiv.appendChild(pTitle);
-
-                    const pCompany = document.createElement('p');
-                    pCompany.textContent = refCompany || 'Company';
-                    refDiv.appendChild(pCompany);
-
-                    const pContact = document.createElement('p');
-                    pContact.textContent = refContact || 'Contact';
-                    refDiv.appendChild(pContact);
-
-                    previewReferenceEntriesContainer.appendChild(refDiv);
-                }
-            });
-             if (previewReferenceEntriesContainer.children.length === 0) { // Fallback if all fields are empty
-                defaultTexts.references.forEach(ref => {
-                    const refDiv = document.createElement('div');
-                    refDiv.innerHTML = `
-                        <p><strong>${ref.refName}</strong></p>
-                        <p>${ref.refJobTitle}</p>
-                        <p>${ref.refCompany}</p>
-                        <p>${ref.refContact}</p>
-                    `;
-                    previewReferenceEntriesContainer.appendChild(refDiv);
-                });
             }
+        });
+
+        if (hasReferenceContent) {
+            previewReferencesSection.style.display = '';
+        } else {
+            previewReferencesSection.style.display = 'none';
         }
     };
 
@@ -360,7 +427,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Static fields
     const allStaticInputs = [
         fullNameInput, jobTitleInput, phoneInput, locationInput, emailInput, linkedinInput,
-        objectiveInput, skillsAbilitiesInput, communicationInput, leadershipInput
+        objectiveInput, skillsAbilitiesInput,
+        skillsLanguagesInput, skillsFrameworksInput, skillsToolsInput, skillsPlatformsInput, // New skill inputs
+        communicationInput, leadershipInput
     ];
     allStaticInputs.forEach(input => {
         if (input) input.addEventListener('input', updatePreview);
