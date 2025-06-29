@@ -30,6 +30,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewEducationSection = document.getElementById('preview-education-section'); // Main preview section wrapper
     const previewEducationEntriesContainer = document.getElementById('preview-education-entries'); // Preview container for entries
 
+    // Skills & Abilities Form Elements
+    const toggleSkills = document.getElementById('toggle-skills');
+    const skillsFormContent = document.getElementById('skills-form-content');
+    const skillsAbilitiesInput = document.getElementById('skillsAbilities'); // Main description
+    const toggleDetailedSkills = document.getElementById('toggle-detailed-skills');
+    const detailedSkillsForm = document.getElementById('detailed-skills-form'); // Wrapper for detailed skill textareas
+    const skillsLanguagesInput = document.getElementById('skillsLanguages');
+    const skillsFrameworksInput = document.getElementById('skillsFrameworks');
+    const skillsToolsInput = document.getElementById('skillsTools');
+    const skillsPlatformsInput = document.getElementById('skillsPlatforms');
+
+    // Skills & Abilities Preview Elements
+    const previewSkillsAbilitiesSection = document.getElementById('preview-skillsAbilities-section');
+    const previewSkillsAbilities = document.getElementById('preview-skillsAbilities'); // <p> for main description
+    const previewDetailedSkillsDiv = document.getElementById('preview-detailed-skills'); // Wrapper for detailed skill lists
+    const previewSkillsLanguagesList = document.getElementById('preview-skillsLanguages-list');
+    const previewSkillsFrameworksList = document.getElementById('preview-skillsFrameworks-list');
+    const previewSkillsToolsList = document.getElementById('preview-skillsTools-list');
+    const previewSkillsPlatformsList = document.getElementById('preview-skillsPlatforms-list');
+
 
     // --- Default Preview Text ---
     const defaultTexts = {
@@ -126,13 +146,71 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewEducationSection.style.display = 'none';
             }
         }
+
+        // Skills & Abilities Preview Logic
+        if (previewSkillsAbilitiesSection && skillsFormContent && skillsAbilitiesInput && previewSkillsAbilities) {
+            if (toggleSkills && toggleSkills.checked) {
+                previewSkillsAbilitiesSection.style.display = '';
+                previewSkillsAbilities.textContent = skillsAbilitiesInput.value || defaultTexts.skillsAbilities || "Your skills summary here...";
+
+                if (toggleDetailedSkills && toggleDetailedSkills.checked && previewDetailedSkillsDiv) {
+                    let hasDetailedSkillContent = false;
+                    // Ensure populateSkillList is defined before calling it
+                    if (typeof populateSkillList === "function") {
+                        hasDetailedSkillContent = populateSkillList(skillsLanguagesInput, previewSkillsLanguagesList, 'Languages') || hasDetailedSkillContent;
+                        hasDetailedSkillContent = populateSkillList(skillsFrameworksInput, previewSkillsFrameworksList, 'Frameworks/Libraries') || hasDetailedSkillContent;
+                        hasDetailedSkillContent = populateSkillList(skillsToolsInput, previewSkillsToolsList, 'Tools') || hasDetailedSkillContent;
+                        hasDetailedSkillContent = populateSkillList(skillsPlatformsInput, previewSkillsPlatformsList, 'Platforms') || hasDetailedSkillContent;
+                    }
+                    previewDetailedSkillsDiv.style.display = hasDetailedSkillContent ? '' : 'none';
+                } else if (previewDetailedSkillsDiv) {
+                    previewDetailedSkillsDiv.style.display = 'none';
+                }
+            } else {
+                previewSkillsAbilitiesSection.style.display = 'none';
+                if (previewDetailedSkillsDiv) previewDetailedSkillsDiv.style.display = 'none'; // Also hide detailed if main skills is off
+            }
+        }
     };
+
+    // --- Helper function to populate skill subcategories in Preview ---
+    // (This function was present in previous full versions, re-adding/ensuring its existence)
+    const populateSkillList = (inputElement, previewListElement, categoryName) => {
+        if (!inputElement || !previewListElement) return false;
+        previewListElement.innerHTML = '';
+        const skillsText = inputElement.value.trim();
+        if (skillsText) {
+            const skillsArray = skillsText.split(/[\n,]+/).map(s => s.trim()).filter(s => s);
+            if (skillsArray.length > 0) {
+                const h4 = document.createElement('h4');
+                h4.textContent = `${categoryName}: `;
+                previewListElement.appendChild(h4);
+                const ul = document.createElement('ul');
+                skillsArray.forEach(skill => {
+                    const li = document.createElement('li');
+                    li.textContent = skill;
+                    ul.appendChild(li);
+                });
+                previewListElement.appendChild(ul);
+                previewListElement.style.display = '';
+                if (skillsText.includes('\n')) {
+                    previewListElement.classList.add('newline-items');
+                } else {
+                    previewListElement.classList.remove('newline-items');
+                }
+                return true; // Content was added
+            }
+        }
+        previewListElement.style.display = 'none';
+        return false; // No content added
+    };
+
 
     // --- Factory for Creating Form Entries ---
     const createFormEntry = (type, container) => {
         if (!container) return;
         const entryDiv = document.createElement('div');
-        entryDiv.classList.add(`${type}-entry`); // e.g., 'education-entry'
+        entryDiv.classList.add(`${type}-entry`);
         let innerHTML = '';
 
         switch (type) {
@@ -149,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         entryDiv.innerHTML = innerHTML;
         container.appendChild(entryDiv);
-        entryDiv.querySelectorAll('input, textarea, select').forEach(inputEl => { // Changed variable name
+        entryDiv.querySelectorAll('input, textarea, select').forEach(inputEl => {
             if(inputEl) inputEl.addEventListener('input', updatePreview);
         });
         updatePreview();
@@ -162,16 +240,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
                 updatePreview();
             });
-            // Set initial state of content based on checkbox
             contentDiv.style.display = toggleCheckbox.checked ? '' : 'none';
         }
     };
 
     // --- Add Event Listeners ---
-    const allHeaderInputs = [
-        fullNameInput, jobTitleInput, phoneInput, locationInput, emailInput, linkedinInput
+    const allStaticInputs = [ // Renamed to avoid conflict with header-only array
+        fullNameInput, jobTitleInput, phoneInput, locationInput, emailInput, linkedinInput,
+        skillsAbilitiesInput, skillsLanguagesInput, skillsFrameworksInput, skillsToolsInput, skillsPlatformsInput // Added skills inputs
     ];
-    allHeaderInputs.forEach(input => {
+    allStaticInputs.forEach(input => {
         if (input) input.addEventListener('input', updatePreview);
     });
 
@@ -188,12 +266,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if(educationEntriesContainer) createFormEntry('education', educationEntriesContainer);
         });
     }
-    // Initial listeners for hardcoded education entry
     if (educationEntriesContainer) {
         educationEntriesContainer.querySelectorAll('.education-entry input, .education-entry textarea').forEach(el => {
             if(el) el.addEventListener('input', updatePreview);
         });
     }
+
+    // Skills & Abilities Section Listeners
+    if (toggleSkills) setupToggleListener(toggleSkills, skillsFormContent);
+    if (toggleDetailedSkills) setupToggleListener(toggleDetailedSkills, detailedSkillsForm);
+    // Input listeners for skills textareas are covered by allStaticInputs
 
 
     // Initial preview update
