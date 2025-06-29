@@ -84,6 +84,38 @@
                 <button type="button" id="add-experience">Add Experience</button>
             </div>
 
+            <!-- Projects Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-projects" checked> Projects</label>
+            </h2>
+            <div id="projects-form-content">
+                <div id="project-entries">
+                    <div class="project-entry">
+                        <input type="text" class="projectName" placeholder="Project Name">
+                        <input type="text" class="projectRole" placeholder="Your Role (e.g., Lead Developer, Contributor)">
+                        <input type="text" class="projectDates" placeholder="Dates/Duration (e.g., Jan 2023 - Mar 2023)">
+                        <textarea class="projectDescription" placeholder="Description, Key Features, Technologies Used (one per line)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-project">Add Project</button>
+            </div>
+
+            <!-- Research Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-research" checked> Research</label>
+            </h2>
+            <div id="research-form-content">
+                <div id="research-entries">
+                    <div class="research-entry">
+                        <input type="text" class="researchTitle" placeholder="Research Title/Topic">
+                        <input type="text" class="researchAffiliation" placeholder="Affiliation/Lab (optional)">
+                        <input type="text" class="researchDates" placeholder="Dates (e.g., Spring 2022)">
+                        <textarea class="researchSummary" placeholder="Abstract, Summary, Key Findings (one per line if needed)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-research">Add Research</button>
+            </div>
+
             <!-- Other sections will be added here later -->
         </div>
 
@@ -123,6 +155,20 @@
                 <div id="preview-experience-section">
                     <h2>Experience</h2>
                     <div id="preview-experience-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- Projects Preview -->
+                <div id="preview-projects-section">
+                    <h2>Projects</h2>
+                    <div id="preview-project-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- Research Preview -->
+                <div id="preview-research-section">
+                    <h2>Research</h2>
+                    <div id="preview-research-entries">
                         <!-- JS will populate this based on form input -->
                     </div>
                 </div>
