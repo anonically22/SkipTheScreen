@@ -47,6 +47,27 @@
                 <button type="button" id="add-education">Add Education</button>
             </div>
 
+            <!-- Skills & Abilities Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-skills" checked> Skills & Abilities</label>
+            </h2>
+            <div id="skills-form-content">
+                <textarea id="skillsAbilities" placeholder="Describe your general skills and abilities..."></textarea>
+                <div class="form-subsection-toggle" style="margin-top:10px; margin-bottom:5px;">
+                    <label><input type="checkbox" id="toggle-detailed-skills" checked> Include detailed skills breakdown</label>
+                </div>
+                <div id="detailed-skills-form">
+                    <h3>Languages</h3>
+                    <textarea id="skillsLanguages" placeholder="e.g., JavaScript, Python (comma or newline separated)"></textarea>
+                    <h3>Frameworks/Libraries</h3>
+                    <textarea id="skillsFrameworks" placeholder="e.g., React, Node.js (comma or newline separated)"></textarea>
+                    <h3>Tools</h3>
+                    <textarea id="skillsTools" placeholder="e.g., Git, Docker (comma or newline separated)"></textarea>
+                    <h3>Platforms</h3>
+                    <textarea id="skillsPlatforms" placeholder="e.g., AWS, Azure (comma or newline separated)"></textarea>
+                </div>
+            </div>
+
             <!-- Other sections will be added here later -->
         </div>
 
@@ -69,6 +90,17 @@
                     <h2>Education</h2>
                     <div id="preview-education-entries">
                         <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- Skills & Abilities Preview -->
+                <div id="preview-skillsAbilities-section">
+                    <h2>Skills & abilities</h2>
+                    <p id="preview-skillsAbilities"></p>
+                    <div id="preview-detailed-skills">
+                        <div id="preview-skillsLanguages-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsTools-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
                     </div>
                 </div>
                 <!-- Other preview sections will be added here later -->
