@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Default SE Resume Template</title>
-
-    <title>SkipTheScreen - Home</title>
-
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* Basic style for stacked header preview option */
+        #preview-contactInfo.stacked span {
+            display: block;
+            margin-bottom: 3px;
+        }
+    </style>
 </head>
 <body>
-
     <h1 id="main-title">Default SE Template</h1>
     <div class="container">
         <div class="resume-form">
@@ -82,34 +84,120 @@
                 <button type="button" id="add-experience">Add Experience</button>
             </div>
 
-    <div class="container home-container">
-        <h1 id="home-title">Welcome to SkipTheScreen</h1>
-        <p id="home-subtitle">Your friendly tool to build a professional resume, quickly and easily.</p>
-        <a href="resume-builder.html" class="button home-button">Go to Resume Builder</a>
-    </div>
+            <!-- Projects Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-projects" checked> Projects</label>
+            </h2>
+            <div id="projects-form-content">
+                <div id="project-entries">
+                    <div class="project-entry">
+                        <input type="text" class="projectName" placeholder="Project Name">
+                        <input type="text" class="projectRole" placeholder="Your Role (e.g., Lead Developer, Contributor)">
+                        <input type="text" class="projectDates" placeholder="Dates/Duration (e.g., Jan 2023 - Mar 2023)">
+                        <textarea class="projectDescription" placeholder="Description, Key Features, Technologies Used (one per line)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-project">Add Project</button>
+            </div>
 
+            <!-- Research Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-research" checked> Research</label>
+            </h2>
+            <div id="research-form-content">
+                <div id="research-entries">
+                    <div class="research-entry">
+                        <input type="text" class="researchTitle" placeholder="Research Title/Topic">
+                        <input type="text" class="researchAffiliation" placeholder="Affiliation/Lab (optional)">
+                        <input type="text" class="researchDates" placeholder="Dates (e.g., Spring 2022)">
+                        <textarea class="researchSummary" placeholder="Abstract, Summary, Key Findings (one per line if needed)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-research">Add Research</button>
+            </div>
 
-    <section id="features" class="features-section">
-        <div class="container">
-            <h2 class="section-title">Key Features</h2>
-            <div class="features-grid">
-                <div class="feature-item">
-                    <h3>Header Customization</h3>
-                    <p>Tailor your resume's header with options for inline or stacked layouts to best present your contact information.</p>
+            <!-- References Section (Optional) -->
+            <h2>
+                <label><input type="checkbox" id="toggle-references"> References Section</label>
+            </h2>
+            <div id="references-form-content" style="display: none;"> <!-- Hidden by default -->
+                <div id="reference-entries">
+                    <div class="reference-entry">
+                        <input type="text" class="refName" placeholder="Reference Name">
+                        <input type="text" class="refJobTitle" placeholder="Job Title">
+                        <input type="text" class="refCompany" placeholder="Company">
+                        <input type="text" class="refContact" placeholder="Contact">
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <h3>Dynamic Sections</h3>
-                    <p>Easily add, remove, and manage multiple entries for Education, Skills (general & detailed), Experience, Projects, Research, and References.</p>
+                <button type="button" id="add-reference">Add Reference</button>
+            </div>
+            <!-- End of dynamically added sections placeholder -->
+        </div>
+
+        <div class="resume-preview-container">
+            <h2>Live Preview</h2>
+            <div id="resume-preview">
+                <!-- Header Preview -->
+                <div id="preview-header">
+                    <h1 id="preview-fullName">Your Name</h1>
+                    <p id="preview-jobTitle">Your Job Title</p>
+                    <div id="preview-contactInfo">
+                        <span id="preview-phone">Your Phone</span>
+                        <span id="preview-location">Your Location</span>
+                        <span id="preview-email">Your Email</span>
+                        <span id="preview-linkedin">Your LinkedIn</span>
+                    </div>
                 </div>
-                <div class="feature-item">
-                    <h3>Live Preview</h3>
-                    <p>See your changes reflected in real-time as you build your resume, ensuring it looks exactly the way you want.</p>
+                <!-- Education Preview -->
+                <div id="preview-education-section">
+                    <h2>Education</h2>
+                    <div id="preview-education-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
                 </div>
+                <!-- Skills & Abilities Preview -->
+                <div id="preview-skillsAbilities-section">
+                    <h2>Skills & abilities</h2>
+                    <p id="preview-skillsAbilities"></p>
+                    <div id="preview-detailed-skills">
+                        <div id="preview-skillsLanguages-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsTools-list" class="skills-subcategory"></div>
+                        <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
+                    </div>
+                </div>
+                <!-- Experience Preview -->
+                <div id="preview-experience-section">
+                    <h2>Experience</h2>
+                    <div id="preview-experience-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- Projects Preview -->
+                <div id="preview-projects-section">
+                    <h2>Projects</h2>
+                    <div id="preview-project-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- Research Preview -->
+                <div id="preview-research-section">
+                    <h2>Research</h2>
+                    <div id="preview-research-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- References Preview -->
+                <div id="preview-references-section" style="display: none;"> <!-- Hidden by default -->
+                    <h2>References</h2>
+                    <div id="preview-reference-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- End of preview sections placeholder -->
             </div>
         </div>
-    </section>
-
-    <!-- Optional: Add a script tag if you need JS on the homepage, though unlikely for a simple one -->
-    <!-- <script src="js/main.js"></script> -->
+    </div>
+    <script src="js/main.js"></script>
 </body>
 </html>
