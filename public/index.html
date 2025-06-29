@@ -3,15 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Default SE Resume Template</title>
+
     <title>SkipTheScreen - Home</title>
+
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+
+    <h1 id="main-title">Default SE Template</h1>
+    <div class="container">
+        <div class="resume-form">
+            <!-- Header Section -->
+            <h2>Header</h2>
+            <div>
+                <label style="margin-right: 10px;"><input type="radio" name="headerLayout" value="inline" checked> Inline Header</label>
+                <label><input type="radio" name="headerLayout" value="stacked"> Stacked Header</label>
+            </div>
+            <input type="text" id="fullName" placeholder="Full Name">
+            <input type="text" id="jobTitle" placeholder="Job Title">
+            <input type="tel" id="phone" placeholder="Phone">
+            <input type="text" id="location" placeholder="Location">
+            <input type="email" id="email" placeholder="Email">
+            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
+
+            <!-- Education Section (Optional Toggle) -->
+            <h2>
+                <label><input type="checkbox" id="toggle-education" checked> Education Section</label>
+            </h2>
+            <div id="education-form-content">
+                <div id="education-entries">
+                    <div class="education-entry">
+                        <input type="text" class="institution" placeholder="Institution (e.g., Glennwood University)">
+                        <input type="text" class="eduLocation" placeholder="Location (e.g., Boulder, CO)">
+                        <input type="text" class="degree" placeholder="Degree (e.g., BS in Computer Science)">
+                        <input type="text" class="gpa" placeholder="GPA (e.g., 3.8)">
+                        <textarea class="coursework" placeholder="Relevant Coursework (e.g., web development, database management)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-education">Add Education</button>
+            </div>
+
+            <!-- Skills & Abilities Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-skills" checked> Skills & Abilities</label>
+            </h2>
+            <div id="skills-form-content">
+                <textarea id="skillsAbilities" placeholder="Describe your general skills and abilities..."></textarea>
+                <div class="form-subsection-toggle" style="margin-top:10px; margin-bottom:5px;">
+                    <label><input type="checkbox" id="toggle-detailed-skills" checked> Include detailed skills breakdown</label>
+                </div>
+                <div id="detailed-skills-form">
+                    <h3>Languages</h3>
+                    <textarea id="skillsLanguages" placeholder="e.g., JavaScript, Python (comma or newline separated)"></textarea>
+                    <h3>Frameworks/Libraries</h3>
+                    <textarea id="skillsFrameworks" placeholder="e.g., React, Node.js (comma or newline separated)"></textarea>
+                    <h3>Tools</h3>
+                    <textarea id="skillsTools" placeholder="e.g., Git, Docker (comma or newline separated)"></textarea>
+                    <h3>Platforms</h3>
+                    <textarea id="skillsPlatforms" placeholder="e.g., AWS, Azure (comma or newline separated)"></textarea>
+                </div>
+            </div>
+
+            <!-- Experience Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-experience" checked> Experience</label>
+            </h2>
+            <div id="experience-form-content">
+                <div id="experience-entries">
+                    <div class="experience-entry">
+                        <input type="text" class="companyName" placeholder="Company Name">
+                        <input type="text" class="jobTitle" placeholder="Job Title">
+                        <input type="text" class="expDates" placeholder="Dates (e.g., Sept 20XX – Aug 20XX)">
+                        <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-experience">Add Experience</button>
+            </div>
+
     <div class="container home-container">
         <h1 id="home-title">Welcome to SkipTheScreen</h1>
         <p id="home-subtitle">Your friendly tool to build a professional resume, quickly and easily.</p>
         <a href="resume-builder.html" class="button home-button">Go to Resume Builder</a>
     </div>
+
 
     <section id="features" class="features-section">
         <div class="container">
