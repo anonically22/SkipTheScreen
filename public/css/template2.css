@@ -1,0 +1,201 @@
+/* Styles for "Template 2: Modern" Resume Preview */
+
+/* Overall Preview Area for Modern Template */
+.template-modern #resume-preview {
+    font-family: 'Helvetica Neue', Arial, sans-serif; /* Clean, modern sans-serif */
+    background-color: #ffffff;
+    color: #484848; /* Softer black for body text */
+    line-height: 1.6;
+    padding: 35px; /* Slightly more padding */
+}
+
+/* Header in Preview - Modern Template */
+.template-modern #preview-header {
+    padding-bottom: 20px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e0e0e0; /* Lighter, subtle separator */
+    text-align: left; /* Default, but ensure for template */
+}
+
+.template-modern #preview-header #preview-fullName {
+    font-size: 2.4em;
+    color: #333; /* Strong dark color */
+    font-weight: 600; /* Bolder than default template1 */
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+}
+
+.template-modern #preview-header #preview-jobTitle {
+    font-size: 1.25em;
+    color: #5DADE2; /* Modern accent blue */
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+.template-modern #preview-contactInfo {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.7;
+}
+/* Modern template might use icons + text for contact, handled by JS if so. */
+/* For now, text with subtle separators if inline */
+.template-modern #preview-contactInfo.inline span:not(:last-child)::after {
+    content: "•"; /* Using a dot or bullet as separator */
+    color: #ccc;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+.template-modern #preview-contactInfo.stacked span {
+    padding: 2px 0; /* More spacing when stacked */
+}
+
+
+/* Section Headings (H2) - Modern Template */
+.template-modern #resume-preview h2 {
+    font-size: 1.2em;
+    color: #5DADE2; /* Modern accent blue */
+    font-weight: 600; /* Bolder headings */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 30px; /* More top margin for sections */
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #5DADE2; /* Accent color underline */
+}
+
+/* Entry Titles (H3) - Modern Template */
+.template-modern #resume-preview h3 { /* e.g., Institution, Company, Project Name */
+    font-size: 1.15em;
+    color: #333;
+    font-weight: 600;
+    margin-top: 18px; /* More space for entries */
+    margin-bottom: 4px;
+}
+
+/* Experience Type Subheadings - Modern Template */
+.template-modern #preview-experience-entries .experience-type-heading {
+    font-size: 1.0em; /* Smaller than main H3 */
+    color: #484848;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 25px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 4px;
+}
+
+/* Paragraphs - Modern Template */
+.template-modern #resume-preview p {
+    font-size: 0.95em;
+    color: #555; /* Slightly lighter paragraph text */
+    margin-bottom: 8px;
+}
+
+/* Lists (ul/li) - Modern Template */
+.template-modern #resume-preview ul {
+    list-style-type: none; /* Remove default bullets for a cleaner look */
+    padding-left: 0;
+    margin-top: 5px;
+}
+.template-modern #resume-preview ul li {
+    padding-left: 18px; /* Indent for custom bullet */
+    position: relative;
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+.template-modern #resume-preview ul li::before {
+    content: "▹"; /* Custom bullet: right-pointing triangle */
+    position: absolute;
+    left: 0;
+    top: 1px;
+    color: #5DADE2; /* Accent color for bullets */
+    font-size: 0.9em;
+}
+
+/* Skills Subcategories - Modern Template */
+.template-modern .skills-subcategory {
+    margin-top: 8px;
+    margin-bottom: 12px; /* More space after skill group */
+}
+.template-modern .skills-subcategory h4 {
+    font-size: 0.95em;
+    font-weight: 600; /* Bolder category name */
+    color: #333;
+    margin-right: 8px;
+    display: inline;
+}
+.template-modern .skills-subcategory ul {
+    padding-left: 0; /* No padding if inline */
+    display: inline;
+}
+.template-modern .skills-subcategory ul li {
+    padding-left: 0; /* No custom bullet for these inline skills */
+    font-size: 0.9em; /* Slightly smaller skills text */
+    color: #555;
+    background-color: #eaf2f8; /* Light background chip for skills */
+    padding: 3px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+    margin-bottom: 6px; /* For wrapping */
+    display: inline-block; /* Allow margin-bottom for wrapped items */
+}
+.template-modern .skills-subcategory ul li::before {
+    content: ""; /* Remove default custom bullet from general ul li */
+}
+.template-modern .skills-subcategory ul li:not(:last-child)::after {
+    content: ""; /* No commas, they are distinct chips */
+}
+
+/* For newline separated skills in Modern Template (if used) */
+.template-modern .skills-subcategory.newline-items ul {
+    display: block;
+    list-style-type: none; /* Still no default bullets */
+    padding-left: 0;
+    margin-top: 4px;
+}
+.template-modern .skills-subcategory.newline-items ul li {
+    display: block; /* Each skill on a new line */
+    padding-left: 18px; /* Indent for custom bullet */
+    background-color: transparent; /* No chip background for block display */
+    margin-bottom: 4px;
+    padding: 2px 0; /* Reset padding */
+}
+.template-modern .skills-subcategory.newline-items ul li::before {
+    content: "▪"; /* Small square bullet for newline items */
+    position: absolute;
+    left: 0;
+    top: 3px; /* Adjust vertical alignment */
+    color: #5DADE2;
+    font-size: 0.7em;
+}
+
+/* Specific Preview Sections - Modern Template */
+.template-modern #preview-objective-section p,
+.template-modern #preview-communication-section p,
+.template-modern #preview-leadership-section p {
+    font-style: normal;
+    padding-left: 0; /* No special indent */
+    font-size: 1em; /* Slightly larger for these summary sections */
+    color: #444;
+}
+
+.template-modern #preview-reference-entries div p {
+    margin-bottom: 3px;
+    font-size: 0.9em;
+}
+.template-modern #preview-reference-entries div p strong {
+    font-weight: 600; /* Slightly less bold than template1 */
+    color: #333;
+}
+
+/* Two-tone effect: Simple version using a colored left border on sections or a header bar */
+/* Example: Add a colored bar to the left of the entire preview */
+/*
+.template-modern #resume-preview {
+    border-left: 8px solid #5DADE2;
+    padding-left: 35px;
+}
+*/
+/* Or, a header bar for each section */
+/* This is already achieved by the H2 styling with border-bottom in accent color */
