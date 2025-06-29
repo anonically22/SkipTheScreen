@@ -68,6 +68,22 @@
                 </div>
             </div>
 
+            <!-- Experience Section -->
+            <h2>
+                <label><input type="checkbox" id="toggle-experience" checked> Experience</label>
+            </h2>
+            <div id="experience-form-content">
+                <div id="experience-entries">
+                    <div class="experience-entry">
+                        <input type="text" class="companyName" placeholder="Company Name">
+                        <input type="text" class="jobTitle" placeholder="Job Title">
+                        <input type="text" class="expDates" placeholder="Dates (e.g., Sept 20XX – Aug 20XX)">
+                        <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
+                    </div>
+                </div>
+                <button type="button" id="add-experience">Add Experience</button>
+            </div>
+
             <!-- Other sections will be added here later -->
         </div>
 
@@ -101,6 +117,13 @@
                         <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
                         <div id="preview-skillsTools-list" class="skills-subcategory"></div>
                         <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
+                    </div>
+                </div>
+                <!-- Experience Preview -->
+                <div id="preview-experience-section">
+                    <h2>Experience</h2>
+                    <div id="preview-experience-entries">
+                        <!-- JS will populate this based on form input -->
                     </div>
                 </div>
                 <!-- Other preview sections will be added here later -->
