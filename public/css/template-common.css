@@ -1,0 +1,197 @@
+/* Styles common to all resume templates editor page (builder.html) */
+/* This will include overall builder page layout, form styling, etc. */
+
+/* Example: Body style for the editor page if different from homepage */
+body.editor-page {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #e9ecef; /* Light grey background for the editor area */
+    color: #343a40;
+}
+
+/* Builder Header */
+.builder-header {
+    background-color: #343a40; /* Dark header for editor */
+    color: #ffffff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.builder-header .back-to-home-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 0.9em;
+}
+.builder-header .back-to-home-link:hover {
+    text-decoration: underline;
+}
+
+/* Main editor layout container (holds form and preview) */
+/* This reuses .container styles from the original styles.css if applicable */
+/* For builder.html, .container holds .resume-form and .resume-preview-container */
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    max-width: 95%; /* Or a specific pixel value like 1800px for wide editors */
+    margin: 20px auto;
+    padding: 0; /* Container itself might not need padding if children have it */
+}
+
+.resume-form, .resume-preview-container {
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05); /* Softer shadow for editor components */
+    flex-basis: 48%; /* Side-by-side */
+    box-sizing: border-box;
+    margin-bottom: 20px; /* If they stack on mobile */
+    height: calc(100vh - 100px); /* Example: Adjust based on header/footer height */
+    overflow-y: auto; /* Allow scrolling within form/preview independently */
+}
+.resume-form {
+    /* Specific styles for the form column if needed */
+}
+.resume-preview-container {
+     position: sticky; /* Make preview sticky */
+     top: 80px; /* Adjust based on builder-header height + some margin */
+     /* height: calc(100vh - 100px); /* Match height or adjust */
+}
+
+
+/* General Form Element Styling (should be common) */
+.resume-form h2 {
+    color: #34495e;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 8px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+.resume-form h2 label { /* Ensure label within h2 is styled appropriately */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1em; /* Inherit from h2 or set explicitly */
+    cursor: pointer;
+}
+.resume-form h2 input[type="checkbox"] {
+    width: auto; /* Override general input width */
+    margin-right: 5px;
+}
+
+
+.resume-form h3 {
+    font-size: 1em;
+    color: #555;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="url"],
+textarea,
+select {
+    width: calc(100% - 22px);
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #bdc3c7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1em;
+}
+select {
+    background-color: white;
+}
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+button:hover {
+    background-color: #2980b9;
+}
+
+/* Generic entry container styling for form sections */
+.education-entry, .experience-entry, .project-entry, .research-entry, .reference-entry {
+    border: 1px solid #ecf0f1;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+.form-subsection-toggle {
+    margin-top:10px;
+    margin-bottom:5px;
+}
+.form-subsection-toggle label {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.form-subsection-toggle input[type="checkbox"] {
+     width: auto; margin-right: 0;
+}
+
+
+/* Responsive adjustments for builder layout */
+@media (max-width: 991px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        max-width: 98%;
+    }
+    .resume-form, .resume-preview-container {
+        flex-basis: auto;
+        width: 100%;
+        margin-bottom: 25px;
+        height: auto; /* Allow height to adjust */
+        overflow-y: visible; /* Reset overflow */
+    }
+    .resume-preview-container {
+        position: static; /* Unstick preview */
+        top: auto;
+    }
+}
+@media (max-width: 480px) {
+    body.editor-page {
+        padding: 10px;
+    }
+     .resume-form, .resume-preview-container {
+        padding: 15px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    textarea,
+    select {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+    button {
+        padding: 8px 15px;
+        font-size: 0.95em;
+    }
+}

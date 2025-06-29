@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Default SE Resume Template</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Resume Editor - SkipTheScreen</title>
+    <link rel="stylesheet" href="css/template-common.css">
+    <link rel="stylesheet" href="css/template1.css">
     <style>
         /* Basic style for stacked header preview option */
         #preview-contactInfo.stacked span {
@@ -13,8 +14,12 @@
         }
     </style>
 </head>
-<body>
-    <h1 id="main-title">Default SE Template</h1>
+<body class="editor-page template-professional"> <!-- Added classes -->
+    <header class="builder-header">
+        <a href="index.html" class="back-to-home-link">&larr; SkipTheScreen Home</a>
+        <!-- Template name/switcher can go here later -->
+    </header>
+    <!-- Removed old <h1 id="main-title">Default SE Template</h1> -->
     <div class="container">
         <div class="resume-form">
             <!-- Header Section -->
@@ -198,6 +203,6 @@
             </div>
         </div>
     </div>
-    <script src="js/main.js"></script>
+    <script src="js/editor.js"></script>
 </body>
 </html>

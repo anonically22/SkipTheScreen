@@ -1,4 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Apply template class from URL query parameter
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const templateName = urlParams.get('template');
+
+        // Remove any existing template-* classes
+        const classesToRemove = [];
+        for (let i = 0; i < document.body.classList.length; i++) {
+            if (document.body.classList[i].startsWith('template-')) {
+                classesToRemove.push(document.body.classList[i]);
+            }
+        }
+        classesToRemove.forEach(cls => document.body.classList.remove(cls));
+
+        if (templateName && templateName.trim() !== '') {
+            document.body.classList.add(`template-${templateName.trim()}`);
+        } else {
+            // Fallback to default if no template specified or if professional is hardcoded and needs ensuring
+            if (!document.body.classList.contains('template-professional')) {
+                 document.body.classList.add('template-professional');
+            }
+        }
+    } catch (e) {
+        console.error("Error processing template query param:", e);
+        // Ensure default template class if error occurs
+        if (!document.body.classList.contains('template-professional')) {
+            document.body.classList.add('template-professional');
+        }
+    }
+
     // --- Form Input Elements ---
     // Header
     const headerLayoutRadios = document.querySelectorAll('input[name="headerLayout"]');
