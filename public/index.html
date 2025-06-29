@@ -3,201 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Default SE Resume Template</title>
-    <link rel="stylesheet" href="css/styles.css">
-    <style>
-        /* Basic style for stacked header preview option */
-        #preview-contactInfo.stacked span {
-            display: block;
-            margin-bottom: 3px;
-        }
-    </style>
+    <title>SkipTheScreen - Beat the Bots, Get the Job</title>
+    <link rel="stylesheet" href="css/home.css"> <!-- Link to new homepage CSS -->
 </head>
-<body>
-    <h1 id="main-title">Default SE Template</h1>
-    <div class="container">
-        <div class="resume-form">
-            <!-- Header Section -->
-            <h2>Header</h2>
-            <div>
-                <label style="margin-right: 10px;"><input type="radio" name="headerLayout" value="inline" checked> Inline Header</label>
-                <label><input type="radio" name="headerLayout" value="stacked"> Stacked Header</label>
-            </div>
-            <input type="text" id="fullName" placeholder="Full Name">
-            <input type="text" id="jobTitle" placeholder="Job Title">
-            <input type="tel" id="phone" placeholder="Phone">
-            <input type="text" id="location" placeholder="Location">
-            <input type="email" id="email" placeholder="Email">
-            <input type="url" id="linkedin" placeholder="LinkedIn Profile URL">
+<body class="homepage-body">
 
-            <!-- Education Section (Optional Toggle) -->
-            <h2>
-                <label><input type="checkbox" id="toggle-education" checked> Education Section</label>
-            </h2>
-            <div id="education-form-content">
-                <div id="education-entries">
-                    <div class="education-entry">
-                        <input type="text" class="institution" placeholder="Institution (e.g., Glennwood University)">
-                        <input type="text" class="eduLocation" placeholder="Location (e.g., Boulder, CO)">
-                        <input type="text" class="degree" placeholder="Degree (e.g., BS in Computer Science)">
-                        <input type="text" class="gpa" placeholder="GPA (e.g., 3.8)">
-                        <textarea class="coursework" placeholder="Relevant Coursework (e.g., web development, database management)"></textarea>
-                    </div>
-                </div>
-                <button type="button" id="add-education">Add Education</button>
-            </div>
-
-            <!-- Skills & Abilities Section -->
-            <h2>
-                <label><input type="checkbox" id="toggle-skills" checked> Skills & Abilities</label>
-            </h2>
-            <div id="skills-form-content">
-                <textarea id="skillsAbilities" placeholder="Describe your general skills and abilities..."></textarea>
-                <div class="form-subsection-toggle" style="margin-top:10px; margin-bottom:5px;">
-                    <label><input type="checkbox" id="toggle-detailed-skills" checked> Include detailed skills breakdown</label>
-                </div>
-                <div id="detailed-skills-form">
-                    <h3>Languages</h3>
-                    <textarea id="skillsLanguages" placeholder="e.g., JavaScript, Python (comma or newline separated)"></textarea>
-                    <h3>Frameworks/Libraries</h3>
-                    <textarea id="skillsFrameworks" placeholder="e.g., React, Node.js (comma or newline separated)"></textarea>
-                    <h3>Tools</h3>
-                    <textarea id="skillsTools" placeholder="e.g., Git, Docker (comma or newline separated)"></textarea>
-                    <h3>Platforms</h3>
-                    <textarea id="skillsPlatforms" placeholder="e.g., AWS, Azure (comma or newline separated)"></textarea>
-                </div>
-            </div>
-
-            <!-- Experience Section -->
-            <h2>
-                <label><input type="checkbox" id="toggle-experience" checked> Experience</label>
-            </h2>
-            <div id="experience-form-content">
-                <div id="experience-entries">
-                    <div class="experience-entry">
-                        <input type="text" class="companyName" placeholder="Company Name">
-                        <input type="text" class="jobTitle" placeholder="Job Title">
-                        <input type="text" class="expDates" placeholder="Dates (e.g., Sept 20XX – Aug 20XX)">
-                        <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
-                    </div>
-                </div>
-                <button type="button" id="add-experience">Add Experience</button>
-            </div>
-
-            <!-- Projects Section -->
-            <h2>
-                <label><input type="checkbox" id="toggle-projects" checked> Projects</label>
-            </h2>
-            <div id="projects-form-content">
-                <div id="project-entries">
-                    <div class="project-entry">
-                        <input type="text" class="projectName" placeholder="Project Name">
-                        <input type="text" class="projectRole" placeholder="Your Role (e.g., Lead Developer, Contributor)">
-                        <input type="text" class="projectDates" placeholder="Dates/Duration (e.g., Jan 2023 - Mar 2023)">
-                        <textarea class="projectDescription" placeholder="Description, Key Features, Technologies Used (one per line)"></textarea>
-                    </div>
-                </div>
-                <button type="button" id="add-project">Add Project</button>
-            </div>
-
-            <!-- Research Section -->
-            <h2>
-                <label><input type="checkbox" id="toggle-research" checked> Research</label>
-            </h2>
-            <div id="research-form-content">
-                <div id="research-entries">
-                    <div class="research-entry">
-                        <input type="text" class="researchTitle" placeholder="Research Title/Topic">
-                        <input type="text" class="researchAffiliation" placeholder="Affiliation/Lab (optional)">
-                        <input type="text" class="researchDates" placeholder="Dates (e.g., Spring 2022)">
-                        <textarea class="researchSummary" placeholder="Abstract, Summary, Key Findings (one per line if needed)"></textarea>
-                    </div>
-                </div>
-                <button type="button" id="add-research">Add Research</button>
-            </div>
-
-            <!-- References Section (Optional) -->
-            <h2>
-                <label><input type="checkbox" id="toggle-references"> References Section</label>
-            </h2>
-            <div id="references-form-content" style="display: none;"> <!-- Hidden by default -->
-                <div id="reference-entries">
-                    <div class="reference-entry">
-                        <input type="text" class="refName" placeholder="Reference Name">
-                        <input type="text" class="refJobTitle" placeholder="Job Title">
-                        <input type="text" class="refCompany" placeholder="Company">
-                        <input type="text" class="refContact" placeholder="Contact">
-                    </div>
-                </div>
-                <button type="button" id="add-reference">Add Reference</button>
-            </div>
-            <!-- End of dynamically added sections placeholder -->
+    <header class="site-header">
+        <div class="header-content">
+            <h1 class="site-logo">SkipTheScreen</h1>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Templates</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="resume-preview-container">
-            <h2>Live Preview</h2>
-            <div id="resume-preview">
-                <!-- Header Preview -->
-                <div id="preview-header">
-                    <h1 id="preview-fullName">Your Name</h1>
-                    <p id="preview-jobTitle">Your Job Title</p>
-                    <div id="preview-contactInfo">
-                        <span id="preview-phone">Your Phone</span>
-                        <span id="preview-location">Your Location</span>
-                        <span id="preview-email">Your Email</span>
-                        <span id="preview-linkedin">Your LinkedIn</span>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Beat the Bots, Get the Job</h2>
+                <p class="tagline">Create professional, ATS-friendly resumes in minutes. Impress recruiters and land your dream interview.</p>
+                <a href="builder.html" class="cta-button primary-cta">Get Started Now - It's Free!</a>
+            </div>
+        </section>
+
+        <section id="template-gallery" class="gallery-section">
+            <div class="gallery-content">
+                <h2>Explore Our Templates</h2>
+                <p class="gallery-intro">Choose from a variety of professionally designed, ATS-optimized resume templates.</p>
+                <div class="gallery-grid">
+                    <div class="template-card-placeholder">Template 1 Preview</div>
+                    <div class="template-card-placeholder">Template 2 Preview</div>
+                    <div class="template-card-placeholder">Template 3 Preview</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="how-it-works-section">
+            <div class="how-it-works-content">
+                <h2>How It Works</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Choose a Template</h3>
+                        <p>Select a professionally designed, ATS-friendly template that fits your style and industry.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Fill Your Details</h3>
+                        <p>Easily input your information with our intuitive editor and live preview.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Download & Apply</h3>
+                        <p>Export your resume as a PDF or DOCX, ready to impress employers.</p>
                     </div>
                 </div>
-                <!-- Education Preview -->
-                <div id="preview-education-section">
-                    <h2>Education</h2>
-                    <div id="preview-education-entries">
-                        <!-- JS will populate this based on form input -->
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials-section">
+            <div class="testimonials-content">
+                <h2>Success Stories</h2>
+                <div class="testimonial-grid">
+                    <div class="testimonial-card">
+                        <p>"SkipTheScreen helped me land my dream job! The ATS-friendly templates made all the difference."</p>
+                        <cite>- Alex P.</cite>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Finally, a resume builder that understands what recruiters and ATS systems are looking for."</p>
+                        <cite>- Jamie L.</cite>
+                    </div>
+                     <div class="testimonial-card">
+                        <p>"The live preview and easy editing saved me so much time. Highly recommend!"</p>
+                        <cite>- Sam K.</cite>
                     </div>
                 </div>
-                <!-- Skills & Abilities Preview -->
-                <div id="preview-skillsAbilities-section">
-                    <h2>Skills & abilities</h2>
-                    <p id="preview-skillsAbilities"></p>
-                    <div id="preview-detailed-skills">
-                        <div id="preview-skillsLanguages-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsFrameworks-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsTools-list" class="skills-subcategory"></div>
-                        <div id="preview-skillsPlatforms-list" class="skills-subcategory"></div>
-                    </div>
-                </div>
-                <!-- Experience Preview -->
-                <div id="preview-experience-section">
-                    <h2>Experience</h2>
-                    <div id="preview-experience-entries">
-                        <!-- JS will populate this based on form input -->
-                    </div>
-                </div>
-                <!-- Projects Preview -->
-                <div id="preview-projects-section">
-                    <h2>Projects</h2>
-                    <div id="preview-project-entries">
-                        <!-- JS will populate this based on form input -->
-                    </div>
-                </div>
-                <!-- Research Preview -->
-                <div id="preview-research-section">
-                    <h2>Research</h2>
-                    <div id="preview-research-entries">
-                        <!-- JS will populate this based on form input -->
-                    </div>
-                </div>
-                <!-- References Preview -->
-                <div id="preview-references-section" style="display: none;"> <!-- Hidden by default -->
-                    <h2>References</h2>
-                    <div id="preview-reference-entries">
-                        <!-- JS will populate this based on form input -->
-                    </div>
-                </div>
-                <!-- End of preview sections placeholder -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-content">
+            <p>&copy; 2024 SkipTheScreen. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+            <div class="social-media-links">
+                <!-- Placeholder for social media icons -->
+                <a href="#" aria-label="Facebook">F</a>
+                <a href="#" aria-label="Twitter">T</a>
+                <a href="#" aria-label="LinkedIn">L</a>
             </div>
         </div>
-    </div>
-    <script src="js/main.js"></script>
+    </footer>
+
 </body>
 </html>
