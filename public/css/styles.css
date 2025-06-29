@@ -7,7 +7,7 @@ body {
     line-height: 1.6;
 }
 
-#main-title { /* This is for the Resume Builder page title */
+#main-title {
     text-align: center;
     color: #2c3e50;
     margin-top: 20px;
@@ -15,119 +15,9 @@ body {
     font-size: 2.5em;
 }
 
-/* Homepage specific styles */
-.home-container {
+.container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 80vh; /* Make it take most of the viewport height */
-    text-align: center;
-    padding: 20px;
-}
-
-#home-title {
-    color: #2c3e50;
-    font-size: 2.8em; /* Larger than resume builder title */
-    margin-bottom: 15px;
-}
-
-#home-subtitle {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 30px;
-    max-width: 600px; /* Keep subtitle readable */
-}
-
-.home-button { /* Styling for the link to look like a button */
-    display: inline-block; /* Needed for padding and other block properties */
-    background-color: #3498db;
-    color: white;
-    padding: 15px 30px;
-    border-radius: 5px;
-    text-decoration: none; /* Remove underline from anchor tag */
-    font-size: 1.1em;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.home-button:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px); /* Slight lift on hover */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-/* Features Section Styles */
-.features-section {
-    padding: 40px 20px; /* Add some padding above and below */
-    background-color: #ffffff; /* White background for this section */
-    text-align: center;
-}
-
-.features-section .container {
-    /* Override default container behavior for this section if needed,
-       or ensure it's suitable. The default .container is flex-row.
-       For a centered title and then a grid/flex row of items,
-       we might need to adjust or add a nested container.
-       Let's try to use the existing .container for max-width and centering,
-       but make its direct children (title, grid) stack. */
-    flex-direction: column; /* Stack title and grid */
-    align-items: center; /* Center them */
-}
-
-.features-section .section-title {
-    color: #2c3e50;
-    font-size: 2.2em;
-    margin-bottom: 30px;
-}
-
-.features-grid {
-    display: flex;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
-    gap: 25px; /* Space between feature items */
-    justify-content: center; /* Center items if they don't fill the row */
-    width: 100%; /* Ensure it uses the container's width */
-}
-
-.feature-item {
-    background-color: #f9f9f9; /* Light background for each item */
-    border: 1px solid #ecf0f1; /* Subtle border */
-    border-radius: 8px;
-    padding: 25px;
-    flex-basis: calc(33.333% - 30px); /* Aim for 3 items per row, adjusting for gap */
-    min-width: 280px; /* Minimum width before wrapping */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    text-align: left; /* Align text to the left within each card */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* For hover effect */
-}
-
-.feature-item:hover {
-    transform: translateY(-5px); /* Lift item slightly on hover */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Enhance shadow on hover */
-}
-
-.feature-item h3 {
-    color: #3498db; /* Use a theme color for feature titles */
-    font-size: 1.3em;
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.feature-item p {
-    font-size: 0.95em;
-    color: #555;
-    line-height: 1.6;
-}
-
-
-/* Original .container for resume builder page - this might need adjustment if
-   the .features-section .container override is too broad.
-   It's better to make .features-section .container more specific or add a new class.
-   For now, the CSS rule `.features-section .container` is specific enough.
-*/
-.container { /* This is the general container, resume builder uses it directly */
-    display: flex;
-    flex-direction: row; /* Default for resume builder page */
+    flex-direction: row;
     gap: 20px;
     max-width: 95%;
     margin: 0 auto;
@@ -377,7 +267,7 @@ button:hover {
 
 /* Medium screens and down (e.g., tablets and mobiles in portrait) */
 @media (max-width: 991px) { /* A slightly larger breakpoint for stacking sooner */
-    .container:not(.home-container):not(.features-section .container) { /* Make resume builder container stack */
+    .container {
         flex-direction: column;
         align-items: center; /* Center form/preview when stacked */
         gap: 0; /* Remove gap, manage spacing with margins */
@@ -459,4 +349,79 @@ button:hover {
     #resume-preview h2 { /* Section titles in preview */
         font-size: 1.2em;
     }
+}
+
+/* --- Homepage Specific Styles --- */
+body.homepage {
+    font-family: Arial, sans-serif; /* Different base font for homepage */
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6; /* Slightly different background */
+    color: #333;
+}
+.homepage-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.homepage-title { /* Class for the main title on the homepage */
+    font-size: 2.8em;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+.homepage-subtitle {
+    font-size: 1.2em;
+    color: #555;
+    margin-bottom: 30px;
+}
+.features-section {
+    margin-top: 40px;
+    text-align: left;
+}
+.features-section h2 { /* Styling for H2 within homepage's features section */
+    font-size: 1.8em;
+    color: #34495e;
+    border-bottom: 2px solid #ecf0f1;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.features-list {
+    list-style: none;
+    padding: 0;
+}
+.features-list li {
+    font-size: 1.1em;
+    color: #444;
+    padding: 10px 0;
+    border-bottom: 1px dotted #ddd;
+}
+.features-list li:last-child {
+    border-bottom: none;
+}
+.features-list li::before {
+    content: '✔️';
+    color: #27ae60;
+    margin-right: 10px;
+    font-weight: bold;
+}
+.cta-button { /* Call to action button on homepage */
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 40px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+.cta-button:hover, .cta-button:focus {
+    background-color: #2980b9;
+    transform: translateY(-2px);
 }

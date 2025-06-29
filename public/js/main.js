@@ -145,10 +145,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     const institution = form.querySelector('.institution')?.value;
                     const eduLocation = form.querySelector('.eduLocation')?.value;
                     const degree = form.querySelector('.degree')?.value;
-                    const cgpa = form.querySelector('.cgpa')?.value;
+                    const gpa = form.querySelector('.gpa')?.value;
                     const coursework = form.querySelector('.coursework')?.value;
 
-                    if (institution || eduLocation || degree || cgpa || coursework) {
+                    if (institution || eduLocation || degree || gpa || coursework) {
                         hasEducationContent = true;
                         const eduDiv = document.createElement('div');
                         eduDiv.classList.add('preview-entry-item'); // Generic class for styling entries
@@ -165,8 +165,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         if (degree) {
                             degreeLine += degree;
                         }
-                        if (cgpa) {
-                            degreeLine += (degreeLine ? ' - ' : '') + `CGPA: ${cgpa}`;
+                        if (gpa) {
+                            degreeLine += (degreeLine ? ' - ' : '') + `GPA: ${gpa}`;
                         }
                         if (degreeLine) {
                             const pDegreeGpa = document.createElement('p');
@@ -481,7 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <input type="text" class="institution" placeholder="Institution">
                     <input type="text" class="eduLocation" placeholder="Location">
                     <input type="text" class="degree" placeholder="Degree">
-                    <input type="text" class="cgpa" placeholder="CGPA">
+                    <input type="text" class="gpa" placeholder="GPA">
                     <textarea class="coursework" placeholder="Relevant Coursework"></textarea>
                 `;
                 break;
