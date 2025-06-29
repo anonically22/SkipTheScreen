@@ -451,4 +451,98 @@ body.homepage-body {
     .gallery-section h2, .how-it-works-section h2, .testimonials-section h2 {
         font-size: 1.7em;
     }
+    .template-card {
+        width: 90%;
+        max-width: 310px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .gallery-filters select {
+        min-width: calc(100% - 36px); /* Full width minus padding */
+        margin-bottom: 10px;
+    }
+    .gallery-filters {
+        gap: 10px; /* Reduce gap for stacked filters */
+    }
+}
+
+/* Trust Features Section */
+.trust-features-section {
+    background-color: #eaf2f8; /* Very light blue, distinct from other sections */
+    padding: 80px 0;
+}
+.trust-features-content { /* Added this wrapper for consistency like other sections */
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+.trust-features-content h2 {
+    font-size: 2.4em;
+    color: #343a40;
+    margin-bottom: 50px;
+    text-align: center;
+    font-weight: 600;
+}
+.features-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Center items if they don't fill the row */
+    gap: 30px;
+    /* max-width: 1140px; /* This is handled by trust-features-content */
+    /* margin: 0 auto; */
+}
+.feature-item {
+    background-color: #ffffff;
+    padding: 30px; /* Increased padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    text-align: center;
+    flex-basis: calc(50% - 40px); /* Two items per row on medium/large, accounts for gap */
+    min-width: 280px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.feature-icon {
+    font-size: 2.8em;
+    color: #3498db;
+    margin-bottom: 20px;
+    /* background-color: #e9f5ff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center; */
+}
+.feature-item h4 {
+    font-size: 1.3em;
+    color: #34495e;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.feature-item p {
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* Responsive adjustments for Trust Features */
+@media (max-width: 992px) {
+    .feature-item {
+        flex-basis: calc(50% - 30px); /* Still aims for two, adjusts for slightly less space */
+    }
+}
+@media (max-width: 768px) {
+    .trust-features-content h2 {
+        font-size: 2em;
+    }
+    .feature-item {
+        flex-basis: 100%; /* Stack to one column */
+        margin-bottom: 30px;
+    }
+    .feature-item:last-child {
+        margin-bottom: 0;
+    }
 }
