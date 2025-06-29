@@ -60,6 +60,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewExperienceSection = document.getElementById('preview-experience-section'); // Main preview section wrapper
     const previewExperienceEntriesContainer = document.getElementById('preview-experience-entries'); // Preview container for entries
 
+    // Projects Form Elements
+    const toggleProjects = document.getElementById('toggle-projects');
+    const projectsFormContent = document.getElementById('projects-form-content');
+    const projectEntriesContainer = document.getElementById('project-entries');
+    const addProjectButton = document.getElementById('add-project');
+
+    // Projects Preview Elements
+    const previewProjectsSection = document.getElementById('preview-projects-section');
+    const previewProjectEntriesContainer = document.getElementById('preview-project-entries');
+
+    // Research Form Elements
+    const toggleResearch = document.getElementById('toggle-research');
+    const researchFormContent = document.getElementById('research-form-content');
+    const researchEntriesContainer = document.getElementById('research-entries');
+    const addResearchButton = document.getElementById('add-research');
+
+    // Research Preview Elements
+    const previewResearchSection = document.getElementById('preview-research-section');
+    const previewResearchEntriesContainer = document.getElementById('preview-research-entries');
+
 
     // --- Default Preview Text ---
     const defaultTexts = {
@@ -238,6 +258,112 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewExperienceSection.style.display = 'none';
             }
         }
+
+        // Projects Preview Logic
+        if (previewProjectsSection && projectsFormContent && projectEntriesContainer && previewProjectEntriesContainer) {
+            if (toggleProjects && toggleProjects.checked) {
+                previewProjectsSection.style.display = '';
+                previewProjectEntriesContainer.innerHTML = ''; // Clear previous entries
+
+                const projectForms = projectEntriesContainer.querySelectorAll('.project-entry');
+                let hasProjectContent = false;
+                projectForms.forEach(form => {
+                    const projectName = form.querySelector('.projectName')?.value;
+                    const projectRole = form.querySelector('.projectRole')?.value;
+                    const projectDates = form.querySelector('.projectDates')?.value;
+                    const projectDescriptionText = form.querySelector('.projectDescription')?.value;
+
+                    if (projectName || projectRole || projectDates || (projectDescriptionText && projectDescriptionText.trim() !== '')) {
+                        hasProjectContent = true;
+                        const projectDiv = document.createElement('div');
+                        projectDiv.classList.add('preview-entry-item');
+
+                        const h3 = document.createElement('h3');
+                        h3.textContent = projectName || 'Project Name';
+                        projectDiv.appendChild(h3);
+
+                        let subHeadingText = '';
+                        if (projectRole) subHeadingText += projectRole;
+                        if (projectDates) subHeadingText += (subHeadingText ? ' | ' : '') + projectDates;
+
+                        if (subHeadingText) {
+                            const pSubHeading = document.createElement('p');
+                            pSubHeading.textContent = subHeadingText;
+                            projectDiv.appendChild(pSubHeading);
+                        }
+
+                        if (projectDescriptionText && projectDescriptionText.trim() !== '') {
+                            const descriptionArray = projectDescriptionText.split('\n').filter(line => line.trim() !== '');
+                            if (descriptionArray.length > 0) {
+                                const ul = document.createElement('ul');
+                                descriptionArray.forEach(descItem => {
+                                    const li = document.createElement('li');
+                                    li.textContent = descItem;
+                                    ul.appendChild(li);
+                                });
+                                projectDiv.appendChild(ul);
+                            }
+                        }
+                        previewProjectEntriesContainer.appendChild(projectDiv);
+                    }
+                });
+            } else {
+                previewProjectsSection.style.display = 'none';
+            }
+        }
+
+        // Research Preview Logic
+        if (previewResearchSection && researchFormContent && researchEntriesContainer && previewResearchEntriesContainer) {
+            if (toggleResearch && toggleResearch.checked) {
+                previewResearchSection.style.display = '';
+                previewResearchEntriesContainer.innerHTML = ''; // Clear previous entries
+
+                const researchForms = researchEntriesContainer.querySelectorAll('.research-entry');
+                let hasResearchContent = false;
+                researchForms.forEach(form => {
+                    const researchTitle = form.querySelector('.researchTitle')?.value;
+                    const researchAffiliation = form.querySelector('.researchAffiliation')?.value;
+                    const researchDates = form.querySelector('.researchDates')?.value;
+                    const researchSummaryText = form.querySelector('.researchSummary')?.value;
+
+                    if (researchTitle || researchAffiliation || researchDates || (researchSummaryText && researchSummaryText.trim() !== '')) {
+                        hasResearchContent = true;
+                        const researchDiv = document.createElement('div');
+                        researchDiv.classList.add('preview-entry-item');
+
+                        const h3 = document.createElement('h3');
+                        h3.textContent = researchTitle || 'Research Title/Topic';
+                        researchDiv.appendChild(h3);
+
+                        let subHeadingText = '';
+                        if (researchAffiliation) subHeadingText += researchAffiliation;
+                        if (researchDates) subHeadingText += (subHeadingText ? ' | ' : '') + researchDates;
+
+                        if (subHeadingText) {
+                            const pSubHeading = document.createElement('p');
+                            pSubHeading.textContent = subHeadingText;
+                            researchDiv.appendChild(pSubHeading);
+                        }
+
+                        if (researchSummaryText && researchSummaryText.trim() !== '') {
+                            const summaryArray = researchSummaryText.split('\n').filter(line => line.trim() !== '');
+                            if (summaryArray.length > 0) {
+                                const ul = document.createElement('ul');
+                                summaryArray.forEach(item => {
+                                    const li = document.createElement('li');
+                                    li.textContent = item;
+                                    ul.appendChild(li);
+                                });
+                                researchDiv.appendChild(ul);
+                            }
+                        }
+                        previewResearchEntriesContainer.appendChild(researchDiv);
+                    }
+                });
+            } else {
+                previewResearchSection.style.display = 'none';
+            }
+        }
     };
 
     // --- Helper function to populate skill subcategories in Preview ---
@@ -298,7 +424,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
                 `;
                 break;
-            // Add other cases (project, research, etc.) here later
+            case 'project':
+                innerHTML = `
+                    <input type="text" class="projectName" placeholder="Project Name">
+                    <input type="text" class="projectRole" placeholder="Your Role (e.g., Lead Developer, Contributor)">
+                    <input type="text" class="projectDates" placeholder="Dates/Duration (e.g., Jan 2023 - Mar 2023)">
+                    <textarea class="projectDescription" placeholder="Description, Key Features, Technologies Used (one per line)"></textarea>
+                `;
+                break;
+            case 'research':
+                innerHTML = `
+                    <input type="text" class="researchTitle" placeholder="Research Title/Topic">
+                    <input type="text" class="researchAffiliation" placeholder="Affiliation/Lab (optional)">
+                    <input type="text" class="researchDates" placeholder="Dates (e.g., Spring 2022)">
+                    <textarea class="researchSummary" placeholder="Abstract, Summary, Key Findings (one per line if needed)"></textarea>
+                `;
+                break;
+            // Add other cases here later
         }
         entryDiv.innerHTML = innerHTML;
         container.appendChild(entryDiv);
@@ -365,6 +507,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // Input listeners for skills textareas are covered by allStaticInputs (this comment seems misplaced, should be with skills)
+
+    // Projects Section Listeners
+    if (toggleProjects) setupToggleListener(toggleProjects, projectsFormContent);
+    if (addProjectButton) {
+        addProjectButton.addEventListener('click', () => {
+            if (projectEntriesContainer) createFormEntry('project', projectEntriesContainer);
+        });
+    }
+    if (projectEntriesContainer) { // Ensure this targets the correct initial entry if needed
+        projectEntriesContainer.querySelectorAll('.project-entry input, .project-entry textarea').forEach(el => {
+            if(el) el.addEventListener('input', updatePreview);
+        });
+    }
+
+    // Research Section Listeners
+    if (toggleResearch) setupToggleListener(toggleResearch, researchFormContent);
+    if (addResearchButton) {
+        addResearchButton.addEventListener('click', () => {
+            if (researchEntriesContainer) createFormEntry('research', researchEntriesContainer);
+        });
+    }
+    if (researchEntriesContainer) { // Ensure this targets the correct initial entry
+        researchEntriesContainer.querySelectorAll('.research-entry input, .research-entry textarea').forEach(el => {
+            if(el) el.addEventListener('input', updatePreview);
+        });
+    }
 
 
     // Initial preview update
