@@ -35,10 +35,75 @@
             <div class="gallery-content">
                 <h2>Explore Our Templates</h2>
                 <p class="gallery-intro">Choose from a variety of professionally designed, ATS-optimized resume templates.</p>
+
+                <div class="gallery-filters">
+                    <select id="filter-industry" aria-label="Filter by Industry">
+                        <option value="">All Industries</option>
+                        <option value="tech">Tech</option>
+                        <option value="marketing">Marketing</option>
+                        <option value="creative">Creative</option>
+                        <option value="finance">Finance</option>
+                        <option value="healthcare">Healthcare</option>
+                    </select>
+                    <select id="filter-style" aria-label="Filter by Style">
+                        <option value="">All Styles</option>
+                        <option value="modern">Modern</option>
+                        <option value="classic">Classic</option>
+                        <option value="creative-style">Creative Style</option>
+                        <option value="minimalist">Minimalist</option>
+                    </select>
+                    <select id="filter-ats" aria-label="Filter by ATS Level">
+                        <option value="">Any ATS Level</option>
+                        <option value="highly-optimized">Highly ATS-Optimized</option>
+                        <option value="standard-ats">Standard ATS-Friendly</option>
+                    </select>
+                </div>
+
                 <div class="gallery-grid">
-                    <div class="template-card-placeholder">Template 1 Preview</div>
-                    <div class="template-card-placeholder">Template 2 Preview</div>
-                    <div class="template-card-placeholder">Template 3 Preview</div>
+                    <div class="template-card">
+                        <div class="card-thumbnail">
+                            <img src="assets/images/template-previews/thumb-placeholder.png" alt="Professional Classic Template Preview">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Professional Classic</h3>
+                            <p class="card-description">A timeless, ATS-friendly design perfect for corporate roles and traditional industries.</p>
+                            <span class="card-difficulty beginner">Beginner</span>
+                        </div>
+                        <a href="builder.html?template=professional-classic" class="cta-button card-cta">Use This Template</a>
+                    </div>
+                    <div class="template-card">
+                        <div class="card-thumbnail">
+                            <img src="assets/images/template-previews/thumb-placeholder.png" alt="Modern Minimalist Template Preview">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Modern Minimalist</h3>
+                            <p class="card-description">Sleek and clean, for those who prefer a contemporary and direct approach.</p>
+                            <span class="card-difficulty intermediate">Intermediate</span>
+                        </div>
+                        <a href="builder.html?template=modern-minimalist" class="cta-button card-cta">Use This Template</a>
+                    </div>
+                    <div class="template-card">
+                        <div class="card-thumbnail">
+                            <img src="assets/images/template-previews/thumb-placeholder.png" alt="Creative Portfolio Template Preview">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Creative Portfolio</h3>
+                            <p class="card-description">Showcase your creative talents with this visually engaging template style.</p>
+                            <span class="card-difficulty advanced">Advanced</span>
+                        </div>
+                        <a href="builder.html?template=creative-portfolio" class="cta-button card-cta">Use This Template</a>
+                    </div>
+                     <div class="template-card">
+                        <div class="card-thumbnail">
+                            <img src="assets/images/template-previews/thumb-placeholder.png" alt="Technical Focus Template Preview">
+                        </div>
+                        <div class="card-content">
+                            <h3 class="card-title">Technical Focus</h3>
+                            <p class="card-description">Highlights skills and projects, ideal for developers and engineers.</p>
+                            <span class="card-difficulty intermediate">Intermediate</span>
+                        </div>
+                        <a href="builder.html?template=technical-focus" class="cta-button card-cta">Use This Template</a>
+                    </div>
                 </div>
             </div>
         </section>
