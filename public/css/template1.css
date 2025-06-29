@@ -1,0 +1,172 @@
+/* Styles specific to the "Professional" Resume Template Preview (Template 1) */
+
+#resume-preview {
+    border: 1px solid #ddd;
+    padding: 30px; /* Standard padding for an A4-like feel */
+    min-height: 600px; /* Should be based on typical resume length */
+    background-color: #fff;
+    text-align: left;
+    font-family: 'Calibri', Arial, sans-serif; /* Classic professional font */
+    color: #333; /* Default text color for template */
+    line-height: 1.5; /* Slightly tighter for professional look */
+}
+
+/* Header in Preview - Professional Template */
+#preview-header {
+    text-align: left; /* Default, but can be overridden by template */
+    margin-bottom: 25px; /* Space after header block */
+    padding-bottom: 15px;
+    border-bottom: 2px solid #333; /* Strong separator */
+}
+#preview-header #preview-fullName {
+    font-size: 2.2em; /* Prominent name */
+    color: #2c3e50; /* Dark, strong blue */
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+#preview-header #preview-jobTitle {
+    font-size: 1.3em;
+    color: #4a4a4a; /* Dark grey */
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-weight: normal;
+}
+
+/* Contact Info in Preview - Professional Template */
+#preview-contactInfo {
+    font-size: 0.95em;
+    color: #555;
+    line-height: 1.6;
+}
+/* Inline contact items styling */
+#preview-contactInfo.inline span {
+    display: inline;
+    margin-right: 3px;
+}
+#preview-contactInfo.inline span:not(:last-child) {
+    margin-right: 8px;
+}
+#preview-contactInfo.inline span:not(:last-child)::after {
+    content: "|";
+    color: #ccc; /* Lighter separator */
+    margin-left: 8px;
+}
+/* Stacked contact items styling - Relies on inline style in HTML for display:block */
+/* JS adds .stacked to #preview-contactInfo based on HTML's inline style example */
+/* #preview-contactInfo.stacked span { display: block; margin-bottom: 3px; } */
+/* This is in index.html's <style> tag, or can be here too if we remove from HTML */
+
+
+/* General Preview Section Headings (H2) - Professional Template */
+#resume-preview h2 {
+    font-size: 1.3em; /* Slightly smaller than form H2s */
+    color: #34495e; /* Consistent dark blue-grey */
+    border-bottom: 1px solid #34495e; /* Thinner, matching border */
+    padding-bottom: 4px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+    font-weight: bold;
+    text-transform: uppercase; /* Common for professional resumes */
+    letter-spacing: 0.5px;
+}
+
+/* General Preview Entry Titles (H3) - Professional Template */
+#resume-preview h3 { /* e.g., Institution, Company Name, Project Title */
+    font-size: 1.1em;
+    color: #2c3e50; /* Darker, for emphasis */
+    margin-top: 15px;
+    margin-bottom: 2px; /* Tighter spacing to sub-details */
+    font-weight: bold;
+}
+
+/* Sub-headings for experience types in preview - Professional Template */
+/* This class is added by JS to H3s like "Professional Experience" */
+#preview-experience-entries .experience-type-heading {
+    font-size: 1.15em; /* Slightly distinct from individual entry H3s */
+    color: #34495e;
+    border-bottom: 1px dotted #bdc3c7; /* Dotted separator for type groups */
+    padding-bottom: 3px;
+    margin-top: 20px; /* More space before a new type group */
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+
+/* General Preview Paragraphs - Professional Template */
+#resume-preview p {
+    margin-top: 0;
+    margin-bottom: 6px; /* Tighter paragraph spacing */
+    color: #4a4a4a; /* Consistent dark grey for text */
+    font-size: 0.95em;
+}
+
+/* General Preview Lists (e.g., for responsibilities) - Professional Template */
+#resume-preview ul {
+    list-style-type: disc; /* Standard bullets */
+    padding-left: 20px;
+    margin-top: 4px; /* Tighter to heading/sub-heading */
+    margin-bottom: 10px;
+}
+#resume-preview ul li {
+    margin-bottom: 4px; /* Tighter list item spacing */
+    color: #4a4a4a;
+    font-size: 0.95em;
+}
+
+/* Styling for Skills Subcategories in Preview - Professional Template */
+.skills-subcategory {
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+.skills-subcategory h4 {
+    font-size: 0.95em; /* Match paragraph text */
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 2px;
+    display: inline;
+}
+.skills-subcategory ul {
+    list-style-type: none;
+    padding-left: 5px; /* Indent slightly after H4 if inline */
+    margin-top: 0;
+    display: inline;
+}
+.skills-subcategory ul li {
+    display: inline;
+    margin-right: 3px;
+    color: #4a4a4a;
+    font-size: 0.95em;
+}
+.skills-subcategory ul li:not(:last-child)::after {
+    content: ", "; /* Comma separation for inline skills */
+}
+/* For newline separated skills - Professional Template */
+.skills-subcategory.newline-items ul {
+    display: block;
+    padding-left: 20px; /* Indent for bullets */
+    list-style-type: disc; /* Use bullets for newline items */
+    margin-top: 2px;
+}
+.skills-subcategory.newline-items ul li {
+    display: list-item;
+    margin-bottom: 3px;
+}
+.skills-subcategory.newline-items ul li::after {
+    content: ""; /* Remove comma for newline items */
+}
+
+/* Specific Preview Sections if needed for Template 1 */
+#preview-objective-section p,
+#preview-communication-section p,
+#preview-leadership-section p {
+    font-style: normal; /* Override any italic defaults if not desired for this template */
+    padding-left: 5px; /* Slight indent for these paragraphs */
+}
+
+#preview-reference-entries div p { /* Tighter spacing for reference details */
+    margin-bottom: 2px;
+}
+#preview-reference-entries div p strong {
+    font-weight: bold;
+    color: #2c3e50;
+}
