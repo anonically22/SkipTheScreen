@@ -50,6 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewSkillsToolsList = document.getElementById('preview-skillsTools-list');
     const previewSkillsPlatformsList = document.getElementById('preview-skillsPlatforms-list');
 
+    // Experience Form Elements
+    const toggleExperience = document.getElementById('toggle-experience');
+    const experienceFormContent = document.getElementById('experience-form-content');
+    const experienceEntriesContainer = document.getElementById('experience-entries'); // Form container for entries
+    const addExperienceButton = document.getElementById('add-experience');
+
+    // Experience Preview Elements
+    const previewExperienceSection = document.getElementById('preview-experience-section'); // Main preview section wrapper
+    const previewExperienceEntriesContainer = document.getElementById('preview-experience-entries'); // Preview container for entries
+
 
     // --- Default Preview Text ---
     const defaultTexts = {
@@ -171,6 +181,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (previewDetailedSkillsDiv) previewDetailedSkillsDiv.style.display = 'none'; // Also hide detailed if main skills is off
             }
         }
+
+        // Experience Preview Logic
+        if (previewExperienceSection && experienceFormContent && experienceEntriesContainer && previewExperienceEntriesContainer) {
+            if (toggleExperience && toggleExperience.checked) {
+                previewExperienceSection.style.display = '';
+                previewExperienceEntriesContainer.innerHTML = ''; // Clear previous entries
+
+                const experienceForms = experienceEntriesContainer.querySelectorAll('.experience-entry');
+                let hasExperienceContent = false;
+                experienceForms.forEach(form => {
+                    const companyName = form.querySelector('.companyName')?.value;
+                    const jobTitle = form.querySelector('.jobTitle')?.value;
+                    const expDates = form.querySelector('.expDates')?.value;
+                    const expResponsibilitiesText = form.querySelector('.expResponsibilities')?.value;
+
+                    if (companyName || jobTitle || expDates || (expResponsibilitiesText && expResponsibilitiesText.trim() !== '')) {
+                        hasExperienceContent = true;
+                        const expDiv = document.createElement('div');
+                        expDiv.classList.add('preview-entry-item');
+
+                        const h3 = document.createElement('h3');
+                        h3.textContent = companyName || 'Company Name';
+                        expDiv.appendChild(h3);
+
+                        let subHeadingText = '';
+                        if (jobTitle) subHeadingText += jobTitle;
+                        if (expDates) subHeadingText += (subHeadingText ? ' | ' : '') + expDates;
+
+                        if (subHeadingText) {
+                            const pSubHeading = document.createElement('p');
+                            pSubHeading.textContent = subHeadingText;
+                            expDiv.appendChild(pSubHeading);
+                        }
+
+                        if (expResponsibilitiesText && expResponsibilitiesText.trim() !== '') {
+                            const responsibilitiesArray = expResponsibilitiesText.split('\n').filter(line => line.trim() !== '');
+                            if (responsibilitiesArray.length > 0) {
+                                const ul = document.createElement('ul');
+                                responsibilitiesArray.forEach(resp => {
+                                    const li = document.createElement('li');
+                                    li.textContent = resp;
+                                    ul.appendChild(li);
+                                });
+                                expDiv.appendChild(ul);
+                            }
+                        }
+                        previewExperienceEntriesContainer.appendChild(expDiv);
+                    }
+                });
+                 // If toggle is checked but no content, H2 "Experience" still shows, entries area is blank.
+                 // To hide H2 as well if no content:
+                 // previewExperienceSection.style.display = hasExperienceContent ? '' : 'none';
+
+            } else {
+                previewExperienceSection.style.display = 'none';
+            }
+        }
     };
 
     // --- Helper function to populate skill subcategories in Preview ---
@@ -223,7 +290,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     <textarea class="coursework" placeholder="Relevant Coursework"></textarea>
                 `;
                 break;
-            // Add other cases (experience, project, etc.) here later
+            case 'experience':
+                innerHTML = `
+                    <input type="text" class="companyName" placeholder="Company Name">
+                    <input type="text" class="jobTitle" placeholder="Job Title">
+                    <input type="text" class="expDates" placeholder="Dates (e.g., Sept 20XX – Aug 20XX)">
+                    <textarea class="expResponsibilities" placeholder="Responsibilities (one per line)"></textarea>
+                `;
+                break;
+            // Add other cases (project, research, etc.) here later
         }
         entryDiv.innerHTML = innerHTML;
         container.appendChild(entryDiv);
@@ -275,7 +350,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // Skills & Abilities Section Listeners
     if (toggleSkills) setupToggleListener(toggleSkills, skillsFormContent);
     if (toggleDetailedSkills) setupToggleListener(toggleDetailedSkills, detailedSkillsForm);
-    // Input listeners for skills textareas are covered by allStaticInputs
+
+    // Experience Section Listeners
+    if (toggleExperience) setupToggleListener(toggleExperience, experienceFormContent);
+    if (addExperienceButton) {
+        addExperienceButton.addEventListener('click', () => {
+            if (experienceEntriesContainer) createFormEntry('experience', experienceEntriesContainer);
+        });
+    }
+    // Initial listeners for hardcoded experience entry
+    if (experienceEntriesContainer) {
+        experienceEntriesContainer.querySelectorAll('.experience-entry input, .experience-entry textarea').forEach(el => {
+            if(el) el.addEventListener('input', updatePreview);
+        });
+    }
+    // Input listeners for skills textareas are covered by allStaticInputs (this comment seems misplaced, should be with skills)
 
 
     // Initial preview update
