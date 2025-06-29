@@ -80,6 +80,16 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewResearchSection = document.getElementById('preview-research-section');
     const previewResearchEntriesContainer = document.getElementById('preview-research-entries');
 
+    // References Form Elements (ensure these are picked up if they existed before, or defined if new)
+    const toggleReferences = document.getElementById('toggle-references');
+    const referencesFormContent = document.getElementById('references-form-content');
+    const referenceEntriesContainer = document.getElementById('reference-entries');
+    const addReferenceButton = document.getElementById('add-reference');
+
+    // References Preview Elements (ensure these are picked up)
+    const previewReferencesSection = document.getElementById('preview-references-section');
+    const previewReferenceEntriesContainer = document.getElementById('preview-reference-entries');
+
 
     // --- Default Preview Text ---
     const defaultTexts = {
@@ -364,6 +374,65 @@ document.addEventListener('DOMContentLoaded', () => {
                 previewResearchSection.style.display = 'none';
             }
         }
+
+        // References Preview Logic
+        if (previewReferencesSection && referencesFormContent && referenceEntriesContainer && previewReferenceEntriesContainer) {
+            if (toggleReferences && toggleReferences.checked) {
+                // Only show section if toggle is checked AND there's content.
+                // First, collect content.
+                let hasReferenceContent = false;
+                const referenceForms = referenceEntriesContainer.querySelectorAll('.reference-entry');
+                const tempPreviewNodes = []; // Store nodes temporarily
+
+                referenceForms.forEach(form => {
+                    const refName = form.querySelector('.refName')?.value;
+                    const refJobTitle = form.querySelector('.refJobTitle')?.value;
+                    const refCompany = form.querySelector('.refCompany')?.value;
+                    const refContact = form.querySelector('.refContact')?.value;
+
+                    if (refName || refJobTitle || refCompany || refContact) {
+                        hasReferenceContent = true;
+                        const refDiv = document.createElement('div');
+                        refDiv.classList.add('preview-entry-item');
+
+                        const pName = document.createElement('p');
+                        const strongName = document.createElement('strong');
+                        strongName.textContent = refName || 'Reference Name';
+                        pName.appendChild(strongName);
+                        refDiv.appendChild(pName);
+
+                        if (refJobTitle) {
+                            const pTitle = document.createElement('p');
+                            pTitle.textContent = refJobTitle;
+                            refDiv.appendChild(pTitle);
+                        }
+                        if (refCompany) {
+                            const pCompany = document.createElement('p');
+                            pCompany.textContent = refCompany;
+                            refDiv.appendChild(pCompany);
+                        }
+                        if (refContact) {
+                            const pContact = document.createElement('p');
+                            pContact.textContent = refContact;
+                            refDiv.appendChild(pContact);
+                        }
+                        tempPreviewNodes.push(refDiv);
+                    }
+                });
+
+                if (hasReferenceContent) {
+                    previewReferencesSection.style.display = '';
+                    previewReferenceEntriesContainer.innerHTML = ''; // Clear before adding new
+                    tempPreviewNodes.forEach(node => previewReferenceEntriesContainer.appendChild(node));
+                } else {
+                    previewReferencesSection.style.display = 'none'; // Hide section if toggle on but no content
+                    previewReferenceEntriesContainer.innerHTML = ''; // Ensure it's clear
+                }
+            } else {
+                previewReferencesSection.style.display = 'none'; // Hide if toggle is off
+                previewReferenceEntriesContainer.innerHTML = ''; // Ensure it's clear
+            }
+        }
     };
 
     // --- Helper function to populate skill subcategories in Preview ---
@@ -440,7 +509,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     <textarea class="researchSummary" placeholder="Abstract, Summary, Key Findings (one per line if needed)"></textarea>
                 `;
                 break;
-            // Add other cases here later
+            case 'reference':
+                innerHTML = `
+                    <input type="text" class="refName" placeholder="Reference Name">
+                    <input type="text" class="refJobTitle" placeholder="Job Title">
+                    <input type="text" class="refCompany" placeholder="Company">
+                    <input type="text" class="refContact" placeholder="Contact">
+                `;
+                break;
         }
         entryDiv.innerHTML = innerHTML;
         container.appendChild(entryDiv);
@@ -530,6 +606,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (researchEntriesContainer) { // Ensure this targets the correct initial entry
         researchEntriesContainer.querySelectorAll('.research-entry input, .research-entry textarea').forEach(el => {
+            if(el) el.addEventListener('input', updatePreview);
+        });
+    }
+
+    // References Section Listeners
+    if (toggleReferences) setupToggleListener(toggleReferences, referencesFormContent);
+    if (addReferenceButton) {
+        addReferenceButton.addEventListener('click', () => {
+            if (referenceEntriesContainer) createFormEntry('reference', referenceEntriesContainer);
+        });
+    }
+    if (referenceEntriesContainer) { // Initial listeners for hardcoded reference entry
+        referenceEntriesContainer.querySelectorAll('.reference-entry input, .reference-entry textarea').forEach(el => { // textarea might not exist but querySelectorAll is fine
             if(el) el.addEventListener('input', updatePreview);
         });
     }

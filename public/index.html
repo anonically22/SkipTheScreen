@@ -116,7 +116,22 @@
                 <button type="button" id="add-research">Add Research</button>
             </div>
 
-            <!-- Other sections will be added here later -->
+            <!-- References Section (Optional) -->
+            <h2>
+                <label><input type="checkbox" id="toggle-references"> References Section</label>
+            </h2>
+            <div id="references-form-content" style="display: none;"> <!-- Hidden by default -->
+                <div id="reference-entries">
+                    <div class="reference-entry">
+                        <input type="text" class="refName" placeholder="Reference Name">
+                        <input type="text" class="refJobTitle" placeholder="Job Title">
+                        <input type="text" class="refCompany" placeholder="Company">
+                        <input type="text" class="refContact" placeholder="Contact">
+                    </div>
+                </div>
+                <button type="button" id="add-reference">Add Reference</button>
+            </div>
+            <!-- End of dynamically added sections placeholder -->
         </div>
 
         <div class="resume-preview-container">
@@ -172,7 +187,14 @@
                         <!-- JS will populate this based on form input -->
                     </div>
                 </div>
-                <!-- Other preview sections will be added here later -->
+                <!-- References Preview -->
+                <div id="preview-references-section" style="display: none;"> <!-- Hidden by default -->
+                    <h2>References</h2>
+                    <div id="preview-reference-entries">
+                        <!-- JS will populate this based on form input -->
+                    </div>
+                </div>
+                <!-- End of preview sections placeholder -->
             </div>
         </div>
     </div>
