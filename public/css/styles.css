@@ -261,3 +261,92 @@ button:hover {
 .skills-subcategory.newline-items ul li::after {
     content: ""; /* Remove comma for newline items */
 }
+
+
+/* --- Responsive Design --- */
+
+/* Medium screens and down (e.g., tablets and mobiles in portrait) */
+@media (max-width: 991px) { /* A slightly larger breakpoint for stacking sooner */
+    .container {
+        flex-direction: column;
+        align-items: center; /* Center form/preview when stacked */
+        gap: 0; /* Remove gap, manage spacing with margins */
+        max-width: 98%; /* Allow a bit more width */
+    }
+
+    .resume-form, .resume-preview-container {
+        flex-basis: auto; /* Reset flex-basis */
+        width: 100%;    /* Take full width of the centered container */
+        margin-bottom: 25px; /* Space between stacked form and preview */
+    }
+    #main-title {
+        font-size: 2.2em;
+    }
+}
+
+
+/* Small screens (e.g., mobile phones in portrait) */
+@media (max-width: 767px) {
+    /* Container already column from 991px breakpoint */
+     #main-title {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    .resume-form, .resume-preview-container {
+        padding: 20px; /* Slightly reduce padding */
+    }
+    #resume-preview {
+        padding: 20px; /* Reduce padding on preview itself too */
+    }
+     .resume-form h2 { /* Section titles in the form */
+        font-size: 1.2em;
+    }
+    #resume-preview h2 { /* Section titles in preview */
+        font-size: 1.3em;
+    }
+    #resume-preview h3 { /* Entry titles in preview */
+        font-size: 1.0em;
+    }
+}
+
+/* Very small screens (e.g., smaller mobile phones) */
+@media (max-width: 480px) {
+    body {
+        padding: 10px; /* Reduce body padding */
+    }
+    #main-title {
+        font-size: 1.8em;
+        margin-bottom: 15px;
+    }
+    .container {
+        max-width: 100%; /* Full width */
+    }
+    .resume-form, .resume-preview-container {
+        padding: 15px; /* Further reduce padding */
+        border-radius: 5px; /* Slightly smaller border radius */
+    }
+    #resume-preview {
+        padding: 15px;
+        min-height: auto; /* Allow preview to shrink more */
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="url"],
+    textarea,
+    select {
+        padding: 10px; /* Smaller padding for form elements */
+        font-size: 0.95em;
+    }
+    button {
+        padding: 8px 15px;
+        font-size: 0.95em;
+    }
+     .resume-form h2 { /* Section titles in the form */
+        font-size: 1.1em;
+    }
+    #resume-preview h2 { /* Section titles in preview */
+        font-size: 1.2em;
+    }
+}
