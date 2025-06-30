@@ -31,6 +31,32 @@ body.editor-page {
     text-decoration: underline;
 }
 
+.builder-header .template-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.builder-header .template-controls label {
+    font-size: 0.9em;
+    color: #f0f0f0; /* Light color for label text in dark header */
+}
+
+#template-switcher {
+    padding: 5px 8px;
+    border-radius: 4px;
+    border: 1px solid #6c757d; /* Darker border for select */
+    background-color: #495057; /* Dark background for select */
+    color: #ffffff; /* Light text for select options */
+    font-size: 0.9em;
+}
+#template-switcher:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52,152,219,.25);
+}
+
+
 /* Main editor layout container (holds form and preview) */
 /* This reuses .container styles from the original styles.css if applicable */
 /* For builder.html, .container holds .resume-form and .resume-preview-container */
