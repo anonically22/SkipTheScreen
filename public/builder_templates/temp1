@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATS-Friendly HR Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #000;
+            background: #f8f9fa;
+            padding: 20px;
+        }
+
+        .resume-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 60px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .edit-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .edit-mode-toggle:hover {
+            background: #34495e;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 20px;
+        }
+
+        .name {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .contact-info {
+            font-size: 1em;
+            color: #000;
+            line-height: 1.4;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #000;
+            padding-bottom: 5px;
+        }
+
+        .objective-text {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #000;
+            margin-bottom: 20px;
+        }
+
+        .experience-item, .education-item, .reference-item {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .job-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .company-location {
+            font-size: 1em;
+            color: #000;
+            margin-bottom: 3px;
+        }
+
+        .job-duration {
+            font-size: 1em;
+            color: #000;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        .job-description {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #000;
+        }
+
+        .education-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .education-school {
+            font-size: 1em;
+            color: #000;
+            margin-bottom: 10px;
+        }
+
+        .education-description {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #000;
+        }
+
+        .skill-section {
+            font-size: 1em;
+            line-height: 1.7;
+            color: #000;
+        }
+
+        .reference-name {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 5px;
+        }
+
+        .reference-details {
+            font-size: 1em;
+            color: #000;
+            line-height: 1.5;
+        }
+
+        .add-btn, .remove-btn {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            font-family: Arial, sans-serif;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #34495e;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .edit-mode .remove-btn {
+            opacity: 1;
+        }
+
+        .edit-mode .add-btn {
+            display: inline-block;
+        }
+
+        .add-btn {
+            display: none;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(44, 62, 80, 0.1);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .section-controls {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        /* ATS-friendly styles */
+        .ats-note {
+            background: #e8f4f8;
+            border-left: 4px solid #2c3e50;
+            padding: 15px;
+            margin-bottom: 30px;
+            font-size: 0.9em;
+            color: #2c3e50;
+            font-family: Arial, sans-serif;
+        }
+
+        .ats-note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .resume-container {
+                padding: 30px 20px;
+            }
+            
+            .name {
+                font-size: 1.8em;
+            }
+            
+            .contact-info {
+                font-size: 0.9em;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .resume-container {
+                box-shadow: none;
+                padding: 0;
+            }
+            
+            .edit-mode-toggle, .add-btn, .remove-btn, .ats-note {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Edit</button>
+        
+        <div class="ats-note">
+            <strong>ATS-Optimized Template</strong>
+            This resume uses simple formatting, standard fonts, and clear section headers to ensure compatibility with Applicant Tracking Systems (ATS). Avoid complex graphics, tables, or unusual fonts for best results.
+        </div>
+        
+        <div class="header">
+            <h1 class="name" contenteditable="true">Caleb Foster</h1>
+            <div class="contact-info" contenteditable="true">
+                456 East 78th Ave | Denver, CO 87654 | 303.555.0113 | caleb@example.com
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Objective</h2>
+            <div class="objective-text" contenteditable="true">
+                Check out the few quick tips below to help you get started. To replace any tip text with your own, just select it and start typing.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Experience</h2>
+            <div id="experience-list">
+                <div class="experience-item">
+                    <button class="remove-btn" onclick="removeItem(this)">×</button>
+                    <div class="job-title" contenteditable="true">Chief Human Resources Officer</div>
+                    <div class="company-location" contenteditable="true">Olson Harris Ltd. | Seattle, WA</div>
+                    <div class="job-duration" contenteditable="true">Feb 2022 - Jan 2024</div>
+                    <div class="job-description" contenteditable="true">
+                        This is the place for a brief summary of your key responsibilities and most stellar accomplishments.
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <button class="remove-btn" onclick="removeItem(this)">×</button>
+                    <div class="job-title" contenteditable="true">Supervisor - Human Resources</div>
+                    <div class="company-location" contenteditable="true">Olson Harris Ltd. | Seattle, WA</div>
+                    <div class="job-duration" contenteditable="true">Jul 2020 - Jun 2022</div>
+                    <div class="job-description" contenteditable="true">
+                        This is the place for a brief summary of your key responsibilities and most stellar accomplishments.
+                    </div>
+                </div>
+            </div>
+            <div class="section-controls">
+                <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Education</h2>
+            <div id="education-list">
+                <div class="education-item">
+                    <button class="remove-btn" onclick="removeItem(this)">×</button>
+                    <div class="education-title" contenteditable="true">Human Resources</div>
+                    <div class="education-school" contenteditable="true">Glennwood University | Redmond, WA | Jun 2020</div>
+                    <div class="education-description" contenteditable="true">
+                        You might want to include your GPA here and a brief summary of relevant coursework, awards, and honors.
+                    </div>
+                </div>
+            </div>
+            <div class="section-controls">
+                <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Communication</h2>
+            <div class="skill-section" contenteditable="true">
+                You delivered that big presentation to rave reviews. This is the place to showcase your skills.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Leadership</h2>
+            <div class="skill-section" contenteditable="true">
+                Are you president of your fraternity, head of the condo board, or a team lead for your favorite charity? You're a natural leader -- tell it like it is!
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">References</h2>
+            <div id="references-list">
+                <div class="reference-item">
+                    <button class="remove-btn" onclick="removeItem(this)">×</button>
+                    <div class="reference-name" contenteditable="true">Briana Hernandez</div>
+                    <div class="reference-details" contenteditable="true">
+                        Olson Harris Ltd. | Contact information
+                    </div>
+                </div>
+            </div>
+            <div class="section-controls">
+                <button class="add-btn" onclick="addReference()">+ Add Reference</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const container = document.querySelector('.resume-container');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            if (editMode) {
+                container.classList.add('edit-mode');
+                toggle.textContent = '👁️ View';
+                toggle.style.background = '#27ae60';
+            } else {
+                container.classList.remove('edit-mode');
+                toggle.textContent = '✏️ Edit';
+                toggle.style.background = '#2c3e50';
+            }
+        }
+
+        function removeItem(button) {
+            if (editMode) {
+                button.parentElement.remove();
+            }
+        }
+
+        function addExperience() {
+            if (!editMode) return;
+            
+            const experienceList = document.getElementById('experience-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'experience-item';
+            newItem.innerHTML = `
+                <button class="remove-btn" onclick="removeItem(this)">×</button>
+                <div class="job-title" contenteditable="true">Job Title</div>
+                <div class="company-location" contenteditable="true">Company Name | Location</div>
+                <div class="job-duration" contenteditable="true">Start Date - End Date</div>
+                <div class="job-description" contenteditable="true">
+                    Brief summary of key responsibilities and accomplishments.
+                </div>
+            `;
+            experienceList.appendChild(newItem);
+        }
+
+        function addEducation() {
+            if (!editMode) return;
+            
+            const educationList = document.getElementById('education-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'education-item';
+            newItem.innerHTML = `
+                <button class="remove-btn" onclick="removeItem(this)">×</button>
+                <div class="education-title" contenteditable="true">Degree/Major</div>
+                <div class="education-school" contenteditable="true">School Name | Location | Graduation Date</div>
+                <div class="education-description" contenteditable="true">
+                    GPA, relevant coursework, awards, and honors.
+                </div>
+            `;
+            educationList.appendChild(newItem);
+        }
+
+        function addReference() {
+            if (!editMode) return;
+            
+            const referencesList = document.getElementById('references-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'reference-item';
+            newItem.innerHTML = `
+                <button class="remove-btn" onclick="removeItem(this)">×</button>
+                <div class="reference-name" contenteditable="true">Reference Name</div>
+                <div class="reference-details" contenteditable="true">
+                    Company | Contact Information
+                </div>
+            `;
+            referencesList.appendChild(newItem);
+        }
+
+        // Prevent default behavior for contenteditable elements in view mode
+        document.addEventListener('click', function(e) {
+            if (!editMode && e.target.hasAttribute('contenteditable')) {
+                e.target.blur();
+            }
+        });
+    </script>
+</body>
+</html> 

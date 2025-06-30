@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Designer Resume</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .resume-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .edit-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-mode-toggle:hover {
+            background: #555;
+        }
+
+        .header {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            padding: 40px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .profile-image-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #f0f0f0;
+            border: 3px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .image-placeholder {
+            color: #999;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .header-info {
+            margin-left: 40px;
+        }
+
+        .name {
+            font-size: 2.5em;
+            font-weight: 300;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+        }
+
+        .job-title {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+        }
+
+        .sidebar {
+            background: #fafafa;
+            padding: 40px 30px;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        .content-area {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-item {
+            margin-bottom: 12px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .skill-item, .language-item {
+            margin-bottom: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .interests-text {
+            font-size: 0.85em;
+            color: #777;
+            line-height: 1.5;
+            font-style: italic;
+        }
+
+        .profile-text {
+            font-size: 0.95em;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 35px;
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .degree-title, .job-position {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .institution, .company {
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .duration {
+            font-size: 0.85em;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .responsibilities {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .responsibilities li {
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .responsibilities li:before {
+            content: "•";
+            color: #333;
+            position: absolute;
+            left: 0;
+        }
+
+        .add-btn, .remove-btn {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 11px;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .add-btn:hover {
+            background: #555;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            opacity: 0;
+            transition: all 0.3s ease;
+            padding: 4px 8px;
+        }
+
+        .remove-btn:hover {
+            background: #c82333;
+        }
+
+        .edit-mode .remove-btn {
+            opacity: 1;
+        }
+
+        .edit-mode .add-btn {
+            display: inline-block;
+        }
+
+        .add-btn {
+            display: none;
+        }
+
+        [contenteditable="true"] {
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        [contenteditable="true"]:focus {
+            background: rgba(0,0,0,0.05);
+            padding: 2px 4px;
+            border-radius: 2px;
+        }
+
+        .section-controls {
+            text-align: left;
+            margin-top: 15px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 20px;
+            }
+            
+            .header-info {
+                margin-left: 0;
+            }
+            
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .name {
+                font-size: 2em;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .resume-container {
+                box-shadow: none;
+            }
+            
+            .edit-mode-toggle, .add-btn, .remove-btn {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <button class="edit-mode-toggle" onclick="toggleEditMode()">✏️ Edit</button>
+        
+        <div class="header">
+            <div class="profile-image-container" onclick="triggerImageUpload()">
+                <img class="profile-image" id="profileImg" alt="Profile">
+                <div class="image-placeholder" id="imagePlaceholder">
+                    Click to add<br>profile photo
+                </div>
+                <input type="file" class="file-input" id="imageInput" accept="image/*" onchange="handleImageUpload(event)">
+            </div>
+            
+            <div class="header-info">
+                <h1 class="name" contenteditable="true">Quarantino Esposito</h1>
+                <div class="job-title" contenteditable="true">Graphic Designer</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="section">
+                    <h2 class="section-title">Contact</h2>
+                    <div class="contact-item" contenteditable="true">786-555-0167</div>
+                    <div class="contact-item" contenteditable="true">someone@example.com</div>
+                    <div class="contact-item" contenteditable="true">www.excellentwebsite.com</div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Languages</h2>
+                    <div id="languages-list">
+                        <div class="language-item" contenteditable="true">English</div>
+                        <div class="language-item" contenteditable="true">Spanish</div>
+                    </div>
+                    <div class="section-controls">
+                        <button class="add-btn" onclick="addLanguage()">+ Add Language</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Skills</h2>
+                    <div id="skills-list">
+                        <div class="skill-item" contenteditable="true">Graphic Design</div>
+                        <div class="skill-item" contenteditable="true">Photography</div>
+                        <div class="skill-item" contenteditable="true">Project Management</div>
+                        <div class="skill-item" contenteditable="true">Video Editing</div>
+                    </div>
+                    <div class="section-controls">
+                        <button class="add-btn" onclick="addSkill()">+ Add Skill</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Interests</h2>
+                    <div class="interests-text" contenteditable="true">
+                        This section is optional but can showcase the unique, intriguing, even fun side of who you are.
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-area">
+                <div class="section">
+                    <h2 class="section-title">Profile</h2>
+                    <div class="profile-text" contenteditable="true">
+                        I am a highly proficient graphic designer with over three years of experience working in various companies. Throughout my career, I have consistently demonstrated reliability, competence, and a focused approach to my work. I have successfully led numerous graphic design projects across diverse areas, including marketing, web design, and other related disciplines. My expertise encompasses a wide range of design tasks, ensuring high-quality results that meet the unique needs of each project and client.
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Education History</h2>
+                    <div id="education-list">
+                        <div class="education-item">
+                            <button class="remove-btn" onclick="removeItem(this)">×</button>
+                            <div class="degree-title" contenteditable="true">Master of Fine Arts, Graphic Design</div>
+                            <div class="institution" contenteditable="true">Graphic Design Institute</div>
+                            <div class="duration" contenteditable="true">Jan 2020 - June 2022</div>
+                        </div>
+
+                        <div class="education-item">
+                            <button class="remove-btn" onclick="removeItem(this)">×</button>
+                            <div class="degree-title" contenteditable="true">Bachelor of Arts, Graphic Design</div>
+                            <div class="institution" contenteditable="true">Clover College of the Arts</div>
+                            <div class="duration" contenteditable="true">Jan 2016 - Sep 2020</div>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button class="add-btn" onclick="addEducation()">+ Add Education</button>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">Work Experience</h2>
+                    <div id="experience-list">
+                        <div class="experience-item">
+                            <button class="remove-btn" onclick="removeItem(this)">×</button>
+                            <div class="job-position" contenteditable="true">Lead Graphic Designer</div>
+                            <div class="company" contenteditable="true">AmCell Mobile</div>
+                            <div class="duration" contenteditable="true">Aug 2022 - Dec 2024</div>
+                            <ul class="responsibilities">
+                                <li contenteditable="true">Promoted to Lead Graphic Designer for AmCell Mobile.</li>
+                                <li contenteditable="true">Led numerous graphic design projects to improve the company's marketing and website experience.</li>
+                            </ul>
+                        </div>
+
+                        <div class="experience-item">
+                            <button class="remove-btn" onclick="removeItem(this)">×</button>
+                            <div class="job-position" contenteditable="true">Graphic Designer</div>
+                            <div class="company" contenteditable="true">Starling and Copper</div>
+                            <div class="duration" contenteditable="true">Aug 2021 - Dec 2022</div>
+                            <ul class="responsibilities">
+                                <li contenteditable="true">Updated the graphic design of Starling and Copper's landing page to better align with the company's new brand identity.</li>
+                                <li contenteditable="true">Led several graphic design projects to improve the company's marketing and website experience.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="section-controls">
+                        <button class="add-btn" onclick="addExperience()">+ Add Experience</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let editMode = false;
+
+        function toggleEditMode() {
+            editMode = !editMode;
+            const container = document.querySelector('.resume-container');
+            const toggle = document.querySelector('.edit-mode-toggle');
+            
+            if (editMode) {
+                container.classList.add('edit-mode');
+                toggle.textContent = '👁️ View';
+                toggle.style.background = '#28a745';
+            } else {
+                container.classList.remove('edit-mode');
+                toggle.textContent = '✏️ Edit';
+                toggle.style.background = '#333';
+            }
+        }
+
+        function triggerImageUpload() {
+            if (editMode) {
+                document.getElementById('imageInput').click();
+            }
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('profileImg');
+                    const placeholder = document.getElementById('imagePlaceholder');
+                    
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeItem(button) {
+            if (editMode) {
+                button.parentElement.remove();
+            }
+        }
+
+        function addSkill() {
+            if (!editMode) return;
+            
+            const skillsList = document.getElementById('skills-list');
+            const newSkill = document.createElement('div');
+            newSkill.className = 'skill-item';
+            newSkill.contentEditable = 'true';
+            newSkill.textContent = 'New Skill';
+            skillsList.appendChild(newSkill);
+        }
+
+        function addLanguage() {
+            if (!editMode) return;
+            
+            const languagesList = document.getElementById('languages-list');
+            const newLanguage = document.createElement('div');
+            newLanguage.className = 'language-item';
+            newLanguage.contentEditable = 'true';
+            newLanguage.textContent = 'New Language';
+            languagesList.appendChild(newLanguage);
+        }
+
+        function addEducation() {
+            if (!editMode) return;
+            
+            const educationList = document.getElementById('education-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'education-item';
+            newItem.innerHTML = `
+                <button class="remove-btn" onclick="removeItem(this)">×</button>
+                <div class="degree-title" contenteditable="true">Degree Title</div>
+                <div class="institution" contenteditable="true">Institution Name</div>
+                <div class="duration" contenteditable="true">Duration</div>
+            `;
+            educationList.appendChild(newItem);
+        }
+
+        function addExperience() {
+            if (!editMode) return;
+            
+            const experienceList = document.getElementById('experience-list');
+            const newItem = document.createElement('div');
+            newItem.className = 'experience-item';
+            newItem.innerHTML = `
+                <button class="remove-btn" onclick="removeItem(this)">×</button>
+                <div class="job-position" contenteditable="true">Job Title</div>
+                <div class="company" contenteditable="true">Company Name</div>
+                <div class="duration" contenteditable="true">Duration</div>
+                <ul class="responsibilities">
+                    <li contenteditable="true">Responsibility 1</li>
+                    <li contenteditable="true">Responsibility 2</li>
+                </ul>
+            `;
+            experienceList.appendChild(newItem);
+        }
+
+        // Prevent default behavior for contenteditable elements in view mode
+        document.addEventListener('click', function(e) {
+            if (!editMode && e.target.hasAttribute('contenteditable')) {
+                e.target.blur();
+            }
+        });
+    </script>
+</body>
+</html>
