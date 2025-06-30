@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Apply template class from URL query parameter
+    const templateSwitcher = document.getElementById('template-switcher');
+
+    // Apply template class from URL query parameter & set dropdown
     try {
         const urlParams = new URLSearchParams(window.location.search);
-        const templateName = urlParams.get('template');
+        let currentTemplateName = urlParams.get('template')?.trim();
 
         // Remove any existing template-* classes
         const classesToRemove = [];
@@ -13,20 +15,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         classesToRemove.forEach(cls => document.body.classList.remove(cls));
 
-        if (templateName && templateName.trim() !== '') {
-            document.body.classList.add(`template-${templateName.trim()}`);
+        if (currentTemplateName) {
+            document.body.classList.add(`template-${currentTemplateName}`);
+            if (templateSwitcher) templateSwitcher.value = currentTemplateName;
         } else {
-            // Fallback to default if no template specified or if professional is hardcoded and needs ensuring
-            if (!document.body.classList.contains('template-professional')) {
-                 document.body.classList.add('template-professional');
-            }
+            currentTemplateName = 'professional'; // Default template
+            document.body.classList.add(`template-${currentTemplateName}`);
+            if (templateSwitcher) templateSwitcher.value = currentTemplateName;
         }
     } catch (e) {
         console.error("Error processing template query param:", e);
-        // Ensure default template class if error occurs
+        // Ensure default template class and dropdown value if error occurs
         if (!document.body.classList.contains('template-professional')) {
             document.body.classList.add('template-professional');
         }
+        if (templateSwitcher) templateSwitcher.value = 'professional';
+    }
+
+    // Event listener for template switcher
+    if (templateSwitcher) {
+        templateSwitcher.addEventListener('change', (event) => {
+            const newTemplateName = event.target.value;
+            // Construct new URL, preserving other query params if any (though none are used now)
+            const currentParams = new URLSearchParams(window.location.search);
+            currentParams.set('template', newTemplateName);
+            window.location.href = window.location.pathname + '?' + currentParams.toString();
+        });
     }
 
     // --- Form Input Elements ---
